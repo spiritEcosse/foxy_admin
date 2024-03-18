@@ -21,7 +21,6 @@ import {
 } from 'react-admin';
 
 import ImageList from './GridList';
-// import Aside from './Aside';
 
 const ItemList = () => {
     const getResourceLabel = useGetResourceLabel();
@@ -38,7 +37,6 @@ const ItemList = () => {
                 )}
             </FilterContext.Provider>
             <Box display="flex">
-                {/*<Aside />*/}
                 <Box width={isSmall ? 'auto' : 'calc(100% - 16em)'}>
                     <ImageList />
                     <Pagination rowsPerPageOptions={[12, 24, 48, 72]} />

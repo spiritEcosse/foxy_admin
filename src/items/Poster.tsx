@@ -10,7 +10,7 @@ const Poster = () => {
         <Card sx={{ display: 'inline-block' }}>
             <CardMedia
                 component="img"
-                image={record.image}
+                image={`${record.media[0].src}`}
                 alt=""
                 sx={{ maxWidth: '42em', maxHeight: '15em' }}
             />

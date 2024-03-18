@@ -3,6 +3,7 @@ import englishMessages from 'ra-language-english';
 
 const customEnglishMessages: TranslationMessages = {
     ...englishMessages,
+    item_updated: 'Item updated',
     pos: {
         search: 'Search',
         configuration: 'Configuration',
@@ -135,7 +136,7 @@ const customEnglishMessages: TranslationMessages = {
             },
         },
         items: {
-            name: 'Poster |||| Posters',
+            name: 'Items',
             fields: {
                 category_id: 'Category',
                 height_gte: 'Min height',

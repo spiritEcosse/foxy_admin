@@ -50,7 +50,7 @@ const Menu = ({ dense = false }: MenuProps) => {
                 dense={dense}
             >
                 <MenuItemLink
-                    to="/items"
+                    to="api/v1/item/admin"
                     state={{_scrollToTop: true}}
                     primaryText={translate(`resources.items.name`, {
                         smart_count: 2,

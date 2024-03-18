@@ -6,16 +6,24 @@ export interface Category extends RaRecord {
     name: string;
 }
 
-export interface Item extends RaRecord {
+export interface ItemType extends RaRecord {
     title: string;
     meta_description: string;
     description: string;
+    media: MediaType[];
+    created_at: string;
+    enabled: boolean;
+    slug: string;
+    updated_at: string;
 }
 
-export interface Media extends RaRecord {
-    item: Item;
+export interface MediaType extends RaRecord {
+    item_id: number;
     thumb: string;
+    src: string;
     sort: number;
+    created_at: string;
+    updated_at: string;
 }
 
 export interface Customer extends RaRecord {
