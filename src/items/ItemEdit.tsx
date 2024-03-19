@@ -6,7 +6,7 @@ import {
     useRecordContext,
     Toolbar,
     SaveButton,
-    DeleteButton,
+    DeleteButton, useRedirect,
 } from 'react-admin';
 import { ItemEditDetails } from './ItemEditDetails';
 import { ItemType, MediaType } from '../types';
@@ -40,6 +40,7 @@ const ItemEdit = () => {
     const [updateItem] = useUpdate();
     const notify = useNotify();
     const dataProvider = useDataProvider();
+    const redirect = useRedirect();
 
     const onSubmit = async (data: any) => {
         await HandleSubmit(
@@ -51,6 +52,7 @@ const ItemEdit = () => {
             updateItem,
             notify,
             dataProvider,
+            redirect
             );
     };
 

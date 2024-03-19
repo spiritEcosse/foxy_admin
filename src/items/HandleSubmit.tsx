@@ -97,6 +97,7 @@ export const HandleSubmit = async (
                 media.item_id = id;
                 return media;
             });
+
             let newMediaCreate = await Promise.all(uploadPromises);
             await dataProvider.multiCreate('api/v1/media/admin/items', { items: newMediaCreate });
         }

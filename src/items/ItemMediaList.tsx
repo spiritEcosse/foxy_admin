@@ -34,7 +34,7 @@ const ItemMediaList: React.FC<MediaListProps> = ({setRecord, setRecordsToDelete,
     const [recordPresent, setRecordPresent] = useState<ItemType>(initialRecord);
     const mediaObject = recordPresent?.media ? recordPresent.media.find((media: MediaType) => media.src === activeMediaSrc) : null;
     function handleDragStart(event: any) {
-        setActiveMediaSrc(event.active.src);
+        setActiveMediaSrc(event.active.id);
     }
 
     useEffect(() => {
