@@ -90,6 +90,7 @@ export const HandleSubmit = async (
         }
         if (newMediaUpload.length !== 0) {
             let uploadPromises = newMediaUpload.map(async (mediaUpload) => {
+                data.id = id;
                 await uploadFile(data, mediaUpload, mediaUpload.file);
                 let media: MediaType = {...mediaUpload};
                 media.src = "items" + media.src.split('items')[1].split('?')[0];
