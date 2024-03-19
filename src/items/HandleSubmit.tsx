@@ -78,7 +78,8 @@ export const HandleSubmit = async (
         let {id} = data;
         let create = false;
         if (data.id !== undefined) {
-            await updateItem('api/v1/item/admin', { id: data.id, data: data});
+            delete data.media;
+            await dataProvider.updateItem('api/v1/item/admin', { id: data.id, data: data});
         } else {
             const response = await dataProvider.create('api/v1/item/admin', { data: data });
             id = response.data.id;

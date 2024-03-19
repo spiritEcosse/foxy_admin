@@ -54,6 +54,16 @@ export const dataProvider = {
         const { json } = await httpClient(url, options);
         return { data: json };
     },
+    updateItem: async (resource: string, params: { id: string | number, data: any }) => {
+        const url = `${getUrl(resource)}/${params.id}`;
+        const options = {
+            method: 'PUT',
+            body: JSON.stringify(params.data),
+            headers: new Headers({ 'Content-Type': 'application/json' }),
+        };
+        const { json } = await httpClient(url, options);
+        return { data: json };
+    },
     multiCreate: async (resource: string, params: { ids: Array<string | number>, data: any }) => {
         const url = `${getUrl(resource)}`;
         const options = {

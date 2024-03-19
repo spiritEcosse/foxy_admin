@@ -2,6 +2,7 @@ import * as React from 'react';
 import {
     required,
     TextInput,
+    DateTimeInput,
 } from 'react-admin';
 import { Grid } from '@mui/material';
 import { useFormContext } from 'react-hook-form';
@@ -29,6 +30,8 @@ export const ItemEditDetails = () => {
                 <TextInput source="title" validate={required()} fullWidth onChange={handleTitleChange} />
                 <TextInput source="slug" validate={required()} fullWidth />
                 <TextInput source="meta_description" validate={required()} fullWidth multiline />
+                <DateTimeInput source="created_at" />
+                <DateTimeInput source="updated_at" />
             </Grid>
         </Grid>
     );
