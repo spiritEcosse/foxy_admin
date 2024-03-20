@@ -4,7 +4,7 @@ import {
     Datagrid,
     TextField,
     DateField,
-    NumberField,
+    NumberField, BooleanField,
 } from 'react-admin';
 
 const PageList = () => (
@@ -32,6 +32,7 @@ const PageList = () => (
             <NumberField source="id" />
             <TextField source="title" />
             <TextField source="slug" />
+            <BooleanField source="enabled" />
             <TextField source="canonical_url" />
             <DateField source="created_at" />
             <DateField source="updated_at" />

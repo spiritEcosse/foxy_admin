@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { TextInput, DateInput, required } from 'react-admin';
+import {TextInput, DateInput, required, BooleanInput} from 'react-admin';
 import { slugify } from '../utils';
 import {useFormContext} from "react-hook-form";
 import { Grid } from '@mui/material';
@@ -26,6 +26,7 @@ export const PageEditDetails = () => {
                 <TextInput source="slug" validate={required()} fullWidth />
                 <TextInput source="meta_description" validate={required()} fullWidth multiline />
                 <TextInput source="canonical_url" fullWidth validate={required()} />
+                <BooleanInput source="enabled" />
                 <RichTextInput source="description" validate={required()} label="" />
                 <DateInput source="created_at" />
                 <DateInput source="updated_at" />
