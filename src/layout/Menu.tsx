@@ -11,15 +11,15 @@ import {
 } from 'react-admin';
 
 import items from '../items';
+import pages from '../pages';
 import SubMenu from './SubMenu';
 
-type MenuName = 'menuCatalog';
+type MenuName = 'menuCatalog' | 'menuPages';
 
 const Menu = ({ dense = false }: MenuProps) => {
     const [state, setState] = useState({
         menuCatalog: true,
-        menuSales: true,
-        menuCustomers: true,
+        menuPages: true,
     });
     const translate = useTranslate();
     const [open] = useSidebarState();
@@ -42,6 +42,22 @@ const Menu = ({ dense = false }: MenuProps) => {
             }}
         >
             <DashboardMenuItem />
+            <SubMenu dense={dense}
+                     handleToggle={() => handleToggle('menuPages')}
+                     icon={<pages.icon />}
+                     isOpen={state.menuPages}
+                     name="pos.menu.pages"
+            >
+                <MenuItemLink
+                    to="api/v1/page/admin"
+                    state={{ _scrollToTop: true }}
+                    primaryText={translate(`resources.pages.name`, {
+                        smart_count: 2,
+                    })}
+                    leftIcon={<pages.icon />}
+                    dense={dense}
+                />
+            </SubMenu>
             <SubMenu
                 handleToggle={() => handleToggle('menuCatalog')}
                 isOpen={state.menuCatalog}

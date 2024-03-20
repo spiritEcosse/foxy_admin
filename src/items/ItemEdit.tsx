@@ -60,8 +60,7 @@ const ItemEdit = () => {
         <Edit title={<ProductTitle/>}>
             <TabbedForm onSubmit={onSubmit} toolbar={<CustomToolbar />}>
                 <TabbedForm.Tab
-                    label="image"
-                    sx={{maxWidth: '40em'}}
+                    label="resources.items.tabs.images"
                 >
                     <ItemMediaList
                         setRecord={setRecord}
@@ -69,16 +68,14 @@ const ItemEdit = () => {
                     />
                 </TabbedForm.Tab>
                 <TabbedForm.Tab
-                    label="details"
+                    label="resources.items.tabs.details"
                     path="details"
-                    sx={{maxWidth: '40em'}}
                 >
                     <ItemEditDetails/>
                 </TabbedForm.Tab>
                 <TabbedForm.Tab
-                    label="description"
+                    label="resources.items.tabs.description"
                     path="description"
-                    sx={{maxWidth: '40em'}}
                 >
                     <RichTextInput source="description" label="" validate={req}/>
                 </TabbedForm.Tab>

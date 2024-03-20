@@ -6,6 +6,16 @@ export interface Category extends RaRecord {
     name: string;
 }
 
+export interface PageType extends RaRecord {
+    title: string;
+    slug: string;
+    description: string;
+    meta_description: string;
+    canonical_url: string;
+    created_at: string;
+    updated_at: string;
+}
+
 export interface ItemType extends RaRecord {
     title: string;
     meta_description: string;
