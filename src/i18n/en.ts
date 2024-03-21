@@ -39,6 +39,7 @@ const customEnglishMessages: TranslationMessages = {
             catalog: 'Catalog',
             customers: 'Customers',
             pages: 'Pages',
+            users: 'Users',
         },
         events: {
             review: {
@@ -132,6 +133,15 @@ const customEnglishMessages: TranslationMessages = {
                 meta_description: "Meta Description",
                 description: "Description",
                 canonical_url: "Canonical URL",
+                created_at: "Created At",
+                updated_at: "Updated At",
+            },
+        },
+        users: {
+            name: 'User |||| Users',
+            fields: {
+                email: "Email",
+                password: "Password",
                 created_at: "Created At",
                 updated_at: "Updated At",
             },

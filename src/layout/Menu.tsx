@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { useState } from 'react';
 import Box from '@mui/material/Box';
 
@@ -12,14 +11,16 @@ import {
 
 import items from '../items';
 import pages from '../pages';
+import users from '../users';
 import SubMenu from './SubMenu';
 
-type MenuName = 'menuCatalog' | 'menuPages';
+type MenuName = 'menuCatalog' | 'menuPages' | 'menuUsers';
 
 const Menu = ({ dense = false }: MenuProps) => {
     const [state, setState] = useState({
         menuCatalog: true,
         menuPages: true,
+        menuUsers: true,
     });
     const translate = useTranslate();
     const [open] = useSidebarState();
@@ -56,6 +57,24 @@ const Menu = ({ dense = false }: MenuProps) => {
                     })}
                     leftIcon={<pages.icon />}
                     dense={dense}
+                    placeholder={undefined}
+                />
+            </SubMenu>
+            <SubMenu dense={dense}
+                     handleToggle={() => handleToggle('menuUsers')}
+                     icon={<users.icon />}
+                     isOpen={state.menuUsers}
+                     name="pos.menu.users"
+            >
+                <MenuItemLink
+                    to="api/v1/user/admin"
+                    state={{ _scrollToTop: true }}
+                    primaryText={translate(`resources.users.name`, {
+                        smart_count: 2,
+                    })}
+                    leftIcon={<users.icon />}
+                    dense={dense}
+                    placeholder={undefined}
                 />
             </SubMenu>
             <SubMenu

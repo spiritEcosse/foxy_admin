@@ -2,6 +2,7 @@ import {dataProvider} from "./dataProvider";
 import {authProvider} from "./authProvider";
 import items from './items';
 import pages from './pages';
+import users from './users';
 import {Admin, Resource, useStore, localStorageStore} from 'react-admin';
 import { themes, ThemeName } from './themes/themes';
 import { Layout, Login } from './layout';
@@ -48,6 +49,7 @@ export const App = () => {
         >
             <Resource name="api/v1/item/admin" {...items} />
             <Resource name="api/v1/page/admin" {...pages} />
+            <Resource name="api/v1/user/admin" {...users} />
         </Admin>
     );
 };

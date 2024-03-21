@@ -1,4 +1,4 @@
-import PageIcon from '@mui/icons-material/LibraryBooks';
+import PageIcon from '@mui/icons-material/ContactPage';
 
 import PageList from './PageList';
 import PageEdit from './PageEdit';
