@@ -8,7 +8,6 @@ import { themes, ThemeName } from './themes/themes';
 import { Layout, Login } from './layout';
 import polyglotI18nProvider from 'ra-i18n-polyglot';
 import englishMessages from './i18n/en';
-import { Dashboard } from './dashboard';
 
 
 const i18nProvider = polyglotI18nProvider(
@@ -37,7 +36,6 @@ export const App = () => {
     return (
         <Admin loginPage={Login}
                store={store}
-               dashboard={Dashboard}
                dataProvider={dataProvider}
                authProvider={authProvider}
                disableTelemetry
