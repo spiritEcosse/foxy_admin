@@ -9,7 +9,6 @@ import { Layout, Login } from './layout';
 import polyglotI18nProvider from 'ra-i18n-polyglot';
 import englishMessages from './i18n/en';
 
-
 const i18nProvider = polyglotI18nProvider(
     locale => {
         if (locale === 'fr') {
