@@ -21,7 +21,7 @@ const uploadFile = async (record: ItemType, media: MediaType, file: File) => {
     try {
         const command = new PutObjectCommand(uploadParams);
         await s3Client.send(command);
-        media.src = `https://${import.meta.env.VITE_APP_BUCKET_NAME}.twic.pics/${src}?twic=v1`;
+        media.src = `https://${import.meta.env.VITE_APP_TWIC_PICS_NAME}.twic.pics/${src}?twic=v1`;
 
         console.log(`File uploaded successfully.`);
     } catch (err) {
