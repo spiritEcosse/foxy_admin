@@ -29,7 +29,6 @@ export interface ItemType extends RaRecord {
 
 export interface MediaType extends RaRecord {
     item_id: number;
-    thumb: string;
     src: string;
     sort: number;
     created_at: string;
