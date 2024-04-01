@@ -51,7 +51,6 @@ const ItemMediaList: React.FC<MediaListProps> = ({setRecord, setRecordsToDelete,
                     src: URL.createObjectURL(file), // temporary URL for the uploaded file
                     sort: recordPresent?.media?.length ? recordPresent.media.length + 1 : i + 1, // add other necessary properties here
                     item_id: recordPresent ? Number(recordPresent.id) : 0,
-                    thumb: "",
                     created_at: "",
                     updated_at: "",
                 };
