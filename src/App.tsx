@@ -9,11 +9,42 @@ import { Layout, Login } from './layout';
 import polyglotI18nProvider from 'ra-i18n-polyglot';
 import englishMessages from './i18n/en';
 import * as Sentry from "@sentry/react";
+import { useLocation } from 'react-router-dom';
+import { useNavigationType } from 'react-router-dom';
+import { createRoutesFromChildren } from 'react-router-dom';
+import { matchRoutes } from 'react-router-dom';
+import React from 'react';
 
-Sentry.init({
-    dsn: import.meta.env.VITE_APP_SENTRY,
-    integrations: [],
-});
+
+if (import.meta.env.VITE_APP_SENTRY) {
+    Sentry.init({
+        dsn: import.meta.env.VITE_APP_SENTRY,
+        integrations: [
+            // See docs for support of different versions of variation of react router
+            // https://docs.sentry.io/platforms/javascript/guides/react/configuration/integrations/react-router/
+            Sentry.reactRouterV6BrowserTracingIntegration({
+                useEffect: React.useEffect,
+                useLocation,
+                useNavigationType,
+                createRoutesFromChildren,
+                matchRoutes
+            }),
+            Sentry.replayIntegration()
+        ],
+
+        // Set tracesSampleRate to 1.0 to capture 100%
+        // of transactions for performance monitoring.
+        tracesSampleRate: 1.0,
+
+        // Set `tracePropagationTargets` to control for which URLs distributed tracing should be enabled
+        tracePropagationTargets: ["localhost", /^https:\/\/api\.dev\.faithfishart\.comi/],
+
+        // Capture Replay for 100% of all sessions,
+        // plus for 100% of sessions with an error
+        replaysSessionSampleRate: 1.0,
+        replaysOnErrorSampleRate: 1.0,
+    });
+}
 
 const i18nProvider = polyglotI18nProvider(
     locale => {
