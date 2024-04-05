@@ -17,6 +17,7 @@
     "@dnd-kit/utilities": "^3.2.2",
     "@mui/icons-material": "^5.15.3",
     "@mui/material": "^5.15.3",
+    "@sentry/react": "^7.109.0",
     "ra-data-fakerest": "^4.16.0",
     "ra-data-json-server": "^4.16.5",
     "ra-data-simple-rest": "^4.16.8",

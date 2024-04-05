@@ -8,6 +8,12 @@ import { themes, ThemeName } from './themes/themes';
 import { Layout, Login } from './layout';
 import polyglotI18nProvider from 'ra-i18n-polyglot';
 import englishMessages from './i18n/en';
+import * as Sentry from "@sentry/react";
+
+Sentry.init({
+    dsn: import.meta.env.VITE_APP_SENTRY,
+    integrations: [],
+});
 
 const i18nProvider = polyglotI18nProvider(
     locale => {
