@@ -16,7 +16,8 @@ import { matchRoutes } from 'react-router-dom';
 import React from 'react';
 
 
-if (import.meta.env.VITE_APP_SENTRY !== "") {
+console.log(import.meta.env.VITE_APP_SENTRY);
+if (import.meta.env.VITE_APP_SENTRY) {
     Sentry.init({
         dsn: import.meta.env.VITE_APP_SENTRY,
         integrations: [
