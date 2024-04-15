@@ -42,9 +42,46 @@ export const dataProvider = {
         const url = `${getUrl(resource)}?${fetchUtils.queryParameters(query)}`;
 
         const { json } = await httpClient(url);
-        return {
-            data: json.items,
-            total: json.count,
-        };
+        return json;
     },
+    multiUpdate: async (resource: string, params: { ids: Array<string | number>, data: any }) => {
+        const url = `${getUrl(resource)}`;
+        const options = {
+            method: 'PUT',
+            body: JSON.stringify(params),
+            headers: new Headers({ 'Content-Type': 'application/json' }),
+        };
+        const { json } = await httpClient(url, options);
+        return { data: json };
+    },
+    updateItem: async (resource: string, params: { id: string | number, data: any }) => {
+        const url = `${getUrl(resource)}/${params.id}`;
+        const options = {
+            method: 'PUT',
+            body: JSON.stringify(params.data),
+            headers: new Headers({ 'Content-Type': 'application/json' }),
+        };
+        const { json } = await httpClient(url, options);
+        return { data: json };
+    },
+    multiCreate: async (resource: string, params: { ids: Array<string | number>, data: any }) => {
+        const url = `${getUrl(resource)}`;
+        const options = {
+            method: 'POST',
+            body: JSON.stringify(params),
+            headers: new Headers({ 'Content-Type': 'application/json' }),
+        };
+        const { json } = await httpClient(url, options);
+        return { data: json };
+    },
+    multiDelete: async (resource: string, params: { items: Array<string | number> }) => {
+        const url = `${getUrl(resource)}`;
+        const options = {
+            method: 'DELETE',
+            body: JSON.stringify(params),
+            headers: new Headers({ 'Content-Type': 'application/json' }),
+        };
+        const { json } = await httpClient(url, options);
+        return { data: json };
+    }
 };

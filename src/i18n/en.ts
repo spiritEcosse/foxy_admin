@@ -3,6 +3,7 @@ import englishMessages from 'ra-language-english';
 
 const customEnglishMessages: TranslationMessages = {
     ...englishMessages,
+    item_updated: 'Item updated',
     pos: {
         search: 'Search',
         configuration: 'Configuration',
@@ -37,6 +38,8 @@ const customEnglishMessages: TranslationMessages = {
             sales: 'Sales',
             catalog: 'Catalog',
             customers: 'Customers',
+            pages: 'Pages',
+            users: 'Users',
         },
         events: {
             review: {
@@ -122,41 +125,43 @@ const customEnglishMessages: TranslationMessages = {
                 total: 'Totals',
             },
         },
-        invoices: {
-            name: 'Invoice |||| Invoices',
+        pages: {
+            name: 'Page |||| Pages',
             fields: {
-                date: 'Invoice date',
-                customer_id: 'Customer',
-                command_id: 'Order',
-                date_gte: 'Passed Since',
-                date_lte: 'Passed Before',
-                total_gte: 'Min amount',
-                address: 'Address',
+                title: "Title",
+                slug: "Slug",
+                meta_description: "Meta Description",
+                description: "Description",
+                canonical_url: "Canonical URL",
+                created_at: "Created At",
+                updated_at: "Updated At",
+            },
+        },
+        users: {
+            name: 'User |||| Users',
+            fields: {
+                email: "Email",
+                password: "Password",
+                created_at: "Created At",
+                updated_at: "Updated At",
             },
         },
         items: {
-            name: 'Poster |||| Posters',
+            name: 'Items |||| Items',
             fields: {
-                category_id: 'Category',
-                height_gte: 'Min height',
-                height_lte: 'Max height',
-                height: 'Height',
-                image: 'Image',
-                price: 'Price',
-                reference: 'Reference',
-                sales: 'Sales',
-                stock_lte: 'Low Stock',
-                stock: 'Stock',
-                thumbnail: 'Thumbnail',
-                width_gte: 'Min width',
-                width_lte: 'Max width',
-                width: 'Width',
+                title: 'Title',
+                description: 'Description',
+                meta_description: 'Meta Description',
+                media: 'Media',
+                created_at: 'Created At',
+                enabled: 'Enabled',
+                slug: 'Slug',
+                updated_at: 'Updated At',
             },
             tabs: {
-                image: 'Image',
+                images: 'Images',
                 details: 'Details',
                 description: 'Description',
-                reviews: 'Reviews',
             },
             filters: {
                 categories: 'Categories',

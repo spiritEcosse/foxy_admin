@@ -10,6 +10,7 @@ module.exports = {
     "plugins": ["@typescript-eslint"],
     "env": {
         "browser": true,
+        "node": true,
         "es2021": true
     },
     "settings": {

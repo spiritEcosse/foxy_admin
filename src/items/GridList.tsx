@@ -54,12 +54,12 @@ const LoadedGridList = () => {
                     component={Link}
                     key={record.id}
                     to={createPath({
-                        resource: 'api/v1/item',
+                        resource: 'api/v1/item/admin',
                         id: record.id,
                         type: 'edit',
                     })}
                 >
-                    <img src={`https://${import.meta.env.VITE_APP_CLOUD_NAME}.twic.pics/${record.src}?twic=v1`} alt="" />
+                    <img src={record.src} alt="" />
                     <ImageListItemBar
                         title={record.reference}
                         subtitle={
