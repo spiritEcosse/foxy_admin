@@ -62,7 +62,6 @@ const ItemEdit = () => {
                 <TabbedForm.Tab
                     label="resources.items.tabs.images"
                 >
-                    <button onClick={() => methodDoesNotExist()}>Break the world</button>;
                     <ItemMediaList
                         setRecord={setRecord}
                         setRecordsToDelete={setRecordsToDelete}
