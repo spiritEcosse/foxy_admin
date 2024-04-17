@@ -41,15 +41,17 @@ const ItemMediaList: React.FC<MediaListProps> = ({setRecord, setRecordsToDelete,
         setRecordPresent(initialRecord);
     }, [initialRecord]); // This effect runs whenever `recordPresent` changes
 
-    const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (event.target && event.target.files) {
-            for (let i = 0; i < event.target.files.length; i++) {
-                const file = event.target.files[i];
+    const handleFileUpload = async (event: any) => {
+        console.log(event);
+        if (Array.isArray(event)) {
+            let index: number = 0;
+            for (let key in event) {
+                const file = event[key];
                 const newMedia: MediaType = {
                     id: 0,
                     file: file,
                     src: URL.createObjectURL(file), // temporary URL for the uploaded file
-                    sort: recordPresent?.media?.length ? recordPresent.media.length + 1 : i + 1, // add other necessary properties here
+                    sort: recordPresent?.media?.length ? recordPresent.media.length + 1 : index + 1, // add other necessary properties here
                     item_id: recordPresent ? Number(recordPresent.id) : 0,
                     created_at: "",
                     updated_at: "",
@@ -62,6 +64,7 @@ const ItemMediaList: React.FC<MediaListProps> = ({setRecord, setRecordsToDelete,
                     ...prevRecord,
                     media: [...(prevRecord?.media || []), newMedia],
                 }));
+                index++;
             }
         }
     };
