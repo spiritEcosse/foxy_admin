@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Box, Card, CardActions, Button, Typography } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import CodeIcon from '@mui/icons-material/Code';

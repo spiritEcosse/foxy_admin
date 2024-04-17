@@ -5,7 +5,7 @@ import pages from './pages';
 import users from './users';
 import {Admin, Resource, useStore, localStorageStore} from 'react-admin';
 import { themes, ThemeName } from './themes/themes';
-import { Layout, Login } from './layout';
+import { Layout } from './layout';
 import polyglotI18nProvider from 'ra-i18n-polyglot';
 import englishMessages from './i18n/en';
 import * as Sentry from "@sentry/react";
@@ -70,7 +70,7 @@ export const App = () => {
     const darkTheme = themes.find(theme => theme.name === themeName)?.dark;
 
     return (
-        <Admin loginPage={Login}
+        <Admin
                store={store}
                dataProvider={dataProvider}
                authProvider={authProvider}

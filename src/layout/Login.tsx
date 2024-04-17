@@ -1,24 +1,10 @@
-import * as React from 'react';
-import { useState } from 'react';
+import {useState} from 'react';
 import PropTypes from 'prop-types';
-import { useLocation } from 'react-router-dom';
+import {useLocation} from 'react-router-dom';
 
-import {
-    Avatar,
-    Button,
-    Card,
-    CardActions,
-    CircularProgress,
-} from '@mui/material';
+import {Avatar, Button, Card, CardActions, CircularProgress,} from '@mui/material';
 import LockIcon from '@mui/icons-material/Lock';
-import {
-    Form,
-    required,
-    TextInput,
-    useTranslate,
-    useLogin,
-    useNotify,
-} from 'react-admin';
+import {Form, required, TextInput, useLogin, useNotify, useTranslate,} from 'react-admin';
 
 import Box from '@mui/material/Box';
 
@@ -41,8 +27,8 @@ const Login = () => {
                 typeof error === 'string'
                     ? error
                     : typeof error === 'undefined' || !error.message
-                    ? 'ra.auth.sign_in_error'
-                    : error.message,
+                        ? 'ra.auth.sign_in_error'
+                        : error.message,
                 {
                     type: 'error',
                     messageArgs: {
@@ -50,8 +36,8 @@ const Login = () => {
                             typeof error === 'string'
                                 ? error
                                 : error && error.message
-                                ? error.message
-                                : undefined,
+                                    ? error.message
+                                    : undefined,
                     },
                 }
             );
@@ -73,7 +59,7 @@ const Login = () => {
                     backgroundSize: 'cover',
                 }}
             >
-                <Card sx={{ minWidth: 300, marginTop: '6em' }}>
+                <Card sx={{minWidth: 300, marginTop: '6em'}}>
                     <Box
                         sx={{
                             margin: '1em',
@@ -81,8 +67,8 @@ const Login = () => {
                             justifyContent: 'center',
                         }}
                     >
-                        <Avatar sx={{ bgcolor: 'secondary.main' }}>
-                            <LockIcon />
+                        <Avatar sx={{bgcolor: 'secondary.main'}}>
+                            <LockIcon/>
                         </Avatar>
                     </Box>
                     <Box
@@ -94,8 +80,8 @@ const Login = () => {
                         }}
                     >
                     </Box>
-                    <Box sx={{ padding: '0 1em 1em 1em' }}>
-                        <Box sx={{ marginTop: '1em' }}>
+                    <Box sx={{padding: '0 1em 1em 1em'}}>
+                        <Box sx={{marginTop: '1em'}}>
                             <TextInput
                                 autoFocus
                                 source="username"
@@ -105,7 +91,7 @@ const Login = () => {
                                 fullWidth
                             />
                         </Box>
-                        <Box sx={{ marginTop: '1em' }}>
+                        <Box sx={{marginTop: '1em'}}>
                             <TextInput
                                 source="password"
                                 label={translate('ra.auth.password')}
@@ -116,7 +102,7 @@ const Login = () => {
                             />
                         </Box>
                     </Box>
-                    <CardActions sx={{ padding: '0 1em 1em 1em' }}>
+                    <CardActions sx={{padding: '0 1em 1em 1em'}}>
                         <Button
                             variant="contained"
                             type="submit"
@@ -125,7 +111,7 @@ const Login = () => {
                             fullWidth
                         >
                             {loading && (
-                                <CircularProgress size={25} thickness={2} />
+                                <CircularProgress size={25} thickness={2}/>
                             )}
                             {translate('ra.auth.sign_in')}
                         </Button>

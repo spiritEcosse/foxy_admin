@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { FC, createElement } from 'react';
 import { Card, Box, Typography, Divider } from '@mui/material';
 import { Link, To } from 'react-router-dom';

@@ -1,6 +1,6 @@
 import React, {forwardRef} from 'react';
 import { Card, CardMedia, CardActions } from '@mui/material';
-import { Button, useInput} from 'react-admin';
+import { Button } from 'react-admin';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { MediaType } from '../types';
 import { ItemType } from '../types';

@@ -89,8 +89,3 @@ export interface Review extends RaRecord {
     comment: string;
 }
 
-declare global {
-    interface Window {
-        restServer: any;
-    }
-}
