@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import { useRecordContext } from 'react-admin';
 import { Item } from '../types';

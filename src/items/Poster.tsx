@@ -1,10 +1,9 @@
-import * as React from 'react';
 import { Card, CardMedia } from '@mui/material';
 import { useRecordContext } from 'react-admin';
-import { Item } from '../types';
+import { ItemType } from '../types';
 
 const Poster = () => {
-    const record = useRecordContext<Item>();
+    const record = useRecordContext<ItemType>();
     if (!record) return null;
     return (
         <Card sx={{ display: 'inline-block' }}>

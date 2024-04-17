@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { ReferenceField, ReferenceFieldProps, TextField } from 'react-admin';
 
 interface Props {
