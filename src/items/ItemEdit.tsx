@@ -23,7 +23,7 @@ const RichTextInput = React.lazy(() =>
 
 const ProductTitle = () => {
     const record = useRecordContext<ItemType>();
-    return record ? <span>Poster "{record.title}"</span> : null;
+    return record ? <span>Poster {record.title}</span> : null;
 };
 
 const CustomToolbar = props => (

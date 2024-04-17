@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Card, CardHeader, List } from '@mui/material';
 import { useTranslate } from 'react-admin';
 

@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Card, CardHeader, CardContent } from '@mui/material';
 import {
     ResponsiveContainer,
