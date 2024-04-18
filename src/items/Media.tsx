@@ -22,7 +22,8 @@ const Media = forwardRef<HTMLDivElement, MediaProps>(({setRecord, setRecordPrese
     const inlineStyles = {
         opacity: faded ? '0.2' : '1',
         transformOrigin: '0 0',
-        height: index === 0 ? 410 : 200,
+        height: 200,
+        width: 200,
         gridRowStart: index === 0 ? 'span 2' : null,
         gridColumnStart: index === 0 ? 'span 2' : null,
         backgroundImage: `url("${media.src}")`,
