@@ -42,29 +42,31 @@ const ItemMediaList: React.FC<MediaListProps> = ({setRecord, setRecordsToDelete,
     }, [initialRecord]); // This effect runs whenever `recordPresent` changes
 
     const handleFileUpload = async (event: any) => {
-        console.log(event);
         if (Array.isArray(event)) {
+            console.log(event);
             let index: number = 0;
             for (let key in event) {
                 const file = event[key];
-                const newMedia: MediaType = {
-                    id: 0,
-                    file: file,
-                    src: URL.createObjectURL(file), // temporary URL for the uploaded file
-                    sort: recordPresent?.media?.length ? recordPresent.media.length + 1 : index + 1, // add other necessary properties here
-                    item_id: recordPresent ? Number(recordPresent.id) : 0,
-                    created_at: "",
-                    updated_at: "",
-                };
-                setRecordPresent(prevRecord => ({
-                    ...prevRecord,
-                    media: [...prevRecord?.media || [], newMedia],
-                }));
-                setRecord(prevRecord => ({
-                    ...prevRecord,
-                    media: [...(prevRecord?.media || []), newMedia],
-                }));
-                index++;
+                if (file instanceof File) {
+                    const newMedia: MediaType = {
+                        id: 0,
+                        file: file,
+                        src: URL.createObjectURL(file), // temporary URL for the uploaded file
+                        sort: recordPresent?.media?.length ? recordPresent.media.length + 1 : index + 1, // add other necessary properties here
+                        item_id: recordPresent ? Number(recordPresent.id) : 0,
+                        created_at: "",
+                        updated_at: "",
+                    };
+                    setRecordPresent(prevRecord => ({
+                        ...prevRecord,
+                        media: [...prevRecord?.media || [], newMedia],
+                    }));
+                    setRecord(prevRecord => ({
+                        ...prevRecord,
+                        media: [...(prevRecord?.media || []), newMedia],
+                    }));
+                    index++;
+                }
             }
         }
     };
@@ -111,7 +113,7 @@ const ItemMediaList: React.FC<MediaListProps> = ({setRecord, setRecordsToDelete,
             onDragCancel={handleDragCancel}
         >
             <SortableContext items={recordPresent?.media ? recordPresent.media.map((media: MediaType) => media.src) : []} strategy={rectSortingStrategy}>
-                <Grid columns={4}>
+                <Grid columns={5}>
                     {recordPresent?.media ? recordPresent.media.map((media: MediaType, index: number) => (
                         <SortablePhoto
                             setRecordPresent={setRecordPresent}
