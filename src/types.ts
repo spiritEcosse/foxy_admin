@@ -25,6 +25,7 @@ export interface ItemType extends RaRecord {
     enabled: boolean;
     slug: string;
     updated_at: string;
+    price: number;
 }
 
 export interface MediaType extends RaRecord {
