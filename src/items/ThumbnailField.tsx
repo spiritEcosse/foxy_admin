@@ -1,6 +1,6 @@
 import { styled } from '@mui/material/styles';
 import { useRecordContext } from 'react-admin';
-import { Item } from '../types';
+import { ItemType } from '../types';
 
 const Img = styled('img')({
     width: 25,
@@ -10,7 +10,7 @@ const Img = styled('img')({
 });
 
 const ThumbnailField = (_: { source: string; label?: string }) => {
-    const record = useRecordContext<Item>();
+    const record = useRecordContext<ItemType>();
     if (!record) return null;
     return <Img src={record.thumbnail} alt="" />;
 };

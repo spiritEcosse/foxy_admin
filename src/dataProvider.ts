@@ -44,6 +44,17 @@ export const dataProvider = {
         const { json } = await httpClient(url);
         return json;
     },
+    getMany: async (resource: string, params: GetListParams) => {
+        const query = {
+            ...fetchUtils.flattenObject(params.filter),
+        };
+        const url = `${getUrl(resource)}?${fetchUtils.queryParameters(query)}`;
+        const { json } = await httpClient(url);
+        if (json.error) {
+            throw new Error(json.error);
+        }
+        return json;
+    },
     multiUpdate: async (resource: string, params: { ids: Array<string | number>, data: any }) => {
         const url = `${getUrl(resource)}`;
         const options = {

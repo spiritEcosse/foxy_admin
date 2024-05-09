@@ -1,13 +1,12 @@
-import {TextInput, DateTimeInput, required, PasswordInput} from 'react-admin';
+import {TextInput, DateTimeInput, required} from 'react-admin';
 import { Grid } from '@mui/material';
 
-export const UserEditDetails = () => {
+export const CountryEditDetails = () => {
     return (
         <Grid container columnSpacing={2}>
             <Grid item xs={12}>
                 <TextInput disabled source="id" />
-                <TextInput type="email" source="email" fullWidth validate={required()}/>
-                <PasswordInput source="password" fullWidth validate={required()}/>
+                <TextInput source="title" validate={required()} fullWidth />
                 <DateTimeInput source="created_at" />
                 <DateTimeInput source="updated_at" />
             </Grid>

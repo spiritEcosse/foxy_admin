@@ -3,6 +3,9 @@ import {authProvider} from "./authProvider";
 import items from './items';
 import pages from './pages';
 import users from './users';
+import country from './country';
+import shipping_profile from './shipping_profile';
+import shipping_rate from './shipping_rate';
 import {Admin, Resource, useStore, localStorageStore} from 'react-admin';
 import { themes, ThemeName } from './themes/themes';
 import { Layout } from './layout';
@@ -84,6 +87,10 @@ export const App = () => {
             <Resource name="api/v1/item/admin" {...items} />
             <Resource name="api/v1/page/admin" {...pages} />
             <Resource name="api/v1/user/admin" {...users} />
+            <Resource name="api/v1/user/admin" {...users} />
+            <Resource name="api/v1/country/admin" {...country} />
+            <Resource name="api/v1/shippingprofile/admin" {...shipping_profile} />
+            <Resource name="api/v1/shippingrate/admin" {...shipping_rate} />
         </Admin>
     );
 };
