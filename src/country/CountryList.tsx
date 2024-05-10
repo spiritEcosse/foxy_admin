@@ -30,6 +30,7 @@ const CountryList = () => (
         >
             <NumberField source="id" />
             <TextField source="title" />
+            <TextField source="code" />
             <DateField source="created_at" />
             <DateField source="updated_at" />
         </Datagrid>
