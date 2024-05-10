@@ -153,7 +153,7 @@ const customEnglishMessages: TranslationMessages = {
             fields: {
                 id: 'ID',
                 country_id: 'Country',
-                profile_id: 'Profile',
+                shipping_profile_id: 'Shipping Profile',
                 delivery_days_min: 'Delivery Days Min',
                 delivery_days_max: 'Delivery Days Max',
                 created_at: 'Created At',
@@ -187,6 +187,7 @@ const customEnglishMessages: TranslationMessages = {
                 title: 'Title',
                 description: 'Description',
                 meta_description: 'Meta Description',
+                shipping_profile_id: 'Shipping Profile',
                 media: 'Media',
                 created_at: 'Created At',
                 enabled: 'Enabled',

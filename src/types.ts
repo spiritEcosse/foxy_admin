@@ -34,7 +34,7 @@ export interface ShippingProfileType extends RaRecord {
 
 export interface ShippingRateType extends RaRecord {
     country_id: Identifier;
-    profile_id: Identifier;
+    shipping_profile_id: Identifier;
     delivery_days_min: number;
     delivery_days_max: number;
     created_at: string;
@@ -51,6 +51,7 @@ export interface ItemType extends RaRecord {
     slug: string;
     updated_at: string;
     price: number;
+    shipping_profile_id: Identifier;
 }
 
 export interface MediaType extends RaRecord {
