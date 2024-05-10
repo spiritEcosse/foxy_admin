@@ -14,7 +14,7 @@ export const ShippingRateEditDetails = () => {
                 </ReferenceInput>
             </Grid>
             <Grid item xs={12} sm={4}>
-                <ReferenceInput label="Shipping Profile" source="profile_id" reference="api/v1/shippingprofile/admin">
+                <ReferenceInput label="Shipping Profile" source="shipping_profile_id" reference="api/v1/shippingprofile/admin">
                     <SelectInput optionText="title" validate={required()}/>
                 </ReferenceInput>
             </Grid>
