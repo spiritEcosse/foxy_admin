@@ -18,6 +18,7 @@ export interface PageType extends RaRecord {
 
 export interface CountryType extends RaRecord {
     title: string;
+    code: string;
     created_at: string;
     updated_at: string;
 }

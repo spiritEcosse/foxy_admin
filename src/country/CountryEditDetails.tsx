@@ -7,6 +7,7 @@ export const CountryEditDetails = () => {
             <Grid item xs={12}>
                 <TextInput disabled source="id" />
                 <TextInput source="title" validate={required()} fullWidth />
+                <TextInput source="code" validate={required()} fullWidth />
                 <DateTimeInput source="created_at" />
                 <DateTimeInput source="updated_at" />
             </Grid>
