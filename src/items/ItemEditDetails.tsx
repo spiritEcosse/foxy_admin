@@ -4,16 +4,11 @@ import {
     TextInput,
     DateTimeInput,
     BooleanInput,
-    NumberInput,
+    NumberInput, ReferenceInput, SelectInput,
 } from 'react-admin';
 import { Grid, InputAdornment } from '@mui/material';
 import { useFormContext } from 'react-hook-form';
-import { slugify } from '../utils';
-
-
-const validatePositive = (value: any) => {
-    return value <= 0 ? 'Price must be a positive number' : undefined;
-};
+import { slugify, validatePositive } from '../utils';
 
 export const ItemEditDetails = () => {
     const formContext = useFormContext();
@@ -29,7 +24,16 @@ export const ItemEditDetails = () => {
                 <TextInput source="title" validate={required()} fullWidth onChange={handleTitleChange} />
                 <TextInput source="slug" validate={required()} fullWidth />
                 <TextInput source="meta_description" validate={required()} fullWidth multiline />
+            </Grid>
+            <Grid item xs={12} sm={4}>
                 <BooleanInput source="enabled" />
+            </Grid>
+            <Grid item xs={12} sm={4}>
+                <ReferenceInput label="Shipping Profile" source="shipping_profile_id" reference="api/v1/shippingprofile/admin">
+                    <SelectInput optionText="title" validate={required()}/>
+                </ReferenceInput>
+            </Grid>
+            <Grid item xs={12} sm={4}>
                 <NumberInput
                     source="price"
                     InputProps={{
@@ -38,9 +42,12 @@ export const ItemEditDetails = () => {
                         ),
                     }}
                     validate={[required(), validatePositive]}
-                    fullWidth
                 />
+            </Grid>
+            <Grid item xs={12} sm={4}>
                 <DateTimeInput source="created_at" />
+            </Grid>
+            <Grid item xs={12} sm={4}>
                 <DateTimeInput source="updated_at" />
             </Grid>
         </Grid>

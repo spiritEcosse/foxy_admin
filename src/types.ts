@@ -16,6 +16,32 @@ export interface PageType extends RaRecord {
     updated_at: string;
 }
 
+export interface CountryType extends RaRecord {
+    title: string;
+    code: string;
+    created_at: string;
+    updated_at: string;
+}
+
+export interface ShippingProfileType extends RaRecord {
+    title: string;
+    country_id: Identifier;
+    postal_code: string;
+    processing_time: number;
+    shipping_upgrade_cost: number;
+    created_at: string;
+    updated_at: string;
+}
+
+export interface ShippingRateType extends RaRecord {
+    country_id: Identifier;
+    shipping_profile_id: Identifier;
+    delivery_days_min: number;
+    delivery_days_max: number;
+    created_at: string;
+    updated_at: string;
+}
+
 export interface ItemType extends RaRecord {
     title: string;
     meta_description: string;
@@ -26,6 +52,7 @@ export interface ItemType extends RaRecord {
     slug: string;
     updated_at: string;
     price: number;
+    shipping_profile_id: Identifier;
 }
 
 export interface MediaType extends RaRecord {

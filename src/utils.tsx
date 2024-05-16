@@ -6,3 +6,7 @@ export function slugify(text: string) {
         .replace(/^-+/, '')             // Trim - from start of text
         .replace(/-+$/, '');            // Trim - from end of text
 }
+
+export  function validatePositive (value: any)  {
+    return value <= 0 ? 'Price must be a positive number' : undefined;
+}

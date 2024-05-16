@@ -12,15 +12,19 @@ import {
 import items from '../items';
 import pages from '../pages';
 import users from '../users';
+import country from '../country';
+import shipping_profile from '../shipping_profile';
+import shipping_rate from '../shipping_rate';
 import SubMenu from './SubMenu';
 
-type MenuName = 'menuCatalog' | 'menuPages' | 'menuUsers';
+type MenuName = 'menuCatalog' | 'menuPages' | 'menuUsers' | 'menuShipping';
 
 const Menu = ({ dense = false }: MenuProps) => {
     const [state, setState] = useState({
         menuCatalog: true,
         menuPages: true,
         menuUsers: true,
+        menuShipping: true,
     });
     const translate = useTranslate();
     const [open] = useSidebarState();
@@ -56,6 +60,43 @@ const Menu = ({ dense = false }: MenuProps) => {
                         smart_count: 2,
                     })}
                     leftIcon={<pages.icon />}
+                    dense={dense}
+                    placeholder={undefined}
+                />
+            </SubMenu>
+            <SubMenu dense={dense}
+                     handleToggle={() => handleToggle('menuShipping')}
+                     icon={<country.icon />}
+                     isOpen={state.menuShipping}
+                     name="pos.menu.shipping"
+            >
+                <MenuItemLink
+                    to="api/v1/country/admin"
+                    state={{ _scrollToTop: true }}
+                    primaryText={translate(`resources.country.name`, {
+                        smart_count: 2,
+                    })}
+                    leftIcon={<country.icon />}
+                    dense={dense}
+                    placeholder={undefined}
+                />
+                <MenuItemLink
+                    to="api/v1/shippingprofile/admin"
+                    state={{ _scrollToTop: true }}
+                    primaryText={translate(`resources.shipping_profile.name`, {
+                        smart_count: 2,
+                    })}
+                    leftIcon={<shipping_profile.icon />}
+                    dense={dense}
+                    placeholder={undefined}
+                />
+                <MenuItemLink
+                    to="api/v1/shippingrate/admin"
+                    state={{ _scrollToTop: true }}
+                    primaryText={translate(`resources.shipping_rate.name`, {
+                        smart_count: 2,
+                    })}
+                    leftIcon={<shipping_rate.icon />}
                     dense={dense}
                     placeholder={undefined}
                 />

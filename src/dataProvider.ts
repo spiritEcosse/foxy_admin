@@ -44,6 +44,31 @@ export const dataProvider = {
         const { json } = await httpClient(url);
         return json;
     },
+    getMany: async (resource: string, params: GetListParams) => {
+        const query = {
+            ...fetchUtils.flattenObject(params.filter),
+        };
+        const url = `${getUrl(resource)}?${fetchUtils.queryParameters(query)}`;
+        const { json } = await httpClient(url);
+        if (json.error) {
+            throw new Error(json.error);
+        }
+        return json;
+    },
+    getOne: async (resource: string, params: { id: string | number }) => {
+        if (resource === 'api/v1/item/admin') {
+            // Custom handling for /api/v1/item/admin
+            const url = `${getUrl(resource)}/${params.id}`;
+            const { json } = await httpClient(url);
+            if (json.error) {
+                throw new Error(json.error);
+            }
+            return { data: { ...json['_item'], ...json['_media'] } };
+        } else {
+            // Fallback to the default getOne method for other resources
+            return dataProviderBase.getOne(resource, params);
+        }
+    },
     multiUpdate: async (resource: string, params: { ids: Array<string | number>, data: any }) => {
         const url = `${getUrl(resource)}`;
         const options = {

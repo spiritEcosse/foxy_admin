@@ -40,6 +40,7 @@ const customEnglishMessages: TranslationMessages = {
             customers: 'Customers',
             pages: 'Pages',
             users: 'Users',
+            shipping: 'Shipping',
         },
         events: {
             review: {
@@ -125,6 +126,40 @@ const customEnglishMessages: TranslationMessages = {
                 total: 'Totals',
             },
         },
+        country: {
+            name: 'Country |||| Countries',
+            fields: {
+                id: 'ID',
+                title: 'Title',
+                created_at: 'Created At',
+                updated_at: 'Updated At',
+            },
+        },
+        shipping_profile: {
+            name: 'Shipping Profile |||| Shipping Profiles',
+            fields: {
+                id: 'ID',
+                title: 'Title',
+                country_id: 'Country',
+                postal_code: 'Postal Code',
+                processing_time: 'Processing Time',
+                shipping_upgrade_cost: 'Shipping Upgrade Cost',
+                created_at: 'Created At',
+                updated_at: 'Updated At',
+            },
+        },
+        shipping_rate: {
+            name: 'Shipping Rate |||| Shipping Rates',
+            fields: {
+                id: 'ID',
+                country_id: 'Country',
+                shipping_profile_id: 'Shipping Profile',
+                delivery_days_min: 'Delivery Days Min',
+                delivery_days_max: 'Delivery Days Max',
+                created_at: 'Created At',
+                updated_at: 'Updated At',
+            },
+        },
         pages: {
             name: 'Page |||| Pages',
             fields: {
@@ -152,6 +187,7 @@ const customEnglishMessages: TranslationMessages = {
                 title: 'Title',
                 description: 'Description',
                 meta_description: 'Meta Description',
+                shipping_profile_id: 'Shipping Profile',
                 media: 'Media',
                 created_at: 'Created At',
                 enabled: 'Enabled',
