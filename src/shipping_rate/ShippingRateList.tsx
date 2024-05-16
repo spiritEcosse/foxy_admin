@@ -28,6 +28,10 @@ const ShippingRateList = () => (
             }}
         >
             <NumberField source="id" />
+            <NumberField source="delivery_days_min" />
+            <NumberField source="delivery_days_max" />
+            <NumberField source="country_id" />
+            <NumberField source="shipping_profile_id" />
             <DateField source="created_at" />
             <DateField source="updated_at" />
         </Datagrid>

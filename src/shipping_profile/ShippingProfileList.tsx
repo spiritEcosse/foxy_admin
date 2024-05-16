@@ -30,6 +30,8 @@ const ShippingProfileList = () => (
         >
             <NumberField source="id" />
             <TextField source="title" />
+            <NumberField source="processing_time" />
+            <NumberField source="country_id" />
             <DateField source="created_at" />
             <DateField source="updated_at" />
         </Datagrid>
