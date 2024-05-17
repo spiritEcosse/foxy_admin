@@ -63,7 +63,9 @@ export const dataProvider = {
             if (json.error) {
                 throw new Error(json.error);
             }
-            return { data: { ...json['_item'], ...json['_media'] } };
+            let item = json['_item'];
+            item.media = json['_media'];
+            return { data: item };
         } else {
             // Fallback to the default getOne method for other resources
             return dataProviderBase.getOne(resource, params);
