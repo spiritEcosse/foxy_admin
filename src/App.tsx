@@ -4,6 +4,7 @@ import items from './items';
 import pages from './pages';
 import users from './users';
 import country from './country';
+import orders from './orders';
 import shipping_profile from './shipping_profile';
 import shipping_rate from './shipping_rate';
 import {Admin, Resource, useStore, localStorageStore} from 'react-admin';
@@ -84,6 +85,7 @@ export const App = () => {
                darkTheme={darkTheme}
                defaultTheme="light"
         >
+            <Resource name="api/v1/order/admin" {...orders}  options={{ label: 'Orders' }} />
             <Resource name="api/v1/item/admin" {...items} />
             <Resource name="api/v1/page/admin" {...pages} />
             <Resource name="api/v1/user/admin" {...users} />

@@ -94,7 +94,7 @@ const customEnglishMessages: TranslationMessages = {
                     'The password confirmation is not the same as the password.',
             },
         },
-        commands: {
+        sales: {
             name: 'Order |||| Orders',
             amount: '1 order |||| %{smart_count} orders',
             title: 'Order %{reference}',

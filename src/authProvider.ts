@@ -30,13 +30,17 @@ export const authProvider: AuthProvider = {
         return Promise.resolve();
     },
     checkError: (error) => {
-        const status = error.status;
-        if (status === 401 || status === 403) {
-            localStorage.removeItem('auth');
-            return Promise.reject();
+        if (error) {
+            const status = error.status;
+            if (status === 401 || status === 403) {
+                localStorage.removeItem('auth');
+                return Promise.reject();
+            }
+            // other error code (404, 500, etc): no need to log out
+            return Promise.resolve();
+        } else {
+            throw new Error('Error object is undefined');
         }
-        // other error code (404, 500, etc): no need to log out
-        return Promise.resolve();
     },
     checkAuth: () => localStorage.getItem('auth')
         ? Promise.resolve()

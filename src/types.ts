@@ -96,11 +96,15 @@ export interface Order extends RaRecord {
     taxes: number;
     customer_id: Identifier;
     reference: string;
+    created_at: string;
+    updated_at: string;
 }
 
 export type BasketItem = {
-    product_id: Identifier;
+    item_id: Identifier;
     quantity: number;
+    created_at: string;
+    updated_at: string;
 };
 
 export interface Invoice extends RaRecord {
