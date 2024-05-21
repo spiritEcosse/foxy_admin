@@ -87,7 +87,7 @@ export type OrderStatus = 'ordered' | 'delivered' | 'cancelled';
 
 export interface Order extends RaRecord {
     status: OrderStatus;
-    basket: BasketItem[];
+    count_items: number;
     date: Date;
     total: number;
     total_ex_taxes: number;

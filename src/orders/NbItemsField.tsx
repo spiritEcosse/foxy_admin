@@ -1,7 +1,7 @@
 import { FunctionField } from 'react-admin';
 import { Order } from '../types';
 
-const render = (record: Order) => record.basket.length;
+const render = (record: Order) => record.count_items;
 
 const NbItemsField = () => <FunctionField<Order> render={render} />;
 
