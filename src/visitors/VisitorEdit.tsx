@@ -11,9 +11,9 @@ import {
 import { Grid, Box, Typography } from '@mui/material';
 
 import Aside from './Aside';
-import FullNameField from './FullNameField';
-import SegmentsInput from './SegmentsInput';
-import { validateForm } from './VisitorCreate';
+import FullNameField from '../users/FullNameField';
+import SegmentsInput from '../users/SegmentsInput';
+import { validateForm } from '../users/UserCreate';
 
 const VisitorEdit = () => {
     const translate = useTranslate();

@@ -1,15 +1,14 @@
-import * as React from 'react';
 import { Avatar, SxProps } from '@mui/material';
 import { FieldProps, useRecordContext } from 'react-admin';
-import { Customer } from '../types';
+import { User } from '../types';
 
-interface Props extends FieldProps<Customer> {
+interface Props extends FieldProps<User> {
     sx?: SxProps;
     size?: string;
 }
 
 const AvatarField = ({ size = '25', sx }: Props) => {
-    const record = useRecordContext<Customer>();
+    const record = useRecordContext<User>();
     if (!record) return null;
     return (
         <Avatar

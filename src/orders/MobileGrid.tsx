@@ -10,7 +10,7 @@ import {
     RecordContextProvider,
 } from 'react-admin';
 
-import CustomerReferenceField from '../visitors/CustomerReferenceField';
+import UserReferenceField from '../visitors/UserReferenceField';
 import { Order } from '../types';
 
 const MobileGrid = () => {
@@ -27,7 +27,7 @@ const MobileGrid = () => {
                         <CardHeader
                             title={
                                 <>
-                                    {translate('resources.commands.name', 1)} #
+                                    {translate('resources.sales.name', 1)} #
                                     <TextField
                                         source="reference"
                                         variant="body1"
@@ -38,7 +38,7 @@ const MobileGrid = () => {
                             action={<EditButton />}
                         />
                         <CardContent sx={{ pt: 0 }}>
-                            <CustomerReferenceField
+                            <UserReferenceField
                                 sx={{ display: 'block', mb: 1 }}
                             />
                             <Typography variant="body2" gutterBottom>
@@ -48,7 +48,7 @@ const MobileGrid = () => {
                             </Typography>
                             <Typography variant="body2" gutterBottom>
                                 {translate(
-                                    'resources.commands.fields.basket.total'
+                                    'resources.sales.fields.basket.total'
                                 )}
                                 :&nbsp;
                                 <NumberField
@@ -60,13 +60,13 @@ const MobileGrid = () => {
                                 />
                             </Typography>
                             <Typography variant="body2" gutterBottom>
-                                {translate('resources.commands.fields.status')}
+                                {translate('resources.sales.fields.status')}
                                 :&nbsp;
                                 <TextField source="status" />
                             </Typography>
                             <Typography variant="body2">
                                 {translate(
-                                    'resources.commands.fields.returned'
+                                    'resources.sales.fields.returned'
                                 )}
                                 :&nbsp;
                                 <BooleanField source="returned" />

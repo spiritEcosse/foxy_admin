@@ -29,11 +29,11 @@ import StarRatingField from '../reviews/StarRatingField';
 import {
     Order as OrderRecord,
     Review as ReviewRecord,
-    Customer,
+    User,
 } from '../types';
 
 const Aside = () => {
-    const record = useRecordContext<Customer>();
+    const record = useRecordContext<User>();
     return (
         <Box width={400} display={{ xs: 'none', lg: 'block' }}>
             {record && <EventList />}
@@ -42,23 +42,23 @@ const Aside = () => {
 };
 
 const EventList = () => {
-    const record = useRecordContext<Customer>();
+    const record = useRecordContext<User>();
     const translate = useTranslate();
 
     const { data: orders, total: totalOrders } = useGetList<OrderRecord>(
-        'commands',
+        'api/v1/order/admin',
         {
             pagination: { page: 1, perPage: 100 },
             sort: { field: 'date', order: 'DESC' },
-            filter: { customer_id: record.id },
+            filter: { user_id: record.id },
         }
     );
     const { data: reviews, total: totalReviews } = useGetList<ReviewRecord>(
-        'reviews',
+        'api/v1/review/admin',
         {
             pagination: { page: 1, perPage: 100 },
             sort: { field: 'date', order: 'DESC' },
-            filter: { customer_id: record.id },
+            filter: { user_id: record.id },
         }
     );
     const events = mixOrdersAndReviews(orders, reviews);
@@ -68,7 +68,7 @@ const EventList = () => {
             <Card>
                 <CardContent>
                     <Typography variant="h6" gutterBottom>
-                        {translate('resources.customers.fieldGroups.history')}
+                        {translate('resources.users.fieldGroups.history')}
                     </Typography>
                     <Grid container rowSpacing={1} columnSpacing={1}>
                         <Grid item xs={6} display="flex" gap={1}>
@@ -76,7 +76,7 @@ const EventList = () => {
                             <Box flexGrow={1}>
                                 <Typography variant="body2">
                                     {translate(
-                                        'resources.customers.fields.first_seen'
+                                        'resources.users.fields.first_seen'
                                     )}
                                 </Typography>
                                 <DateField
@@ -96,11 +96,11 @@ const EventList = () => {
                                         variant="body2"
                                         flexGrow={1}
                                         to={{
-                                            pathname: '/commands',
+                                            pathname: 'api/v1/order/admin',
                                             search: `displayedFilters=${JSON.stringify(
-                                                { customer_id: true }
+                                                { user_id: true }
                                             )}&filter=${JSON.stringify({
-                                                customer_id: record.id,
+                                                user_id: record.id,
                                                 status: 'delivered',
                                             })}`,
                                         }}
@@ -120,7 +120,7 @@ const EventList = () => {
                             <Box flexGrow={1}>
                                 <Typography variant="body2">
                                     {translate(
-                                        'resources.customers.fields.last_seen'
+                                        'resources.users.fields.last_seen'
                                     )}
                                 </Typography>
                                 <DateField record={record} source="last_seen" />
@@ -137,11 +137,11 @@ const EventList = () => {
                                         variant="body2"
                                         flexGrow={1}
                                         to={{
-                                            pathname: '/reviews',
+                                            pathname: '',
                                             search: `displayedFilters=${JSON.stringify(
-                                                { customer_id: true }
+                                                { user_id: true }
                                             )}&filter=${JSON.stringify({
-                                                customer_id: record.id,
+                                                user_id: record.id,
                                             })}`,
                                         }}
                                     >
@@ -202,7 +202,7 @@ const Timeline = ({ events }: { events: AsideEvent[] }) => (
                 completed
             >
                 <Link
-                    to={`/${event.type === 'order' ? 'commands' : 'reviews'}/${
+                    to={`/${event.type === 'order' ? 'api/v1/order/admin' : 'api/v1/review/admin'}/${
                         event.data.id
                     }`}
                 >
@@ -245,7 +245,7 @@ const OrderTitle = () => {
     return (
         <>
             {translate('pos.events.order.title', {
-                smart_count: record.basket.length,
+                smart_count: record.count_items,
             })}
         </>
     );

@@ -45,7 +45,7 @@ const MobileGrid = () => {
                         <CardContent sx={{ pt: 0 }}>
                             <Typography variant="body2">
                                 {translate(
-                                    'resources.commands.name',
+                                    'resources.sales.name',
                                     record.nb_commands || 1
                                 )}
                                 :&nbsp;

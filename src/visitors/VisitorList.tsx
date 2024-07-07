@@ -55,7 +55,7 @@ const VisitorList = () => {
                     <DateField source="last_seen" />
                     <NumberField
                         source="nb_commands"
-                        label="resources.customers.fields.commands"
+                        label="resources.sales.fields.commands"
                     />
                     <ColoredNumberField
                         source="total_spent"

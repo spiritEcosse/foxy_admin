@@ -5,7 +5,6 @@ import {
     Form,
     Labeled,
     PrevNextButtons,
-    ReferenceField,
     SelectInput,
     TextField,
     Toolbar,
@@ -14,8 +13,7 @@ import {
 } from 'react-admin';
 import { Link as RouterLink } from 'react-router-dom';
 import { Card, CardContent, Box, Grid, Typography, Link } from '@mui/material';
-
-import { Order, Customer } from '../types';
+import {Address, Order, User} from '../types';
 import Basket from './Basket';
 import Totals from './Totals';
 
@@ -30,21 +28,20 @@ const OrderTitle = () => {
     const record = useRecordContext<Order>();
     return record ? (
         <span>
-            {translate('resources.commands.title', {
+            {translate('resources.sales.title', {
                 reference: record.reference,
             })}
         </span>
     ) : null;
 };
 
-const CustomerDetails = () => {
-    const record = useRecordContext<Customer>();
+const UserDetails = ({record}: {record: User}) => {
     return (
         <div>
             <Typography
                 component={RouterLink}
                 color="primary"
-                to={`/customers/${record?.id}`}
+                to={`/api/v1/user/admin/${record?.id}`}
                 style={{ textDecoration: 'none' }}
             >
                 {record?.first_name} {record?.last_name}
@@ -62,16 +59,12 @@ const CustomerDetails = () => {
     );
 };
 
-const CustomerAddress = () => {
-    const record = useRecordContext<Customer>();
+const UserAddress = ({record}: {record: Address}) => {
     return (
         <div>
+            <Typography>{record?.country.title}</Typography>
             <Typography>
-                {record?.first_name} {record?.last_name}
-            </Typography>
-            <Typography>{record?.address}</Typography>
-            <Typography>
-                {record?.city}, {record?.stateAbbr} {record?.zipcode}
+                {record?.city}, {record?.zipcode}
             </Typography>
         </div>
     );
@@ -81,6 +74,8 @@ const Spacer = () => <Box mb={1}>&nbsp;</Box>;
 
 const OrderForm = () => {
     const translate = useTranslate();
+    const record = useRecordContext<Order>();
+
     return (
         <Form>
             <Box maxWidth="50em">
@@ -94,7 +89,7 @@ const OrderForm = () => {
                             <Grid item xs={12} sm={12} md={8}>
                                 <Typography variant="h6" gutterBottom>
                                     {translate(
-                                        'resources.commands.section.order'
+                                        'resources.sales.section.order'
                                     )}
                                 </Typography>
                                 <Grid container>
@@ -147,36 +142,24 @@ const OrderForm = () => {
                             <Grid item xs={12} sm={12} md={4}>
                                 <Typography variant="h6" gutterBottom>
                                     {translate(
-                                        'resources.commands.section.customer'
+                                        'resources.sales.section.user'
                                     )}
                                 </Typography>
-                                <ReferenceField
-                                    source="customer_id"
-                                    reference="customers"
-                                    link={false}
-                                >
-                                    <CustomerDetails />
-                                </ReferenceField>
+                                <UserDetails record={record.user} />
                                 <Spacer />
 
                                 <Typography variant="h6" gutterBottom>
                                     {translate(
-                                        'resources.commands.section.shipping_address'
+                                        'resources.sales.section.shipping_address'
                                     )}
                                 </Typography>
-                                <ReferenceField
-                                    source="customer_id"
-                                    reference="customers"
-                                    link={false}
-                                >
-                                    <CustomerAddress />
-                                </ReferenceField>
+                                <UserAddress record={record.address} />
                             </Grid>
                         </Grid>
                         <Spacer />
 
                         <Typography variant="h6" gutterBottom>
-                            {translate('resources.commands.section.items')}
+                            {translate('resources.sales.section.items')}
                         </Typography>
                         <div>
                             <Basket />
@@ -184,7 +167,7 @@ const OrderForm = () => {
                         <Spacer />
 
                         <Typography variant="h6" gutterBottom>
-                            {translate('resources.commands.section.total')}
+                            {translate('resources.sales.section.total')}
                         </Typography>
                         <div>
                             <Totals />

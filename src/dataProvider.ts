@@ -34,8 +34,8 @@ export const dataProvider = {
         const { field, order } = params.sort;
         const query = {
             ...fetchUtils.flattenObject(params.filter),
-            _sort: field,
-            _order: order,
+            sort: field,
+            order: order,
             page: page,
             limit: perPage,
         };
@@ -59,13 +59,25 @@ export const dataProvider = {
         if (resource === 'api/v1/item/admin') {
             // Custom handling for /api/v1/item/admin
             const url = `${getUrl(resource)}/${params.id}`;
-            const { json } = await httpClient(url);
+            const {json} = await httpClient(url);
             if (json.error) {
                 throw new Error(json.error);
             }
             let item = json['_item'];
             item.media = json['_media'];
-            return { data: item };
+            return {data: item};
+        } else if (resource === 'api/v1/order/admin') {
+            // Custom handling for /api/v1/item/admin
+            const url = `${getUrl(resource)}/${params.id}`;
+            const {json} = await httpClient(url);
+            if (json.error) {
+                throw new Error(json.error);
+            }
+            let item = json['_order'];
+            item.items = json['_items'];
+            item.address = json['_address'];
+            item.user = json['_user'];
+            return {data: item};
         } else {
             // Fallback to the default getOne method for other resources
             return dataProviderBase.getOne(resource, params);

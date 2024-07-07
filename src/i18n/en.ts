@@ -52,10 +52,10 @@ const customEnglishMessages: TranslationMessages = {
         },
     },
     resources: {
-        customers: {
-            name: 'Customer |||| Customers',
+        users: {
+            name: 'User |||| Users',
             fields: {
-                commands: 'Orders',
+                orders: 'Orders',
                 first_seen: 'First seen',
                 groups: 'Segments',
                 last_seen: 'Last seen',
@@ -110,7 +110,7 @@ const customEnglishMessages: TranslationMessages = {
                     unit_price: 'Unit Price',
                 },
                 address: 'Address',
-                customer_id: 'Customer',
+                user_id: 'User',
                 date_gte: 'Passed Since',
                 date_lte: 'Passed Before',
                 nb_items: 'Nb Items',
@@ -120,7 +120,7 @@ const customEnglishMessages: TranslationMessages = {
             },
             section: {
                 order: 'Order',
-                customer: 'Customer',
+                user: 'User',
                 shipping_address: 'Shipping Address',
                 items: 'Items',
                 total: 'Totals',
@@ -168,15 +168,6 @@ const customEnglishMessages: TranslationMessages = {
                 meta_description: "Meta Description",
                 description: "Description",
                 canonical_url: "Canonical URL",
-                created_at: "Created At",
-                updated_at: "Updated At",
-            },
-        },
-        users: {
-            name: 'User |||| Users',
-            fields: {
-                email: "Email",
-                password: "Password",
                 created_at: "Created At",
                 updated_at: "Updated At",
             },

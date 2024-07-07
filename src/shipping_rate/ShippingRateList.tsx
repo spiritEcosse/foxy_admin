@@ -19,9 +19,6 @@ const ShippingRateList = () => (
                 '& .column-total_ex_taxes': {
                     display: { xs: 'none', md: 'table-cell' },
                 },
-                '& .column-delivery_fees': {
-                    display: { xs: 'none', md: 'table-cell' },
-                },
                 '& .column-taxes': {
                     display: { xs: 'none', md: 'table-cell' },
                 },

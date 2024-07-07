@@ -1,12 +1,12 @@
 import { useRecordContext } from 'react-admin';
-import { Customer } from '../types';
+import { Address } from '../types';
 
 const AddressField = () => {
-    const record = useRecordContext<Customer>();
+    const record = useRecordContext<Address>();
 
     return record ? (
         <span>
-            {record.address}, {record.city}, {record.stateAbbr} {record.zipcode}
+            {record.country.title}, {record.address}, {record.city}, {record.zipcode}
         </span>
     ) : null;
 };

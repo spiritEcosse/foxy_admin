@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Link, FieldProps, useRecordContext } from 'react-admin';
 
-import FullNameField from './FullNameField';
+import FullNameField from '../users/FullNameField';
 import { Customer } from '../types';
 
 const CustomerLinkField = (_: FieldProps<Customer>) => {

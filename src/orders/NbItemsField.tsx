@@ -6,7 +6,7 @@ const render = (record: Order) => record.count_items;
 const NbItemsField = () => <FunctionField<Order> render={render} />;
 
 NbItemsField.defaultProps = {
-    label: 'resources.commands.fields.nb_items',
+    label: 'resources.sales.fields.nb_items',
     textAlign: 'right',
 };
 

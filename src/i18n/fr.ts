@@ -143,7 +143,6 @@ const customFrenchMessages: TranslationMessages = {
                 date_lte: 'Emises avant',
                 address: 'Adresse',
                 total_ex_taxes: 'Montant HT',
-                delivery_fees: 'Frais de livraison',
                 taxes: 'TVA',
             },
         },

@@ -13,29 +13,23 @@ const Totals = () => {
             <TableBody>
                 <TableRow>
                     <TableCell>
-                        {translate('resources.commands.fields.basket.sum')}
+                        {translate('resources.sales.fields.basket.sum')}
                     </TableCell>
                     <TableCellRight>
                         {record?.total_ex_taxes.toLocaleString(undefined, {
                             style: 'currency',
-                            currency: 'USD',
+                            currency: 'EUR',
                         })}
                     </TableCellRight>
                 </TableRow>
                 <TableRow>
                     <TableCell>
-                        {translate('resources.commands.fields.basket.delivery')}
+                        {translate('resources.sales.fields.basket.delivery')}
                     </TableCell>
-                    <TableCellRight>
-                        {record?.delivery_fees.toLocaleString(undefined, {
-                            style: 'currency',
-                            currency: 'USD',
-                        })}
-                    </TableCellRight>
                 </TableRow>
                 <TableRow>
                     <TableCell>
-                        {translate('resources.commands.fields.basket.taxes')} (
+                        {translate('resources.sales.fields.basket.taxes')} (
                         {record?.tax_rate.toLocaleString(undefined, {
                             style: 'percent',
                         })}
@@ -44,18 +38,18 @@ const Totals = () => {
                     <TableCellRight>
                         {record?.taxes.toLocaleString(undefined, {
                             style: 'currency',
-                            currency: 'USD',
+                            currency: 'EUR',
                         })}
                     </TableCellRight>
                 </TableRow>
                 <TableRow>
                     <TableCell sx={{ fontWeight: 'bold' }}>
-                        {translate('resources.commands.fields.basket.total')}
+                        {translate('resources.sales.fields.basket.total')}
                     </TableCell>
                     <TableCellRight sx={{ fontWeight: 'bold' }}>
                         {record?.total.toLocaleString(undefined, {
                             style: 'currency',
-                            currency: 'USD',
+                            currency: 'EUR',
                         })}
                     </TableCellRight>
                 </TableRow>

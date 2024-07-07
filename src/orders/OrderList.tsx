@@ -24,10 +24,10 @@ import {
 import {useMediaQuery, Divider, Tabs, Tab, Theme} from '@mui/material';
 
 import NbItemsField from './NbItemsField';
-import CustomerReferenceField from '../visitors/CustomerReferenceField';
+import UserReferenceField from '../visitors/UserReferenceField';
 import AddressField from '../visitors/AddressField';
 import MobileGrid from './MobileGrid';
-import {Customer} from '../types';
+import {User} from '../types';
 
 const ListActions = () => (
     <TopToolbar>
@@ -51,9 +51,9 @@ const OrderList = () => (
 
 const orderFilters = [
     <SearchInput source="q" alwaysOn/>,
-    <ReferenceInput source="customer_id" reference="customers">
+    <ReferenceInput source="user_id" reference="api/v1/user/admin">
         <AutocompleteInput
-            optionText={(choice?: Customer) =>
+            optionText={(choice?: User) =>
                 choice?.id // the empty choice is { id: '' }
                     ? `${choice.first_name} ${choice.last_name}`
                     : ''
@@ -129,29 +129,22 @@ const TabbedDatagrid = () => {
                     {filterValues.status === 'ordered' && (
                         <DatagridConfigurable
                             rowClick="edit"
-                            omit={['total_ex_taxes', 'delivery_fees', 'taxes']}
+                            omit={['total_ex_taxes', 'taxes']}
                         >
-                            <DateField source="date" showTime/>
+                            <DateField source="created_at" showTime/>
                             <TextField source="reference"/>
-                            <CustomerReferenceField/>
+                            <UserReferenceField/>
                             <ReferenceField
-                                source="customer_id"
-                                reference="customers"
+                                source="address_id"
+                                reference="api/v1/address/admin"
                                 link={false}
-                                label="resources.commands.fields.address"
+                                label="resources.sales.fields.address"
                             >
                                 <AddressField/>
                             </ReferenceField>
                             <NbItemsField/>
                             <NumberField
                                 source="total_ex_taxes"
-                                options={{
-                                    style: 'currency',
-                                    currency: 'USD',
-                                }}
-                            />
-                            <NumberField
-                                source="delivery_fees"
                                 options={{
                                     style: 'currency',
                                     currency: 'USD',
@@ -177,29 +170,22 @@ const TabbedDatagrid = () => {
                     {filterValues.status === 'delivered' && (
                         <DatagridConfigurable
                             rowClick="edit"
-                            omit={['total_ex_taxes', 'delivery_fees', 'taxes']}
+                            omit={['total_ex_taxes', 'taxes']}
                         >
-                            <DateField source="date" showTime/>
+                            <DateField source="created_at" showTime/>
                             <TextField source="reference"/>
-                            <CustomerReferenceField/>
+                            <UserReferenceField/>
                             <ReferenceField
-                                source="customer_id"
-                                reference="customers"
+                                source="address_id"
+                                reference="api/v1/address/admin"
                                 link={false}
-                                label="resources.commands.fields.address"
+                                label="resources.sales.fields.address"
                             >
                                 <AddressField/>
                             </ReferenceField>
                             <NbItemsField/>
                             <NumberField
                                 source="total_ex_taxes"
-                                options={{
-                                    style: 'currency',
-                                    currency: 'USD',
-                                }}
-                            />
-                            <NumberField
-                                source="delivery_fees"
                                 options={{
                                     style: 'currency',
                                     currency: 'USD',
@@ -229,29 +215,22 @@ const TabbedDatagrid = () => {
                     {filterValues.status === 'cancelled' && (
                         <DatagridConfigurable
                             rowClick="edit"
-                            omit={['total_ex_taxes', 'delivery_fees', 'taxes']}
+                            omit={['total_ex_taxes', 'taxes']}
                         >
-                            <DateField source="date" showTime/>
+                            <DateField source="created_at" showTime/>
                             <TextField source="reference"/>
-                            <CustomerReferenceField/>
+                            <UserReferenceField/>
                             <ReferenceField
-                                source="customer_id"
-                                reference="customers"
+                                source="address_id"
+                                reference="api/v1/address/admin"
                                 link={false}
-                                label="resources.commands.fields.address"
+                                label="resources.sales.fields.address"
                             >
                                 <AddressField/>
                             </ReferenceField>
                             <NbItemsField/>
                             <NumberField
                                 source="total_ex_taxes"
-                                options={{
-                                    style: 'currency',
-                                    currency: 'USD',
-                                }}
-                            />
-                            <NumberField
-                                source="delivery_fees"
                                 options={{
                                     style: 'currency',
                                     currency: 'USD',
