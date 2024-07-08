@@ -126,6 +126,15 @@ const customEnglishMessages: TranslationMessages = {
                 total: 'Totals',
             },
         },
+        financial_details: {
+          name: 'Financial Details |||| Financial Details',
+            fields: {
+                id: 'ID',
+                tax_rate: 'Tax Rate',
+                created_at: 'Created At',
+                updated_at: 'Updated At',
+            },
+        },
         country: {
             name: 'Country |||| Countries',
             fields: {

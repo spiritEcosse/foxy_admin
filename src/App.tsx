@@ -8,6 +8,7 @@ import orders from './orders';
 import shipping_profile from './shipping_profile';
 import shipping_rate from './shipping_rate';
 import reviews from './reviews';
+import financial_details from './financial_details';
 import {Admin, Resource, useStore, localStorageStore} from 'react-admin';
 import { themes, ThemeName } from './themes/themes';
 import { Layout } from './layout';
@@ -89,6 +90,7 @@ export const App = () => {
             <Resource name="api/v1/order/admin" {...orders}  options={{ label: 'Orders' }} />
             <Resource name="api/v1/item/admin" {...items} />
             <Resource name="api/v1/page/admin" {...pages} />
+            <Resource name="api/v1/financialdetails/admin" {...financial_details} />
             <Resource name="api/v1/user/admin" {...users} />
             <Resource name="api/v1/user/admin" {...users} />
             <Resource name="api/v1/country/admin" {...country} />

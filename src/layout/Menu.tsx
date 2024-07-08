@@ -7,6 +7,7 @@ import orders from '../orders';
 import items from '../items';
 import pages from '../pages';
 import users from '../users';
+import financial_details from '../financial_details';
 import country from '../country';
 import shipping_profile from '../shipping_profile';
 import shipping_rate from '../shipping_rate';
@@ -57,6 +58,15 @@ const Menu = ({dense = false}: MenuProps) => {
                         smart_count: 2,
                     })}
                     leftIcon={<orders.icon/>}
+                    dense={dense}
+                />
+                <MenuItemLink
+                    to="/api/v1/financialdetails/admin"
+                    state={{_scrollToTop: true}}
+                    primaryText={translate(`resources.financial_details.name`, {
+                        smart_count: 2,
+                    })}
+                    leftIcon={<financial_details.icon/>}
                     dense={dense}
                 />
             </SubMenu>
