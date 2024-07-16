@@ -73,7 +73,7 @@ const OrderChart = (props: { orders?: Order[] }) => {
                 formatter={(value: any) =>
                   new Intl.NumberFormat(undefined, {
                     style: 'currency',
-                    currency: 'USD',
+                    currency: 'EUR',
                   }).format(value)
                 }
                 labelFormatter={(label: any) => dateFormatter(label)}
