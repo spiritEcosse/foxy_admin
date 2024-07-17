@@ -8,7 +8,7 @@ const Basket = () => {
     const record = useRecordContext<Order>()
     const translate = useTranslate()
 
-    if (!record || !record.basket_items) return null
+    if (!record || !record.items) return null
 
     return (
         <Table>
