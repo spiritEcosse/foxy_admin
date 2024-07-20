@@ -108,6 +108,15 @@ export interface Order extends RaRecord {
     items: ItemType
 }
 
+export interface SocialMediaType extends RaRecord {
+    title: string
+    external_id: string;
+    social_url: string;
+    item_id: Identifier;
+    created_at: Date
+    updated_at: Date
+}
+
 export interface FinancialDetails extends RaRecord {
     tax_rate: number
     gateway: string

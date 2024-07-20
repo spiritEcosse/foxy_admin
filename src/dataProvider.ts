@@ -34,6 +34,17 @@ export const dataProvider = {
         const baseUrl = import.meta.env.VITE_JSON_SERVER_URL
         return `${baseUrl}/${resource}`
     },
+    publishToSocialMedia: async () => {
+        const url = `${dataProvider.getUrl('api/v1/socialmedia/admin/publish')}`;
+        const options = {
+            method: 'POST',
+            headers: new Headers({
+                'Content-Type': 'application/json',
+            }),
+        };
+        const {json} = await httpClient(url, options);
+        return {data: json};
+    },
     getList: async (resource: string, params: GetListParams) => {
         const {page, perPage} = params.pagination
         const {field, order} = params.sort

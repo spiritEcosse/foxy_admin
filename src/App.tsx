@@ -7,6 +7,7 @@ import orders from './orders'
 import shipping_profile from './shipping_profile'
 import shipping_rate from './shipping_rate'
 import reviews from './reviews'
+import social_media from './social_media'
 import financial_details from './financial_details'
 import {Admin, localStorageStore, Resource, useStore} from 'react-admin'
 import {ThemeName, themes} from './themes/themes'
@@ -111,6 +112,7 @@ export const App = () => {
                 {...orders}
                 options={{label: 'Orders'}}
             />
+            <Resource name="api/v1/socialmedia/admin" {...social_media} />
             <Resource name="api/v1/item/admin" {...items} />
             <Resource name="api/v1/page/admin" {...pages} />
             <Resource name="api/v1/financialdetails/admin" {...financial_details} />
