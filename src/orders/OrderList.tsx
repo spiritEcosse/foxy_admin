@@ -1,25 +1,25 @@
 import * as React from 'react'
 import {Fragment, useCallback} from 'react'
 import {
-  AutocompleteInput,
-  BooleanField,
-  Count,
-  DatagridConfigurable,
-  DateField,
-  DateInput,
-  ExportButton,
-  FilterButton,
-  List,
-  NullableBooleanInput,
-  NumberField,
-  ReferenceField,
-  ReferenceInput,
-  SearchInput,
-  SelectColumnsButton,
-  TextField,
-  TextInput,
-  TopToolbar,
-  useListContext,
+    AutocompleteInput,
+    BooleanField,
+    Count,
+    DatagridConfigurable,
+    DateField,
+    DateInput,
+    ExportButton,
+    FilterButton,
+    List,
+    NullableBooleanInput,
+    NumberField,
+    ReferenceField,
+    ReferenceInput,
+    SearchInput,
+    SelectColumnsButton,
+    TextField,
+    TextInput,
+    TopToolbar,
+    useListContext,
 } from 'react-admin'
 import {Divider, Tab, Tabs, Theme, useMediaQuery} from '@mui/material'
 
@@ -39,7 +39,7 @@ const ListActions = () => (
 
 const OrderList = () => (
     <List
-        filterDefaultValues={{status: 'ordered'}}
+        filterDefaultValues={{status: 'Ordered'}}
         sort={{field: 'date', order: 'DESC'}}
         perPage={25}
         filters={orderFilters}
@@ -68,9 +68,9 @@ const orderFilters = [
 ]
 
 const tabs = [
-    {id: 'ordered', name: 'ordered'},
-    {id: 'delivered', name: 'delivered'},
-    {id: 'cancelled', name: 'cancelled'},
+    {id: 'Ordered', name: 'Ordered'},
+    {id: 'Delivered', name: 'Delivered'},
+    {id: 'Cancelled', name: 'Cancelled'},
 ]
 
 const TabbedDatagrid = () => {
@@ -124,7 +124,7 @@ const TabbedDatagrid = () => {
                 <MobileGrid/>
             ) : (
                 <>
-                    {filterValues.status === 'ordered' && (
+                    {filterValues.status === 'Ordered' && (
                         <DatagridConfigurable
                             rowClick="edit"
                             omit={['total_ex_taxes', 'taxes']}
@@ -165,7 +165,7 @@ const TabbedDatagrid = () => {
                             />
                         </DatagridConfigurable>
                     )}
-                    {filterValues.status === 'delivered' && (
+                    {filterValues.status === 'Delivered' && (
                         <DatagridConfigurable
                             rowClick="edit"
                             omit={['total_ex_taxes', 'taxes']}
@@ -207,7 +207,7 @@ const TabbedDatagrid = () => {
                             <BooleanField source="returned" sx={{mt: -0.5, mb: -0.5}}/>
                         </DatagridConfigurable>
                     )}
-                    {filterValues.status === 'cancelled' && (
+                    {filterValues.status === 'Cancelled' && (
                         <DatagridConfigurable
                             rowClick="edit"
                             omit={['total_ex_taxes', 'taxes']}

@@ -1,13 +1,12 @@
-import {useMemo, CSSProperties} from 'react'
+import {CSSProperties, useMemo} from 'react'
 import {useGetList} from 'react-admin'
-import {useMediaQuery, Theme} from '@mui/material'
-import {subDays, startOfDay} from 'date-fns'
+import {Theme, useMediaQuery} from '@mui/material'
+import {startOfDay, subDays} from 'date-fns'
 
 import Welcome from './Welcome'
 import MonthlyRevenue from './MonthlyRevenue'
 import NbNewOrders from './NbNewOrders'
 import PendingOrders from './PendingOrders'
-import PendingReviews from './PendingReviews'
 import NewCustomers from './NewCustomers'
 
 import {Order} from '../types'
@@ -50,14 +49,14 @@ const Dashboard = () => {
     const aggregation = useMemo<State>(() => {
         if (!orders) return {}
         const aggregations = orders
-            .filter((order) => order.status !== 'cancelled')
+            .filter((order) => order.status !== 'Cancelled')
             .reduce(
                 (stats: OrderStats, order) => {
-                    if (order.status !== 'cancelled') {
+                    if (order.status !== 'Cancelled') {
                         stats.revenue += order.total
                         stats.nbNewOrders++
                     }
-                    if (order.status === 'ordered') {
+                    if (order.status === 'Ordered') {
                         stats.pendingOrders.push(order)
                     }
                     return stats

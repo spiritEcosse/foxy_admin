@@ -79,7 +79,7 @@ const EventList = () => {
                                                 customer_id: true,
                                             })}&filter=${JSON.stringify({
                                                 customer_id: record.id,
-                                                status: 'delivered',
+                                                status: 'Delivered',
                                             })}`,
                                         }}
                                     >

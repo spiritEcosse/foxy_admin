@@ -89,7 +89,7 @@ export interface Address extends RaRecord {
     updated_at: Date
 }
 
-export type OrderStatus = 'ordered' | 'delivered' | 'cancelled'
+export type OrderStatus = 'Ordered' | 'Delivered' | 'Cancelled'
 
 export interface Order extends RaRecord {
     status: OrderStatus
