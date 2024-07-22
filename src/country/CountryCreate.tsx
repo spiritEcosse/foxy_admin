@@ -1,12 +1,12 @@
-import {CountryEditDetails} from "./CountryEditDetails";
-import { Create, SimpleForm, EditProps } from 'react-admin';
+import { CountryEditDetails } from './CountryEditDetails'
+import { Create, SimpleForm, EditProps } from 'react-admin'
 
 const CountryEdit = (props: EditProps) => (
-    <Create {...props}>
-        <SimpleForm>
-            <CountryEditDetails/>
-        </SimpleForm>
-    </Create>
-);
+  <Create {...props}>
+    <SimpleForm>
+      <CountryEditDetails />
+    </SimpleForm>
+  </Create>
+)
 
-export default CountryEdit;
+export default CountryEdit
