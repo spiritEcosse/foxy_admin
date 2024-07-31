@@ -1,23 +1,23 @@
-import DollarIcon from '@mui/icons-material/AttachMoney';
-import { useTranslate } from 'react-admin';
+import DollarIcon from "@mui/icons-material/AttachMoney";
+import { useTranslate } from "react-admin";
 
-import CardWithIcon from './CardWithIcon';
+import CardWithIcon from "./CardWithIcon";
 
 interface Props {
-    value?: string;
+  value?: string;
 }
 
 const MonthlyRevenue = (props: Props) => {
-    const { value } = props;
-    const translate = useTranslate();
-    return (
-        <CardWithIcon
-            to="/commands"
-            icon={DollarIcon}
-            title={translate('pos.dashboard.monthly_revenue')}
-            subtitle={value}
-        />
-    );
+  const { value } = props;
+  const translate = useTranslate();
+  return (
+    <CardWithIcon
+      to="/commands"
+      icon={DollarIcon}
+      title={translate("pos.dashboard.monthly_revenue")}
+      subtitle={value}
+    />
+  );
 };
 
 export default MonthlyRevenue;
