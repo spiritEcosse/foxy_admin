@@ -1,11 +1,16 @@
-import {Box, Button} from '@mui/material'
+import { Box, Button } from '@mui/material'
 import CustomerIcon from '@mui/icons-material/PersonAdd'
-import {Link} from 'react-router-dom'
-import {ListBase, SimpleList, useTranslate, WithListContext,} from 'react-admin'
-import {subDays} from 'date-fns'
+import { Link } from 'react-router-dom'
+import {
+    ListBase,
+    SimpleList,
+    useTranslate,
+    WithListContext,
+} from 'react-admin'
+import { subDays } from 'date-fns'
 
 import CardWithIcon from './CardWithIcon'
-import {Customer} from '../types'
+import { Customer } from '../types'
 
 const NewCustomers = () => {
     const translate = useTranslate()
@@ -17,12 +22,12 @@ const NewCustomers = () => {
     aMonthAgo.setSeconds(0)
     aMonthAgo.setMilliseconds(0)
 
-    const CustomerListItem = ({customer}) => (
+    const CustomerListItem = ({ customer }) => (
         <Avatar
             src={`${customer.avatar}?size=32x32`}
             alt={`${customer.first_name} ${customer.last_name}`}
         />
-    );
+    )
 
     return (
         <ListBase
@@ -31,7 +36,7 @@ const NewCustomers = () => {
                 has_ordered: true,
                 first_seen_gte: aMonthAgo.toISOString(),
             }}
-            sort={{field: 'first_seen', order: 'DESC'}}
+            sort={{ field: 'first_seen', order: 'DESC' }}
             perPage={100}
             disableSyncWithLocation
         >
@@ -40,7 +45,7 @@ const NewCustomers = () => {
                 icon={CustomerIcon}
                 title={translate('pos.dashboard.new_customers')}
                 subtitle={
-                    <WithListContext render={({total}) => <>{total}</>}/>
+                    <WithListContext render={({ total }) => <>{total}</>} />
                 }
             >
                 <SimpleList<Customer>
@@ -49,13 +54,13 @@ const NewCustomers = () => {
                 />
                 <Box flexGrow={1}>&nbsp;</Box>
                 <Button
-                    sx={{borderRadius: 0}}
+                    sx={{ borderRadius: 0 }}
                     component={Link}
                     to="/customers"
                     size="small"
                     color="primary"
                 >
-                    <Box p={1} sx={{color: 'primary.main'}}>
+                    <Box p={1} sx={{ color: 'primary.main' }}>
                         {translate('pos.dashboard.all_customers')}
                     </Box>
                 </Button>
