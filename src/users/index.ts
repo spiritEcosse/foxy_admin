@@ -4,8 +4,8 @@ import UserEdit from './UserEdit'
 import UserCreate from './UserCreate'
 
 export default {
-  list: UserList,
-  edit: UserEdit,
-  create: UserCreate,
-  icon: PersonIcon,
+    list: UserList,
+    edit: UserEdit,
+    create: UserCreate,
+    icon: PersonIcon,
 }

@@ -9,20 +9,20 @@ const httpClient = async (url: string, options: fetchUtils.Options = {}) => {
     customHeaders.set('Authorization', `Bearer ${localStorage.getItem('auth')}`)
     options.headers = customHeaders
     try {
-        return await fetchUtils.fetchJson(url, options);
+        return await fetchUtils.fetchJson(url, options)
     } catch (error) {
         if (
             error instanceof Error &&
-            (error.message === 'Unauthorized' || error.message === 'Failed to fetch')
+            (error.message === 'Unauthorized' ||
+                error.message === 'Failed to fetch')
         ) {
-            localStorage.removeItem('auth');
-            window.dispatchEvent(new Event('storage'));
-            return Promise.reject()
+            localStorage.removeItem('auth')
+            window.dispatchEvent(new Event('storage'))
+            return Promise.reject(new Error('Authentication failed'))
         }
-        return Promise.reject(error)
+        return Promise.reject(error instanceof Error ? error : new Error(String(error)))
     }
 }
-
 const dataProviderBase = jsonServerProvider(
     import.meta.env.VITE_JSON_SERVER_URL,
     httpClient,
@@ -35,15 +35,15 @@ export const dataProvider = {
         return `${baseUrl}/${resource}`
     },
     publishToSocialMedia: async () => {
-        const url = `${dataProvider.getUrl('api/v1/socialmedia/admin/publish')}`;
+        const url = `${dataProvider.getUrl('api/v1/socialmedia/admin/publish')}`
         const options = {
             method: 'POST',
             headers: new Headers({
                 'Content-Type': 'application/json',
             }),
-        };
-        const {json} = await httpClient(url, options);
-        return {data: json};
+        }
+        const {json} = await httpClient(url, options)
+        return {data: json}
     },
     getList: async (resource: string, params: GetListParams) => {
         const {page, perPage} = params.pagination
@@ -55,7 +55,9 @@ export const dataProvider = {
             page: page,
             limit: perPage,
         }
-        const url = `${dataProvider.getUrl(resource)}?${fetchUtils.queryParameters(query)}`
+        const url = `${dataProvider.getUrl(
+            resource,
+        )}?${fetchUtils.queryParameters(query)}`
 
         const {json} = await httpClient(url)
         return json
@@ -64,7 +66,9 @@ export const dataProvider = {
         const query = {
             ...fetchUtils.flattenObject(params.filter),
         }
-        const url = `${dataProvider.getUrl(resource)}?${fetchUtils.queryParameters(query)}`
+        const url = `${dataProvider.getUrl(
+            resource,
+        )}?${fetchUtils.queryParameters(query)}`
         const {json} = await httpClient(url)
         if (json.error) {
             throw new Error(json.error)

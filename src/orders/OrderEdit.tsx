@@ -11,15 +11,15 @@ import {
     useRecordContext,
     useTranslate,
 } from 'react-admin'
-import {Link as RouterLink} from 'react-router-dom'
-import {Box, Card, CardContent, Grid, Link, Typography} from '@mui/material'
-import {Address, Order, User} from '../types'
+import { Link as RouterLink } from 'react-router-dom'
+import { Box, Card, CardContent, Grid, Link, Typography } from '@mui/material'
+import { Address, Order, User } from '../types'
 import Basket from './Basket'
 import Totals from './Totals'
 
 const OrderEdit = () => (
-    <Edit title={<OrderTitle/>} component="div">
-        <OrderForm/>
+    <Edit title={<OrderTitle />} component="div">
+        <OrderForm />
     </Edit>
 )
 
@@ -28,30 +28,30 @@ const OrderTitle = () => {
     const record = useRecordContext<Order>()
     return record ? (
         <span>
-      {translate('resources.sales.title', {
-          reference: record.reference,
-      })}
-    </span>
+            {translate('resources.sales.title', {
+                reference: record.reference,
+            })}
+        </span>
     ) : null
 }
 
-const UserDetails = ({record}: { record: User }) => {
+const UserDetails = ({ record }: { record: User }) => {
     return (
         <div>
             <Typography
                 component={RouterLink}
                 color="primary"
                 to={`/api/v1/user/admin/${record?.id}`}
-                style={{textDecoration: 'none'}}
+                style={{ textDecoration: 'none' }}
             >
                 {record?.first_name} {record?.last_name}
             </Typography>
-            <br/>
+            <br />
             <Typography
                 component={Link}
                 color="primary"
                 href={`mailto:${record?.email}`}
-                style={{textDecoration: 'none'}}
+                style={{ textDecoration: 'none' }}
             >
                 {record?.email}
             </Typography>
@@ -59,7 +59,7 @@ const UserDetails = ({record}: { record: User }) => {
     )
 }
 
-const UserAddress = ({record}: { record: Address }) => {
+const UserAddress = ({ record }: { record: Address }) => {
     return (
         <div>
             <Typography>{record?.country.title}</Typography>
@@ -80,8 +80,8 @@ const OrderForm = () => {
         <Form>
             <Box maxWidth="50em">
                 <PrevNextButtons
-                    filterDefaultValues={{status: 'Ordered'}}
-                    sort={{field: 'date', order: 'DESC'}}
+                    filterDefaultValues={{ status: 'Ordered' }}
+                    sort={{ field: 'date', order: 'DESC' }}
                 />
                 <Card>
                     <CardContent>
@@ -93,12 +93,12 @@ const OrderForm = () => {
                                 <Grid container>
                                     <Grid item xs={12} sm={12} md={6}>
                                         <Labeled source="date">
-                                            <DateField source="date"/>
+                                            <DateField source="date" />
                                         </Labeled>
                                     </Grid>
                                     <Grid item xs={12} sm={12} md={6}>
                                         <Labeled source="reference">
-                                            <TextField source="reference"/>
+                                            <TextField source="reference" />
                                         </Labeled>
                                     </Grid>
                                 </Grid>
@@ -129,7 +129,10 @@ const OrderForm = () => {
                                     </Grid>
                                     <Grid item xs={12} sm={12} md={6}>
                                         <Box mt={2}>
-                                            <BooleanInput row={true} source="returned"/>
+                                            <BooleanInput
+                                                row={true}
+                                                source="returned"
+                                            />
                                         </Box>
                                     </Grid>
                                 </Grid>
@@ -138,33 +141,35 @@ const OrderForm = () => {
                                 <Typography variant="h6" gutterBottom>
                                     {translate('resources.sales.section.user')}
                                 </Typography>
-                                <UserDetails record={record.user}/>
-                                <Spacer/>
+                                <UserDetails record={record.user} />
+                                <Spacer />
 
                                 <Typography variant="h6" gutterBottom>
-                                    {translate('resources.sales.section.shipping_address')}
+                                    {translate(
+                                        'resources.sales.section.shipping_address',
+                                    )}
                                 </Typography>
-                                <UserAddress record={record.address}/>
+                                <UserAddress record={record.address} />
                             </Grid>
                         </Grid>
-                        <Spacer/>
+                        <Spacer />
 
                         <Typography variant="h6" gutterBottom>
                             {translate('resources.sales.section.items')}
                         </Typography>
                         <div>
-                            <Basket/>
+                            <Basket />
                         </div>
-                        <Spacer/>
+                        <Spacer />
 
                         <Typography variant="h6" gutterBottom>
                             {translate('resources.sales.section.total')}
                         </Typography>
                         <div>
-                            <Totals/>
+                            <Totals />
                         </div>
                     </CardContent>
-                    <Toolbar/>
+                    <Toolbar />
                 </Card>
             </Box>
         </Form>

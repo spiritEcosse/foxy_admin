@@ -4,17 +4,17 @@ import { useRecordContext } from 'react-admin'
 import { Item } from '../types'
 
 const ItemRefField = () => {
-  const record = useRecordContext<Item>()
-  return record ? (
-    <MuiLink component={Link} to={`/items/${record.id}`} underline="none">
-      {record.reference}
-    </MuiLink>
-  ) : null
+    const record = useRecordContext<Item>()
+    return record ? (
+        <MuiLink component={Link} to={`/items/${record.id}`} underline="none">
+            {record.reference}
+        </MuiLink>
+    ) : null
 }
 
 ItemRefField.defaultProps = {
-  source: 'id',
-  label: 'Reference',
+    source: 'id',
+    label: 'Reference',
 }
 
 export default ItemRefField

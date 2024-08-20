@@ -5,8 +5,8 @@ import PageEdit from './PageEdit'
 import PageCreate from './PageCreate'
 
 export default {
-  list: PageList,
-  edit: PageEdit,
-  create: PageCreate,
-  icon: PageIcon,
+    list: PageList,
+    edit: PageEdit,
+    create: PageCreate,
+    icon: PageIcon,
 }

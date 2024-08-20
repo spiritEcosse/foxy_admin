@@ -5,8 +5,8 @@ import FinancialDetailsEdit from './FinancialDetailsEdit'
 import PageCreate from './FinancialDetailsCreate'
 
 export default {
-  list: FinancialDetailsList,
-  edit: FinancialDetailsEdit,
-  create: PageCreate,
-  icon: Payment,
+    list: FinancialDetailsList,
+    edit: FinancialDetailsEdit,
+    create: PageCreate,
+    icon: Payment,
 }

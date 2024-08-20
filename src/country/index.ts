@@ -5,8 +5,8 @@ import CountryEdit from './CountryEdit'
 import CountryCreate from './CountryCreate'
 
 export default {
-  list: CountryList,
-  edit: CountryEdit,
-  create: CountryCreate,
-  icon: CountryIcon,
+    list: CountryList,
+    edit: CountryEdit,
+    create: CountryCreate,
+    icon: CountryIcon,
 }

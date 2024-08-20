@@ -1,4 +1,4 @@
-import {Identifier, RaRecord} from 'react-admin'
+import { Identifier, RaRecord } from 'react-admin'
 
 export type ThemeName = 'light' | 'dark'
 
@@ -110,9 +110,9 @@ export interface Order extends RaRecord {
 
 export interface SocialMediaType extends RaRecord {
     title: string
-    external_id: string;
-    social_url: string;
-    item_id: Identifier;
+    external_id: string
+    social_url: string
+    item_id: Identifier
     created_at: Date
     updated_at: Date
 }

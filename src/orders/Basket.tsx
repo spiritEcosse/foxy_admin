@@ -8,7 +8,7 @@ const Basket = () => {
     const record = useRecordContext<Order>()
     const translate = useTranslate()
 
-    if (!record || !record.items) return null
+    if (!record?.items) return null
 
     return (
         <Table>
@@ -32,7 +32,9 @@ const Basket = () => {
                 {record.items.map((item: ItemType) => (
                     <TableRow key={item.id}>
                         <TableCell>
-                            <Link to={`/api/v1/item/admin/${item.id}`}>{item.title}</Link>
+                            <Link to={`/api/v1/item/admin/${item.id}`}>
+                                {item.title}
+                            </Link>
                         </TableCell>
                         <TableCellRight>
                             {item.price.toLocaleString(undefined, {
@@ -42,10 +44,13 @@ const Basket = () => {
                         </TableCellRight>
                         <TableCellRight>{item.quantity}</TableCellRight>
                         <TableCellRight>
-                            {(item.price * item.quantity).toLocaleString(undefined, {
-                                style: 'currency',
-                                currency: 'EUR',
-                            })}
+                            {(item.price * item.quantity).toLocaleString(
+                                undefined,
+                                {
+                                    style: 'currency',
+                                    currency: 'EUR',
+                                },
+                            )}
                         </TableCellRight>
                     </TableRow>
                 ))}

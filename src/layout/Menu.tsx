@@ -1,7 +1,13 @@
-import {useState} from 'react'
+import { useState } from 'react'
 import Box from '@mui/material/Box'
 
-import {DashboardMenuItem, MenuItemLink, MenuProps, useSidebarState, useTranslate,} from 'react-admin'
+import {
+    DashboardMenuItem,
+    MenuItemLink,
+    MenuProps,
+    useSidebarState,
+    useTranslate,
+} from 'react-admin'
 
 import orders from '../orders'
 import items from '../items'
@@ -22,7 +28,7 @@ type MenuName =
     | 'menuShipping'
     | 'menuSocialMedia'
 
-const Menu = ({dense = false}: MenuProps) => {
+const Menu = ({ dense = false }: MenuProps) => {
     const [state, setState] = useState({
         menuCatalog: true,
         menuSales: true,
@@ -35,7 +41,7 @@ const Menu = ({dense = false}: MenuProps) => {
     const [open] = useSidebarState()
 
     const handleToggle = (menu: MenuName) => {
-        setState((state) => ({...state, [menu]: !state[menu]}))
+        setState((state) => ({ ...state, [menu]: !state[menu] }))
     }
 
     return (
@@ -51,30 +57,30 @@ const Menu = ({dense = false}: MenuProps) => {
                     }),
             }}
         >
-            <DashboardMenuItem/>
+            <DashboardMenuItem />
             <SubMenu
                 handleToggle={() => handleToggle('menuSales')}
                 isOpen={state.menuSales}
                 name="pos.menu.sales"
-                icon={<orders.icon/>}
+                icon={<orders.icon />}
                 dense={dense}
             >
                 <MenuItemLink
                     to="/api/v1/order/admin"
-                    state={{_scrollToTop: true}}
+                    state={{ _scrollToTop: true }}
                     primaryText={translate(`resources.sales.name`, {
                         smart_count: 2,
                     })}
-                    leftIcon={<orders.icon/>}
+                    leftIcon={<orders.icon />}
                     dense={dense}
                 />
                 <MenuItemLink
                     to="/api/v1/financialdetails/admin"
-                    state={{_scrollToTop: true}}
+                    state={{ _scrollToTop: true }}
                     primaryText={translate(`resources.financial_details.name`, {
                         smart_count: 2,
                     })}
-                    leftIcon={<financial_details.icon/>}
+                    leftIcon={<financial_details.icon />}
                     dense={dense}
                 />
             </SubMenu>
@@ -82,85 +88,85 @@ const Menu = ({dense = false}: MenuProps) => {
                 handleToggle={() => handleToggle('menuSales')}
                 isOpen={state.menuSocialMedia}
                 name="pos.menu.social_media"
-                icon={<social_media.icon/>}
+                icon={<social_media.icon />}
                 dense={dense}
             >
                 <MenuItemLink
                     to="/api/v1/socialmedia/admin"
-                    state={{_scrollToTop: true}}
+                    state={{ _scrollToTop: true }}
                     primaryText={translate(`resources.social_media.name`, {
                         smart_count: 2,
                     })}
-                    leftIcon={<social_media.icon/>}
+                    leftIcon={<social_media.icon />}
                     dense={dense}
                 />
             </SubMenu>
             <SubMenu
                 dense={dense}
                 handleToggle={() => handleToggle('menuPages')}
-                icon={<pages.icon/>}
+                icon={<pages.icon />}
                 isOpen={state.menuPages}
                 name="pos.menu.pages"
             >
                 <MenuItemLink
                     to="api/v1/page/admin"
-                    state={{_scrollToTop: true}}
+                    state={{ _scrollToTop: true }}
                     primaryText={translate(`resources.pages.name`, {
                         smart_count: 2,
                     })}
-                    leftIcon={<pages.icon/>}
+                    leftIcon={<pages.icon />}
                     dense={dense}
                 />
             </SubMenu>
             <SubMenu
                 dense={dense}
                 handleToggle={() => handleToggle('menuShipping')}
-                icon={<country.icon/>}
+                icon={<country.icon />}
                 isOpen={state.menuShipping}
                 name="pos.menu.shipping"
             >
                 <MenuItemLink
                     to="api/v1/country/admin"
-                    state={{_scrollToTop: true}}
+                    state={{ _scrollToTop: true }}
                     primaryText={translate(`resources.country.name`, {
                         smart_count: 2,
                     })}
-                    leftIcon={<country.icon/>}
+                    leftIcon={<country.icon />}
                     dense={dense}
                 />
                 <MenuItemLink
                     to="api/v1/shippingprofile/admin"
-                    state={{_scrollToTop: true}}
+                    state={{ _scrollToTop: true }}
                     primaryText={translate(`resources.shipping_profile.name`, {
                         smart_count: 2,
                     })}
-                    leftIcon={<shipping_profile.icon/>}
+                    leftIcon={<shipping_profile.icon />}
                     dense={dense}
                 />
                 <MenuItemLink
                     to="api/v1/shippingrate/admin"
-                    state={{_scrollToTop: true}}
+                    state={{ _scrollToTop: true }}
                     primaryText={translate(`resources.shipping_rate.name`, {
                         smart_count: 2,
                     })}
-                    leftIcon={<shipping_rate.icon/>}
+                    leftIcon={<shipping_rate.icon />}
                     dense={dense}
                 />
             </SubMenu>
             <SubMenu
                 dense={dense}
                 handleToggle={() => handleToggle('menuUsers')}
-                icon={<users.icon/>}
+                icon={<users.icon />}
                 isOpen={state.menuUsers}
                 name="pos.menu.users"
             >
                 <MenuItemLink
                     to="api/v1/user/admin"
-                    state={{_scrollToTop: true}}
+                    state={{ _scrollToTop: true }}
                     primaryText={translate(`resources.users.name`, {
                         smart_count: 2,
                     })}
-                    leftIcon={<users.icon/>}
+                    leftIcon={<users.icon />}
                     dense={dense}
                 />
             </SubMenu>
@@ -168,16 +174,16 @@ const Menu = ({dense = false}: MenuProps) => {
                 handleToggle={() => handleToggle('menuCatalog')}
                 isOpen={state.menuCatalog}
                 name="pos.menu.catalog"
-                icon={<items.icon/>}
+                icon={<items.icon />}
                 dense={dense}
             >
                 <MenuItemLink
                     to="api/v1/item/admin"
-                    state={{_scrollToTop: true}}
+                    state={{ _scrollToTop: true }}
                     primaryText={translate(`resources.items.name`, {
                         smart_count: 2,
                     })}
-                    leftIcon={<items.icon/>}
+                    leftIcon={<items.icon />}
                     dense={dense}
                 />
             </SubMenu>

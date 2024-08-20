@@ -36,8 +36,12 @@ const Spacer = () => <span style={{width: '1em'}}/>
 const VerticalSpacer = () => <span style={{height: '1em'}}/>
 
 const Dashboard = () => {
-    const isXSmall = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'))
-    const isSmall = useMediaQuery((theme: Theme) => theme.breakpoints.down('lg'))
+    const isXSmall = useMediaQuery((theme: Theme) =>
+        theme.breakpoints.down('sm'),
+    )
+    const isSmall = useMediaQuery((theme: Theme) =>
+        theme.breakpoints.down('lg'),
+    )
     const aMonthAgo = useMemo(() => subDays(startOfDay(new Date()), 30), [])
 
     const {data: orders} = useGetList<Order>('commands', {
@@ -80,7 +84,7 @@ const Dashboard = () => {
         }
     }, [orders])
 
-    const {nbNewOrders, pendingOrders, revenue, recentOrders} = aggregation
+    const {nbNewOrders, pendingOrders, revenue} = aggregation
     return isXSmall ? (
         <div>
             <div style={styles.flexColumn as CSSProperties}>

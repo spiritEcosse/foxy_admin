@@ -5,23 +5,23 @@ import { Order } from '../types'
 import { PendingOrder } from './PendingOrder'
 
 interface Props {
-  orders?: Order[]
+    orders?: Order[]
 }
 
 const PendingOrders = (props: Props) => {
-  const { orders = [] } = props
-  const translate = useTranslate()
+    const { orders = [] } = props
+    const translate = useTranslate()
 
-  return (
-    <Card sx={{ flex: 1 }}>
-      <CardHeader title={translate('pos.dashboard.pending_orders')} />
-      <List dense={true}>
-        {orders.map((record) => (
-          <PendingOrder key={record.id} order={record} />
-        ))}
-      </List>
-    </Card>
-  )
+    return (
+        <Card sx={{ flex: 1 }}>
+            <CardHeader title={translate('pos.dashboard.pending_orders')} />
+            <List dense={true}>
+                {orders.map((record) => (
+                    <PendingOrder key={record.id} order={record} />
+                ))}
+            </List>
+        </Card>
+    )
 }
 
 export default PendingOrders

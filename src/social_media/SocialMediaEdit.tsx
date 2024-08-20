@@ -1,10 +1,10 @@
-import {SocialMediaEditDetails} from './SocialMediaEditDetails'
-import {Edit, EditProps, SimpleForm} from 'react-admin'
+import { SocialMediaEditDetails } from './SocialMediaEditDetails'
+import { Edit, EditProps, SimpleForm } from 'react-admin'
 
 const SocialMediaEdit = (props: EditProps) => (
     <Edit {...props}>
         <SimpleForm>
-            <SocialMediaEditDetails/>
+            <SocialMediaEditDetails />
         </SimpleForm>
     </Edit>
 )

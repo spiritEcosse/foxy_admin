@@ -1,21 +1,21 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import {
-  DeleteButton,
-  Edit,
-  required,
-  SaveButton,
-  TabbedForm,
-  Toolbar,
-  useDataProvider,
-  useNotify,
-  useRecordContext,
-  useRedirect,
-  useUpdate,
+    DeleteButton,
+    Edit,
+    required,
+    SaveButton,
+    TabbedForm,
+    Toolbar,
+    useDataProvider,
+    useNotify,
+    useRecordContext,
+    useRedirect,
+    useUpdate,
 } from 'react-admin'
-import {ItemEditDetails} from './ItemEditDetails'
-import {ItemType, MediaType} from '../types'
+import { ItemEditDetails } from './ItemEditDetails'
+import { ItemType, MediaType } from '../types'
 import ItemMediaList from './ItemMediaList'
-import {HandleSubmit} from './HandleSubmit'
+import { HandleSubmit } from './HandleSubmit'
 
 const RichTextInput = React.lazy(() =>
     import('ra-input-rich-text').then((module) => ({
@@ -30,8 +30,8 @@ const ProductTitle = () => {
 
 const CustomToolbar = (props) => (
     <Toolbar {...props}>
-        <SaveButton alwaysEnable/>
-        <DeleteButton/>
+        <SaveButton alwaysEnable />
+        <DeleteButton />
     </Toolbar>
 )
 
@@ -59,22 +59,29 @@ const ItemEdit = () => {
     }
 
     return (
-        <Edit title={<ProductTitle/>}>
-            <TabbedForm onSubmit={onSubmit} toolbar={<CustomToolbar/>}>
+        <Edit title={<ProductTitle />}>
+            <TabbedForm onSubmit={onSubmit} toolbar={<CustomToolbar />}>
                 <TabbedForm.Tab label="resources.items.tabs.images">
                     <ItemMediaList
                         setRecord={setRecord}
                         setRecordsToDelete={setRecordsToDelete}
                     />
                 </TabbedForm.Tab>
-                <TabbedForm.Tab label="resources.items.tabs.details" path="details">
-                    <ItemEditDetails/>
+                <TabbedForm.Tab
+                    label="resources.items.tabs.details"
+                    path="details"
+                >
+                    <ItemEditDetails />
                 </TabbedForm.Tab>
                 <TabbedForm.Tab
                     label="resources.items.tabs.description"
                     path="description"
                 >
-                    <RichTextInput source="description" label="" validate={req}/>
+                    <RichTextInput
+                        source="description"
+                        label=""
+                        validate={req}
+                    />
                 </TabbedForm.Tab>
             </TabbedForm>
         </Edit>

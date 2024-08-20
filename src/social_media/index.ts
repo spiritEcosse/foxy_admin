@@ -1,4 +1,4 @@
-import PublicIcon from '@mui/icons-material/Public';
+import PublicIcon from '@mui/icons-material/Public'
 
 import SocialMediaList from './SocialMediaList'
 import SocialMediaEdit from './SocialMediaEdit'

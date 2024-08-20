@@ -1,12 +1,20 @@
-import {Card, CardContent, CardHeader} from '@mui/material'
-import {Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis,} from 'recharts'
-import {useTranslate} from 'react-admin'
-import {addDays, format, subDays} from 'date-fns'
+import { Card, CardContent, CardHeader } from '@mui/material'
+import {
+    Area,
+    AreaChart,
+    CartesianGrid,
+    ResponsiveContainer,
+    Tooltip,
+    XAxis,
+    YAxis,
+} from 'recharts'
+import { useTranslate } from 'react-admin'
+import { addDays, format, subDays } from 'date-fns'
 
-import {Order} from '../types'
+import { Order } from '../types'
 
 const lastDay = new Date()
-const lastMonthDays = Array.from({length: 30}, (_, i) => subDays(lastDay, i))
+const lastMonthDays = Array.from({ length: 30 }, (_, i) => subDays(lastDay, i))
 const aMonthAgo = subDays(new Date(), 30)
 
 const dateFormatter = (date: number): string =>
@@ -33,21 +41,35 @@ const getRevenuePerDay = (orders: Order[]): TotalByDay[] => {
 }
 
 const OrderChart = (props: { orders?: Order[] }) => {
-    const {orders} = props
+    const { orders } = props
     const translate = useTranslate()
     if (!orders) return null
 
     return (
         <Card>
-            <CardHeader title={translate('pos.dashboard.month_history')}/>
+            <CardHeader title={translate('pos.dashboard.month_history')} />
             <CardContent>
-                <div style={{width: '100%', height: 300}}>
+                <div style={{ width: '100%', height: 300 }}>
                     <ResponsiveContainer>
                         <AreaChart data={getRevenuePerDay(orders)}>
                             <defs>
-                                <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-                                    <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8}/>
-                                    <stop offset="95%" stopColor="#8884d8" stopOpacity={0}/>
+                                <linearGradient
+                                    id="colorUv"
+                                    x1="0"
+                                    y1="0"
+                                    x2="0"
+                                    y2="1"
+                                >
+                                    <stop
+                                        offset="5%"
+                                        stopColor="#8884d8"
+                                        stopOpacity={0.8}
+                                    />
+                                    <stop
+                                        offset="95%"
+                                        stopColor="#8884d8"
+                                        stopOpacity={0}
+                                    />
                                 </linearGradient>
                             </defs>
                             <XAxis
@@ -55,20 +77,25 @@ const OrderChart = (props: { orders?: Order[] }) => {
                                 name="Date"
                                 type="number"
                                 scale="time"
-                                domain={[addDays(aMonthAgo, 1).getTime(), new Date().getTime()]}
+                                domain={[
+                                    addDays(aMonthAgo, 1).getTime(),
+                                    new Date().getTime(),
+                                ]}
                                 tickFormatter={dateFormatter}
                             />
-                            <YAxis dataKey="total" name="Revenue" unit="€"/>
-                            <CartesianGrid strokeDasharray="3 3"/>
+                            <YAxis dataKey="total" name="Revenue" unit="€" />
+                            <CartesianGrid strokeDasharray="3 3" />
                             <Tooltip
-                                cursor={{strokeDasharray: '3 3'}}
+                                cursor={{ strokeDasharray: '3 3' }}
                                 formatter={(value: any) =>
                                     new Intl.NumberFormat(undefined, {
                                         style: 'currency',
                                         currency: 'EUR',
                                     }).format(value)
                                 }
-                                labelFormatter={(label: any) => dateFormatter(label)}
+                                labelFormatter={(label: any) =>
+                                    dateFormatter(label)
+                                }
                             />
                             <Area
                                 type="monotone"
