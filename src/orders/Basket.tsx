@@ -1,8 +1,8 @@
-import {Table, TableBody, TableCell, TableHead, TableRow} from '@mui/material'
-import {Link, useRecordContext, useTranslate} from 'react-admin'
+import { Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material'
+import { Link, useRecordContext, useTranslate } from 'react-admin'
 
-import {ItemType, Order} from '../types'
-import {TableCellRight} from './TableCellRight'
+import { ItemType, Order } from '../types'
+import { TableCellRight } from './TableCellRight'
 
 const Basket = () => {
     const record = useRecordContext<Order>()

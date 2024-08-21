@@ -1,5 +1,5 @@
 import jsonServerProvider from 'ra-data-json-server'
-import {fetchUtils, GetListParams} from 'react-admin'
+import { fetchUtils, GetListParams } from 'react-admin'
 
 const httpClient = async (url: string, options: fetchUtils.Options = {}) => {
     const customHeaders = (options.headers ||
@@ -20,7 +20,9 @@ const httpClient = async (url: string, options: fetchUtils.Options = {}) => {
             window.dispatchEvent(new Event('storage'))
             return Promise.reject(new Error('Authentication failed'))
         }
-        return Promise.reject(error instanceof Error ? error : new Error(String(error)))
+        return Promise.reject(
+            error instanceof Error ? error : new Error(String(error)),
+        )
     }
 }
 const dataProviderBase = jsonServerProvider(
@@ -42,12 +44,12 @@ export const dataProvider = {
                 'Content-Type': 'application/json',
             }),
         }
-        const {json} = await httpClient(url, options)
-        return {data: json}
+        const { json } = await httpClient(url, options)
+        return { data: json }
     },
     getList: async (resource: string, params: GetListParams) => {
-        const {page, perPage} = params.pagination
-        const {field, order} = params.sort
+        const { page, perPage } = params.pagination
+        const { field, order } = params.sort
         const query = {
             ...fetchUtils.flattenObject(params.filter),
             sort: field,
@@ -59,7 +61,7 @@ export const dataProvider = {
             resource,
         )}?${fetchUtils.queryParameters(query)}`
 
-        const {json} = await httpClient(url)
+        const { json } = await httpClient(url)
         return json
     },
     getMany: async (resource: string, params: GetListParams) => {
@@ -69,7 +71,7 @@ export const dataProvider = {
         const url = `${dataProvider.getUrl(
             resource,
         )}?${fetchUtils.queryParameters(query)}`
-        const {json} = await httpClient(url)
+        const { json } = await httpClient(url)
         if (json.error) {
             throw new Error(json.error)
         }
@@ -79,17 +81,17 @@ export const dataProvider = {
         if (resource === 'api/v1/item/admin') {
             // Custom handling for /api/v1/item/admin
             const url = `${dataProvider.getUrl(resource)}/${params.id}`
-            const {json} = await httpClient(url)
+            const { json } = await httpClient(url)
             if (json.error) {
                 throw new Error(json.error)
             }
             let item = json['_item']
             item.media = json['_media']
-            return {data: item}
+            return { data: item }
         } else if (resource === 'api/v1/order/admin') {
             // Custom handling for /api/v1/item/admin
             const url = `${dataProvider.getUrl(resource)}/${params.id}`
-            const {json} = await httpClient(url)
+            const { json } = await httpClient(url)
             if (json.error) {
                 throw new Error(json.error)
             }
@@ -97,7 +99,7 @@ export const dataProvider = {
             item.items = json['_items']
             item.address = json['_address']
             item.user = json['_user']
-            return {data: item}
+            return { data: item }
         } else {
             // Fallback to the default getOne method for other resources
             return dataProviderBase.getOne(resource, params)
@@ -111,10 +113,10 @@ export const dataProvider = {
         const options = {
             method: 'PUT',
             body: JSON.stringify(params),
-            headers: new Headers({'Content-Type': 'application/json'}),
+            headers: new Headers({ 'Content-Type': 'application/json' }),
         }
-        const {json} = await httpClient(url, options)
-        return {data: json}
+        const { json } = await httpClient(url, options)
+        return { data: json }
     },
     updateItem: async (
         resource: string,
@@ -124,10 +126,10 @@ export const dataProvider = {
         const options = {
             method: 'PUT',
             body: JSON.stringify(params.data),
-            headers: new Headers({'Content-Type': 'application/json'}),
+            headers: new Headers({ 'Content-Type': 'application/json' }),
         }
-        const {json} = await httpClient(url, options)
-        return {data: json}
+        const { json } = await httpClient(url, options)
+        return { data: json }
     },
     multiCreate: async (
         resource: string,
@@ -137,10 +139,10 @@ export const dataProvider = {
         const options = {
             method: 'POST',
             body: JSON.stringify(params),
-            headers: new Headers({'Content-Type': 'application/json'}),
+            headers: new Headers({ 'Content-Type': 'application/json' }),
         }
-        const {json} = await httpClient(url, options)
-        return {data: json}
+        const { json } = await httpClient(url, options)
+        return { data: json }
     },
     multiDelete: async (
         resource: string,
@@ -150,9 +152,9 @@ export const dataProvider = {
         const options = {
             method: 'DELETE',
             body: JSON.stringify(params),
-            headers: new Headers({'Content-Type': 'application/json'}),
+            headers: new Headers({ 'Content-Type': 'application/json' }),
         }
-        const {json} = await httpClient(url, options)
-        return {data: json}
+        const { json } = await httpClient(url, options)
+        return { data: json }
     },
 }
