@@ -7,7 +7,6 @@ import Welcome from './Welcome'
 import MonthlyRevenue from './MonthlyRevenue'
 import NbNewOrders from './NbNewOrders'
 import PendingOrders from './PendingOrders'
-import NewCustomers from './NewCustomers'
 
 import {Order} from '../types'
 
@@ -129,7 +128,6 @@ const Dashboard = () => {
                 <div style={styles.rightCol}>
                     <div style={styles.flex}>
                         <Spacer/>
-                        <NewCustomers/>
                     </div>
                 </div>
             </div>

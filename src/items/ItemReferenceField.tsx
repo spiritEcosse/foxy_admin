@@ -2,15 +2,10 @@ import React from 'react'
 import {Button, Grid} from '@mui/material'
 import {useRecordContext, useRedirect} from 'react-admin'
 
-interface Props {
-    basePath: string
-}
-
-const ItemReferenceField: React.FC<Props> = ({
-                                                 basePath = 'api/v1/item/admin',
-                                             }) => {
+const ItemReferenceField: React.FC = () => {
     const record = useRecordContext()
     const redirect = useRedirect()
+    const basePath = 'api/v1/item/admin';
 
     return (
         <Grid>
