@@ -1,46 +1,48 @@
-import React from 'react';
+import React, { useState } from 'react'
 import {
+    DeleteButton,
     Edit,
     required,
-    TabbedForm,
-    useRecordContext,
-    Toolbar,
     SaveButton,
-    DeleteButton, useRedirect,
-} from 'react-admin';
-import { ItemEditDetails } from './ItemEditDetails';
-import { ItemType, MediaType } from '../types';
-import ItemMediaList from "./ItemMediaList";
-import { useState} from "react";
-import {HandleSubmit} from "./HandleSubmit";
-import {useDataProvider, useNotify, useUpdate} from 'react-admin';
+    TabbedForm,
+    Toolbar,
+    useDataProvider,
+    useNotify,
+    useRecordContext,
+    useRedirect,
+    useUpdate,
+} from 'react-admin'
+import { ItemEditDetails } from './ItemEditDetails'
+import { ItemType, MediaType } from '../types'
+import ItemMediaList from './ItemMediaList'
+import { HandleSubmit } from './HandleSubmit'
 
 const RichTextInput = React.lazy(() =>
-    import('ra-input-rich-text').then(module => ({
+    import('ra-input-rich-text').then((module) => ({
         default: module.RichTextInput,
-    }))
-);
+    })),
+)
 
 const ProductTitle = () => {
-    const record = useRecordContext<ItemType>();
-    return record ? <span>Poster {record.title}</span> : null;
-};
+    const record = useRecordContext<ItemType>()
+    return record ? <span>Poster {record.title}</span> : null
+}
 
-const CustomToolbar = props => (
-    <Toolbar {...props} >
+const CustomToolbar = (props) => (
+    <Toolbar {...props}>
         <SaveButton alwaysEnable />
         <DeleteButton />
     </Toolbar>
-);
+)
 
 const ItemEdit = () => {
-    const initialRecord = useRecordContext<ItemType>();
-    const [record, setRecord] = useState<ItemType>(initialRecord);
-    const [recordsToDelete, setRecordsToDelete] = useState<MediaType[]>([]);
-    const [updateItem] = useUpdate();
-    const notify = useNotify();
-    const dataProvider = useDataProvider();
-    const redirect = useRedirect();
+    const initialRecord = useRecordContext<ItemType>()
+    const [record, setRecord] = useState<ItemType>(initialRecord)
+    const [recordsToDelete, setRecordsToDelete] = useState<MediaType[]>([])
+    const [updateItem] = useUpdate()
+    const notify = useNotify()
+    const dataProvider = useDataProvider()
+    const redirect = useRedirect()
 
     const onSubmit = async (data: any) => {
         await HandleSubmit(
@@ -52,16 +54,14 @@ const ItemEdit = () => {
             updateItem,
             notify,
             dataProvider,
-            redirect
-            );
-    };
+            redirect,
+        )
+    }
 
     return (
-        <Edit title={<ProductTitle/>}>
+        <Edit title={<ProductTitle />}>
             <TabbedForm onSubmit={onSubmit} toolbar={<CustomToolbar />}>
-                <TabbedForm.Tab
-                    label="resources.items.tabs.images"
-                >
+                <TabbedForm.Tab label="resources.items.tabs.images">
                     <ItemMediaList
                         setRecord={setRecord}
                         setRecordsToDelete={setRecordsToDelete}
@@ -71,19 +71,23 @@ const ItemEdit = () => {
                     label="resources.items.tabs.details"
                     path="details"
                 >
-                    <ItemEditDetails/>
+                    <ItemEditDetails />
                 </TabbedForm.Tab>
                 <TabbedForm.Tab
                     label="resources.items.tabs.description"
                     path="description"
                 >
-                    <RichTextInput source="description" label="" validate={req}/>
+                    <RichTextInput
+                        source="description"
+                        label=""
+                        validate={req}
+                    />
                 </TabbedForm.Tab>
             </TabbedForm>
         </Edit>
-    );
-};
+    )
+}
 
-const req = [required()];
+const req = [required()]
 
-export default ItemEdit;
+export default ItemEdit

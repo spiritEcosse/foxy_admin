@@ -1,18 +1,18 @@
-import { Box, Card, CardActions, Button, Typography } from '@mui/material';
-import HomeIcon from '@mui/icons-material/Home';
-import CodeIcon from '@mui/icons-material/Code';
-import { useTranslate } from 'react-admin';
+import { Box, Card, CardActions, Button, Typography } from '@mui/material'
+import HomeIcon from '@mui/icons-material/Home'
+import CodeIcon from '@mui/icons-material/Code'
+import { useTranslate } from 'react-admin'
 
-import publishArticleImage from './welcome_illustration.svg';
+import publishArticleImage from './welcome_illustration.svg'
 
 const Welcome = () => {
-    const translate = useTranslate();
+    const translate = useTranslate()
     return (
         <Card
             sx={{
-                background: theme =>
+                background: (theme) =>
                     `linear-gradient(45deg, ${theme.palette.secondary.dark} 0%, ${theme.palette.secondary.light} 50%, ${theme.palette.primary.dark} 100%)`,
-                color: theme => theme.palette.primary.contrastText,
+                color: (theme) => theme.palette.primary.contrastText,
                 padding: '20px',
                 marginTop: 2,
                 marginBottom: '1em',
@@ -67,7 +67,7 @@ const Welcome = () => {
                 />
             </Box>
         </Card>
-    );
-};
+    )
+}
 
-export default Welcome;
+export default Welcome

@@ -1,5 +1,5 @@
-import {TextInput, DateTimeInput, required} from 'react-admin';
-import { Grid } from '@mui/material';
+import { TextInput, DateTimeInput, required } from 'react-admin'
+import { Grid } from '@mui/material'
 
 export const CountryEditDetails = () => {
     return (
@@ -12,6 +12,5 @@ export const CountryEditDetails = () => {
                 <DateTimeInput source="updated_at" />
             </Grid>
         </Grid>
-    );
-};
-
+    )
+}

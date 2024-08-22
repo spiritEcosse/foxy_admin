@@ -1,15 +1,15 @@
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { useTranslate } from 'react-admin';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
+import { useTranslate } from 'react-admin'
 
-import CardWithIcon from './CardWithIcon';
+import CardWithIcon from './CardWithIcon'
 
 interface Props {
-    value?: number;
+    value?: number
 }
 
 const NbNewOrders = (props: Props) => {
-    const { value } = props;
-    const translate = useTranslate();
+    const { value } = props
+    const translate = useTranslate()
     return (
         <CardWithIcon
             to="/commands"
@@ -17,7 +17,7 @@ const NbNewOrders = (props: Props) => {
             title={translate('pos.dashboard.new_orders')}
             subtitle={value}
         />
-    );
-};
+    )
+}
 
-export default NbNewOrders;
+export default NbNewOrders

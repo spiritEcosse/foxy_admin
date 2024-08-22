@@ -1,14 +1,14 @@
-import { FC, createElement } from 'react';
-import { Card, Box, Typography, Divider } from '@mui/material';
-import { Link, To } from 'react-router-dom';
-import { ReactNode } from 'react';
+import { FC, createElement } from 'react'
+import { Card, Box, Typography, Divider } from '@mui/material'
+import { Link, To } from 'react-router-dom'
+import { ReactNode } from 'react'
 
 interface Props {
-    icon: FC<any>;
-    to: To;
-    title?: string;
-    subtitle?: ReactNode;
-    children?: ReactNode;
+    icon: FC<any>
+    to: To
+    title?: string
+    subtitle?: ReactNode
+    children?: ReactNode
 }
 
 const CardWithIcon = ({ icon, title, subtitle, to, children }: Props) => (
@@ -65,6 +65,6 @@ const CardWithIcon = ({ icon, title, subtitle, to, children }: Props) => (
         {children && <Divider />}
         {children}
     </Card>
-);
+)
 
-export default CardWithIcon;
+export default CardWithIcon

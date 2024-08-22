@@ -1,23 +1,23 @@
-import inflection from 'inflection';
-import { Card, CardContent } from '@mui/material';
-import LocalOfferIcon from '@mui/icons-material/LocalOfferOutlined';
-import BarChartIcon from '@mui/icons-material/BarChart';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import inflection from 'inflection'
+import { Card, CardContent } from '@mui/material'
+import LocalOfferIcon from '@mui/icons-material/LocalOfferOutlined'
+import BarChartIcon from '@mui/icons-material/BarChart'
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney'
 import {
     FilterList,
     FilterListItem,
     FilterLiveSearch,
     SavedQueriesList,
     useGetList,
-} from 'react-admin';
+} from 'react-admin'
 
-import { Category } from '../types';
+import { Category } from '../types'
 
 const Aside = () => {
     const { data } = useGetList<Category>('categories', {
         pagination: { page: 1, perPage: 100 },
         sort: { field: 'name', order: 'ASC' },
-    });
+    })
 
     return (
         <Card
@@ -34,10 +34,7 @@ const Aside = () => {
 
                 <SavedQueriesList />
 
-                <FilterList
-                    label="sales"
-                    icon={<AttachMoneyIcon />}
-                >
+                <FilterList label="sales" icon={<AttachMoneyIcon />}>
                     <FilterListItem
                         label="best_sellers"
                         value={{
@@ -72,10 +69,7 @@ const Aside = () => {
                     />
                 </FilterList>
 
-                <FilterList
-                    label="stock"
-                    icon={<BarChartIcon />}
-                >
+                <FilterList label="stock" icon={<BarChartIcon />}>
                     <FilterListItem
                         label="no_stock"
                         value={{
@@ -110,10 +104,7 @@ const Aside = () => {
                     />
                 </FilterList>
 
-                <FilterList
-                    label="categories"
-                    icon={<LocalOfferIcon />}
-                >
+                <FilterList label="categories" icon={<LocalOfferIcon />}>
                     {data &&
                         data.map((record: any) => (
                             <FilterListItem
@@ -125,7 +116,7 @@ const Aside = () => {
                 </FilterList>
             </CardContent>
         </Card>
-    );
-};
+    )
+}
 
-export default Aside;
+export default Aside

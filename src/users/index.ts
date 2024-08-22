@@ -1,11 +1,11 @@
-import PersonIcon from '@mui/icons-material/Person';
-import UserList from './UserList';
-import UserEdit from './UserEdit';
-import UserCreate from "./UserCreate";
+import PersonIcon from '@mui/icons-material/Person'
+import UserList from './UserList'
+import UserEdit from './UserEdit'
+import UserCreate from './UserCreate'
 
 export default {
     list: UserList,
     edit: UserEdit,
     create: UserCreate,
     icon: PersonIcon,
-};
+}

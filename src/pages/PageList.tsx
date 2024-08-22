@@ -3,14 +3,12 @@ import {
     Datagrid,
     TextField,
     DateField,
-    NumberField, BooleanField,
-} from 'react-admin';
+    NumberField,
+    BooleanField,
+} from 'react-admin'
 
 const PageList = () => (
-    <List
-        perPage={25}
-        sort={{ field: 'updated_at', order: 'DESC' }}
-    >
+    <List perPage={25} sort={{ field: 'updated_at', order: 'DESC' }}>
         <Datagrid
             rowClick="edit"
             sx={{
@@ -18,9 +16,6 @@ const PageList = () => (
                     display: { xs: 'none', md: 'table-cell' },
                 },
                 '& .column-total_ex_taxes': {
-                    display: { xs: 'none', md: 'table-cell' },
-                },
-                '& .column-delivery_fees': {
                     display: { xs: 'none', md: 'table-cell' },
                 },
                 '& .column-taxes': {
@@ -37,6 +32,6 @@ const PageList = () => (
             <DateField source="updated_at" />
         </Datagrid>
     </List>
-);
+)
 
-export default PageList;
+export default PageList

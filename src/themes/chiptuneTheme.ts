@@ -1,4 +1,4 @@
-import { RaThemeOptions } from 'react-admin';
+import { RaThemeOptions } from 'react-admin'
 
 /** Just for fun */
 
@@ -16,4 +16,4 @@ export const chiptuneTheme: RaThemeOptions = {
     typography: {
         fontFamily: `'Pixelify Sans', cursive`,
     },
-};
+}

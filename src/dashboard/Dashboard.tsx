@@ -1,28 +1,26 @@
-import { useMemo, CSSProperties } from 'react';
-import { useGetList } from 'react-admin';
-import { useMediaQuery, Theme } from '@mui/material';
-import { subDays, startOfDay } from 'date-fns';
+import { CSSProperties, useMemo } from 'react'
+import { useGetList } from 'react-admin'
+import { Theme, useMediaQuery } from '@mui/material'
+import { startOfDay, subDays } from 'date-fns'
 
-import Welcome from './Welcome';
-import MonthlyRevenue from './MonthlyRevenue';
-import NbNewOrders from './NbNewOrders';
-import PendingOrders from './PendingOrders';
-import PendingReviews from './PendingReviews';
-import NewCustomers from './NewCustomers';
+import Welcome from './Welcome'
+import MonthlyRevenue from './MonthlyRevenue'
+import NbNewOrders from './NbNewOrders'
+import PendingOrders from './PendingOrders'
 
-import { Order } from '../types';
+import { Order } from '../types'
 
 interface OrderStats {
-    revenue: number;
-    nbNewOrders: number;
-    pendingOrders: Order[];
+    revenue: number
+    nbNewOrders: number
+    pendingOrders: Order[]
 }
 
 interface State {
-    nbNewOrders?: number;
-    pendingOrders?: Order[];
-    recentOrders?: Order[];
-    revenue?: string;
+    nbNewOrders?: number
+    pendingOrders?: Order[]
+    recentOrders?: Order[]
+    revenue?: string
 }
 
 const styles = {
@@ -31,61 +29,61 @@ const styles = {
     leftCol: { flex: 1, marginRight: '0.5em' },
     rightCol: { flex: 1, marginLeft: '0.5em' },
     singleCol: { marginTop: '1em', marginBottom: '1em' },
-};
+}
 
-const Spacer = () => <span style={{ width: '1em' }} />;
-const VerticalSpacer = () => <span style={{ height: '1em' }} />;
+const Spacer = () => <span style={{ width: '1em' }} />
+const VerticalSpacer = () => <span style={{ height: '1em' }} />
 
 const Dashboard = () => {
     const isXSmall = useMediaQuery((theme: Theme) =>
-        theme.breakpoints.down('sm')
-    );
+        theme.breakpoints.down('sm'),
+    )
     const isSmall = useMediaQuery((theme: Theme) =>
-        theme.breakpoints.down('lg')
-    );
-    const aMonthAgo = useMemo(() => subDays(startOfDay(new Date()), 30), []);
+        theme.breakpoints.down('lg'),
+    )
+    const aMonthAgo = useMemo(() => subDays(startOfDay(new Date()), 30), [])
 
     const { data: orders } = useGetList<Order>('commands', {
         filter: { date_gte: aMonthAgo.toISOString() },
         sort: { field: 'date', order: 'DESC' },
         pagination: { page: 1, perPage: 50 },
-    });
+    })
 
     const aggregation = useMemo<State>(() => {
-        if (!orders) return {};
+        if (!orders) return {}
         const aggregations = orders
-            .filter(order => order.status !== 'cancelled')
+            .filter((order) => order.status !== 'Cancelled')
             .reduce(
                 (stats: OrderStats, order) => {
-                    if (order.status !== 'cancelled') {
-                        stats.revenue += order.total;
-                        stats.nbNewOrders++;
+                    if (order.status !== 'Cancelled') {
+                        stats.revenue += order.total
+                        stats.nbNewOrders++
                     }
-                    if (order.status === 'ordered') {
-                        stats.pendingOrders.push(order);
+                    if (order.status === 'Ordered') {
+                        stats.pendingOrders.push(order)
                     }
-                    return stats;
+                    return stats
                 },
                 {
                     revenue: 0,
                     nbNewOrders: 0,
                     pendingOrders: [],
-                }
-            );
+                },
+            )
         return {
             recentOrders: orders,
             revenue: aggregations.revenue.toLocaleString(undefined, {
                 style: 'currency',
-                currency: 'USD',
+                currency: 'EUR',
                 minimumFractionDigits: 0,
                 maximumFractionDigits: 0,
             }),
             nbNewOrders: aggregations.nbNewOrders,
             pendingOrders: aggregations.pendingOrders,
-        };
-    }, [orders]);
+        }
+    }, [orders])
 
-    const { nbNewOrders, pendingOrders, revenue, recentOrders } = aggregation;
+    const { nbNewOrders, pendingOrders, revenue } = aggregation
     return isXSmall ? (
         <div>
             <div style={styles.flexColumn as CSSProperties}>
@@ -107,8 +105,7 @@ const Dashboard = () => {
                 <Spacer />
                 <NbNewOrders value={nbNewOrders} />
             </div>
-            <div style={styles.singleCol}>
-            </div>
+            <div style={styles.singleCol}></div>
             <div style={styles.singleCol}>
                 <PendingOrders orders={pendingOrders} />
             </div>
@@ -123,8 +120,7 @@ const Dashboard = () => {
                         <Spacer />
                         <NbNewOrders value={nbNewOrders} />
                     </div>
-                    <div style={styles.singleCol}>
-                    </div>
+                    <div style={styles.singleCol}></div>
                     <div style={styles.singleCol}>
                         <PendingOrders orders={pendingOrders} />
                     </div>
@@ -132,12 +128,11 @@ const Dashboard = () => {
                 <div style={styles.rightCol}>
                     <div style={styles.flex}>
                         <Spacer />
-                        <NewCustomers />
                     </div>
                 </div>
             </div>
         </>
-    );
-};
+    )
+}
 
-export default Dashboard;
+export default Dashboard

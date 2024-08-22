@@ -1,10 +1,10 @@
-import { Card, CardMedia } from '@mui/material';
-import { useRecordContext } from 'react-admin';
-import { ItemType } from '../types';
+import { Card, CardMedia } from '@mui/material'
+import { useRecordContext } from 'react-admin'
+import { ItemType } from '../types'
 
 const Poster = () => {
-    const record = useRecordContext<ItemType>();
-    if (!record) return null;
+    const record = useRecordContext<ItemType>()
+    if (!record) return null
     return (
         <Card sx={{ display: 'inline-block' }}>
             <CardMedia
@@ -14,7 +14,7 @@ const Poster = () => {
                 sx={{ maxWidth: '42em', maxHeight: '15em' }}
             />
         </Card>
-    );
-};
+    )
+}
 
-export default Poster;
+export default Poster
