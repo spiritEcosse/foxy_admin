@@ -5,23 +5,23 @@ import {
     ListItemText,
     Avatar,
     Box,
-} from '@mui/material';
-import { Link } from 'react-router-dom';
-import { useTranslate, useReference } from 'react-admin';
+} from '@mui/material'
+import { Link } from 'react-router-dom'
+import { useTranslate, useReference } from 'react-admin'
 
-import { Customer, Order } from '../types';
+import { Customer, Order } from '../types'
 
 interface Props {
-    order: Order;
+    order: Order
 }
 
 export const PendingOrder = (props: Props) => {
-    const { order } = props;
-    const translate = useTranslate();
+    const { order } = props
+    const translate = useTranslate()
     const { referenceRecord: customer, isLoading } = useReference<Customer>({
         reference: 'customers',
         id: order.customer_id,
-    });
+    })
 
     return (
         <ListItem button component={Link} to={`/commands/${order.id}`}>
@@ -58,5 +58,5 @@ export const PendingOrder = (props: Props) => {
                 </Box>
             </ListItemSecondaryAction>
         </ListItem>
-    );
-};
+    )
+}

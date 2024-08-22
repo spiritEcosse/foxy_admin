@@ -1,54 +1,54 @@
-import { useTheme, useMediaQuery } from '@mui/material';
-import { Box, ImageList, ImageListItem, ImageListItemBar } from '@mui/material';
-import { useCreatePath, NumberField, useListContext } from 'react-admin';
-import { Link } from 'react-router-dom';
+import { useTheme, useMediaQuery } from '@mui/material'
+import { Box, ImageList, ImageListItem, ImageListItemBar } from '@mui/material'
+import { useCreatePath, NumberField, useListContext } from 'react-admin'
+import { Link } from 'react-router-dom'
 
 const GridList = () => {
-    const { isLoading } = useListContext();
-    return isLoading ? <LoadingGridList /> : <LoadedGridList />;
-};
+    const { isLoading } = useListContext()
+    return isLoading ? <LoadingGridList /> : <LoadedGridList />
+}
 
 const useColsForWidth = () => {
-    const theme = useTheme();
-    const sm = useMediaQuery(theme.breakpoints.up('sm'));
-    const md = useMediaQuery(theme.breakpoints.up('md'));
-    const lg = useMediaQuery(theme.breakpoints.up('lg'));
-    const xl = useMediaQuery(theme.breakpoints.up('xl'));
+    const theme = useTheme()
+    const sm = useMediaQuery(theme.breakpoints.up('sm'))
+    const md = useMediaQuery(theme.breakpoints.up('md'))
+    const lg = useMediaQuery(theme.breakpoints.up('lg'))
+    const xl = useMediaQuery(theme.breakpoints.up('xl'))
     // there are all dividers of 24, to have full rows on each page
-    if (xl) return 8;
-    if (lg) return 6;
-    if (md) return 4;
-    if (sm) return 3;
-    return 2;
-};
+    if (xl) return 8
+    if (lg) return 6
+    if (md) return 4
+    if (sm) return 3
+    return 2
+}
 
 const times = (nbChildren: number, fn: (key: number) => any) =>
-    Array.from({ length: nbChildren }, (_, key) => fn(key));
+    Array.from({ length: nbChildren }, (_, key) => fn(key))
 
 const LoadingGridList = () => {
-    const { perPage } = useListContext();
-    const cols = useColsForWidth();
+    const { perPage } = useListContext()
+    const cols = useColsForWidth()
     return (
         <ImageList rowHeight={180} cols={cols} sx={{ m: 0 }}>
-            {times(perPage, key => (
+            {times(perPage, (key) => (
                 <ImageListItem key={key}>
                     <Box bgcolor="grey.300" height="100%" />
                 </ImageListItem>
             ))}
         </ImageList>
-    );
-};
+    )
+}
 
 const LoadedGridList = () => {
-    const { data } = useListContext();
-    const cols = useColsForWidth();
-    const createPath = useCreatePath();
+    const { data } = useListContext()
+    const cols = useColsForWidth()
+    const createPath = useCreatePath()
 
-    if (!data) return null;
+    if (!data) return null
 
     return (
         <ImageList rowHeight={180} cols={cols} sx={{ m: 0 }}>
-            {data.map(record => (
+            {data.map((record) => (
                 <ImageListItem
                     component={Link}
                     key={record.id}
@@ -70,7 +70,7 @@ const LoadedGridList = () => {
                                     color="inherit"
                                     options={{
                                         style: 'currency',
-                                        currency: 'USD',
+                                        currency: 'EUR',
                                     }}
                                     sx={{
                                         display: 'inline',
@@ -87,7 +87,7 @@ const LoadedGridList = () => {
                 </ImageListItem>
             ))}
         </ImageList>
-    );
-};
+    )
+}
 
-export default GridList;
+export default GridList

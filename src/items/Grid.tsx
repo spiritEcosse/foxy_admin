@@ -1,4 +1,4 @@
-export function Grid({children, columns}) {
+export function Grid({ children, columns }) {
     return (
         <div
             style={{
@@ -11,5 +11,5 @@ export function Grid({children, columns}) {
         >
             {children}
         </div>
-    );
+    )
 }

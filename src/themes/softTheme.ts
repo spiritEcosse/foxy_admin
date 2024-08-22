@@ -1,4 +1,4 @@
-import { defaultTheme } from 'react-admin';
+import { defaultTheme } from 'react-admin'
 
 /**
  * Soft: A gentle theme for apps with rich content (images, charts, maps, etc).
@@ -43,7 +43,7 @@ export const softDarkTheme = {
             },
         },
     },
-};
+}
 
 export const softLightTheme = {
     palette: {
@@ -119,4 +119,4 @@ export const softLightTheme = {
             },
         },
     },
-};
+}

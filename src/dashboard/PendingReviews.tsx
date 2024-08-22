@@ -6,9 +6,9 @@ import {
     ListItem,
     ListItemAvatar,
     ListItemText,
-} from '@mui/material';
-import CommentIcon from '@mui/icons-material/Comment';
-import { Link } from 'react-router-dom';
+} from '@mui/material'
+import CommentIcon from '@mui/icons-material/Comment'
+import { Link } from 'react-router-dom'
 
 import {
     ReferenceField,
@@ -16,21 +16,25 @@ import {
     useGetList,
     useTranslate,
     useIsDataLoaded,
-} from 'react-admin';
+} from 'react-admin'
 
-import { stringify } from 'query-string';
+import { stringify } from 'query-string'
 
-import CardWithIcon from './CardWithIcon';
+import CardWithIcon from './CardWithIcon'
 // import StarRatingField from '../reviews/StarRatingField';
-import { Customer, Review } from '../types';
+import { Customer, Review } from '../types'
 
 const PendingReviews = () => {
-    const translate = useTranslate();
-    const { data: reviews, total, isLoading } = useGetList<Review>('reviews', {
+    const translate = useTranslate()
+    const {
+        data: reviews,
+        total,
+        isLoading,
+    } = useGetList<Review>('reviews', {
         filter: { status: 'pending' },
         sort: { field: 'date', order: 'DESC' },
         pagination: { page: 1, perPage: 100 },
-    });
+    })
 
     // Poor man's Suspense: hide the content until all the data is loaded,
     // including the reference customers.
@@ -38,9 +42,9 @@ const PendingReviews = () => {
     // if the first customer is loaded, then all the customers are loaded.
     const isCustomerDataLoaded = useIsDataLoaded(
         ['customers', 'getMany', { ids: [String(reviews?.[0].customer_id)] }],
-        { enabled: !isLoading && reviews && reviews.length > 0 }
-    );
-    const display = isLoading || !isCustomerDataLoaded ? 'none' : 'block';
+        { enabled: !isLoading && reviews && reviews.length > 0 },
+    )
+    const display = isLoading || !isCustomerDataLoaded ? 'none' : 'block'
 
     return (
         <CardWithIcon
@@ -71,7 +75,7 @@ const PendingReviews = () => {
                                 link={false}
                             >
                                 <FunctionField<Customer>
-                                    render={customer => (
+                                    render={(customer) => (
                                         <Avatar
                                             src={`${customer.avatar}?size=32x32`}
                                             sx={{
@@ -112,7 +116,7 @@ const PendingReviews = () => {
                 </Box>
             </Button>
         </CardWithIcon>
-    );
-};
+    )
+}
 
-export default PendingReviews;
+export default PendingReviews

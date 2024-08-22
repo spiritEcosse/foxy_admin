@@ -1,25 +1,22 @@
-import { ReferenceField, ReferenceFieldProps, TextField } from 'react-admin';
+import React from 'react'
+import { Button, Grid } from '@mui/material'
+import { useRecordContext, useRedirect } from 'react-admin'
 
-interface Props {
-    source?: string;
+const ItemReferenceField: React.FC = () => {
+    const record = useRecordContext()
+    const redirect = useRedirect()
+    const basePath = 'api/v1/item/admin'
+
+    return (
+        <Grid>
+            <Button
+                onClick={() => redirect(`/${basePath}/${record.item_id}`)}
+                variant="contained"
+            >
+                View Item
+            </Button>
+        </Grid>
+    )
 }
 
-const ItemReferenceField = (
-    props: Props &
-        Omit<ReferenceFieldProps, 'source' | 'reference' | 'children'>
-) => (
-    <ReferenceField
-        label="Item"
-        source="item_id"
-        reference="items"
-        {...props}
-    >
-        <TextField source="reference" />
-    </ReferenceField>
-);
-
-ItemReferenceField.defaultProps = {
-    source: 'product_id',
-};
-
-export default ItemReferenceField;
+export default ItemReferenceField

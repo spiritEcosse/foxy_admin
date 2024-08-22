@@ -1,49 +1,52 @@
-import { Card, CardHeader, CardContent } from '@mui/material';
+import { Card, CardContent, CardHeader } from '@mui/material'
 import {
-    ResponsiveContainer,
-    AreaChart,
     Area,
+    AreaChart,
+    CartesianGrid,
+    ResponsiveContainer,
+    Tooltip,
     XAxis,
     YAxis,
-    CartesianGrid,
-    Tooltip,
-} from 'recharts';
-import { useTranslate } from 'react-admin';
-import { format, subDays, addDays } from 'date-fns';
+} from 'recharts'
+import { useTranslate } from 'react-admin'
+import { addDays, format, subDays } from 'date-fns'
 
-import { Order } from '../types';
+import { Order } from '../types'
 
-const lastDay = new Date();
-const lastMonthDays = Array.from({ length: 30 }, (_, i) => subDays(lastDay, i));
-const aMonthAgo = subDays(new Date(), 30);
+const lastDay = new Date()
+const lastMonthDays = Array.from({ length: 30 }, (_, i) => subDays(lastDay, i))
+const aMonthAgo = subDays(new Date(), 30)
 
 const dateFormatter = (date: number): string =>
-    new Date(date).toLocaleDateString();
+    new Date(date).toLocaleDateString()
 
 const aggregateOrdersByDay = (orders: Order[]): { [key: string]: number } =>
     orders
-        .filter((order: Order) => order.status !== 'cancelled')
-        .reduce((acc, curr) => {
-            const day = format(new Date(curr.date), 'yyyy-MM-dd');
-            if (!acc[day]) {
-                acc[day] = 0;
-            }
-            acc[day] += curr.total;
-            return acc;
-        }, {} as { [key: string]: number });
+        .filter((order: Order) => order.status !== 'Cancelled')
+        .reduce(
+            (acc, curr) => {
+                const day = format(new Date(curr.date), 'yyyy-MM-dd')
+                if (!acc[day]) {
+                    acc[day] = 0
+                }
+                acc[day] += curr.total
+                return acc
+            },
+            {} as { [key: string]: number },
+        )
 
 const getRevenuePerDay = (orders: Order[]): TotalByDay[] => {
-    const daysWithRevenue = aggregateOrdersByDay(orders);
-    return lastMonthDays.map(date => ({
+    const daysWithRevenue = aggregateOrdersByDay(orders)
+    return lastMonthDays.map((date) => ({
         date: date.getTime(),
         total: daysWithRevenue[format(new Date(date), 'yyyy-MM-dd')] || 0,
-    }));
-};
+    }))
+}
 
 const OrderChart = (props: { orders?: Order[] }) => {
-    const { orders } = props;
-    const translate = useTranslate();
-    if (!orders) return null;
+    const { orders } = props
+    const translate = useTranslate()
+    if (!orders) return null
 
     return (
         <Card>
@@ -90,7 +93,7 @@ const OrderChart = (props: { orders?: Order[] }) => {
                                 formatter={(value: any) =>
                                     new Intl.NumberFormat(undefined, {
                                         style: 'currency',
-                                        currency: 'USD',
+                                        currency: 'EUR',
                                     }).format(value)
                                 }
                                 labelFormatter={(label: any) =>
@@ -109,12 +112,12 @@ const OrderChart = (props: { orders?: Order[] }) => {
                 </div>
             </CardContent>
         </Card>
-    );
-};
-
-interface TotalByDay {
-    date: number;
-    total: number;
+    )
 }
 
-export default OrderChart;
+interface TotalByDay {
+    date: number
+    total: number
+}
+
+export default OrderChart

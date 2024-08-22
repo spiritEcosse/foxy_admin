@@ -1,5 +1,5 @@
-import { TranslationMessages } from 'react-admin';
-import englishMessages from 'ra-language-english';
+import { TranslationMessages } from 'react-admin'
+import englishMessages from 'ra-language-english'
 
 const customEnglishMessages: TranslationMessages = {
     ...englishMessages,
@@ -23,8 +23,7 @@ const customEnglishMessages: TranslationMessages = {
             all_customers: 'See all customers',
             pending_orders: 'Pending Orders',
             order: {
-                items:
-                    'by %{customer_name}, one item |||| by %{customer_name}, %{nb_items} items',
+                items: 'by %{customer_name}, one item |||| by %{customer_name}, %{nb_items} items',
             },
             welcome: {
                 title: 'Welcome to the react-admin e-commerce demo',
@@ -41,6 +40,7 @@ const customEnglishMessages: TranslationMessages = {
             pages: 'Pages',
             users: 'Users',
             shipping: 'Shipping',
+            social_media: 'Social Media',
         },
         events: {
             review: {
@@ -52,10 +52,10 @@ const customEnglishMessages: TranslationMessages = {
         },
     },
     resources: {
-        customers: {
-            name: 'Customer |||| Customers',
+        users: {
+            name: 'User |||| Users',
             fields: {
-                commands: 'Orders',
+                orders: 'Orders',
                 first_seen: 'First seen',
                 groups: 'Segments',
                 last_seen: 'Last seen',
@@ -94,7 +94,7 @@ const customEnglishMessages: TranslationMessages = {
                     'The password confirmation is not the same as the password.',
             },
         },
-        commands: {
+        sales: {
             name: 'Order |||| Orders',
             amount: '1 order |||| %{smart_count} orders',
             title: 'Order %{reference}',
@@ -110,7 +110,7 @@ const customEnglishMessages: TranslationMessages = {
                     unit_price: 'Unit Price',
                 },
                 address: 'Address',
-                customer_id: 'Customer',
+                user_id: 'User',
                 date_gte: 'Passed Since',
                 date_lte: 'Passed Before',
                 nb_items: 'Nb Items',
@@ -120,10 +120,19 @@ const customEnglishMessages: TranslationMessages = {
             },
             section: {
                 order: 'Order',
-                customer: 'Customer',
+                user: 'User',
                 shipping_address: 'Shipping Address',
                 items: 'Items',
                 total: 'Totals',
+            },
+        },
+        financial_details: {
+            name: 'Financial Details |||| Financial Details',
+            fields: {
+                id: 'ID',
+                tax_rate: 'Tax Rate',
+                created_at: 'Created At',
+                updated_at: 'Updated At',
             },
         },
         country: {
@@ -163,22 +172,24 @@ const customEnglishMessages: TranslationMessages = {
         pages: {
             name: 'Page |||| Pages',
             fields: {
-                title: "Title",
-                slug: "Slug",
-                meta_description: "Meta Description",
-                description: "Description",
-                canonical_url: "Canonical URL",
-                created_at: "Created At",
-                updated_at: "Updated At",
+                title: 'Title',
+                slug: 'Slug',
+                meta_description: 'Meta Description',
+                description: 'Description',
+                canonical_url: 'Canonical URL',
+                created_at: 'Created At',
+                updated_at: 'Updated At',
             },
         },
-        users: {
-            name: 'User |||| Users',
+        social_media: {
+            name: 'Social Media |||| Social Media',
             fields: {
-                email: "Email",
-                password: "Password",
-                created_at: "Created At",
-                updated_at: "Updated At",
+                id: 'ID',
+                title: 'Title',
+                item_id: 'Item',
+                external_id: 'External Id',
+                created_at: 'Created At',
+                updated_at: 'Updated At',
             },
         },
         items: {
@@ -198,6 +209,7 @@ const customEnglishMessages: TranslationMessages = {
                 images: 'Images',
                 details: 'Details',
                 description: 'Description',
+                social_media: 'Social Media',
             },
             filters: {
                 categories: 'Categories',
@@ -261,6 +273,6 @@ const customEnglishMessages: TranslationMessages = {
             },
         },
     },
-};
+}
 
-export default customEnglishMessages;
+export default customEnglishMessages

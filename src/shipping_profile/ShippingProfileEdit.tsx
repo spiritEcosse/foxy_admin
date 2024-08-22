@@ -1,12 +1,12 @@
-import {ShippingProfileEditDetails} from "./ShippingProfileEditDetails";
-import {Edit, EditProps, SimpleForm} from "react-admin";
+import { ShippingProfileEditDetails } from './ShippingProfileEditDetails'
+import { Edit, EditProps, SimpleForm } from 'react-admin'
 
 const ShippingProfileEdit = (props: EditProps) => (
     <Edit {...props}>
         <SimpleForm>
-            <ShippingProfileEditDetails/>
+            <ShippingProfileEditDetails />
         </SimpleForm>
     </Edit>
-);
+)
 
-export default ShippingProfileEdit;
+export default ShippingProfileEdit

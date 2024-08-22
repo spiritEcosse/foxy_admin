@@ -1,5 +1,5 @@
-import { TranslationMessages } from 'react-admin';
-import frenchMessages from 'ra-language-french';
+import { TranslationMessages } from 'react-admin'
+import frenchMessages from 'ra-language-french'
 
 const customFrenchMessages: TranslationMessages = {
     ...frenchMessages,
@@ -22,8 +22,7 @@ const customFrenchMessages: TranslationMessages = {
             all_customers: 'Voir tous les clients',
             pending_orders: 'Commandes à traiter',
             order: {
-                items:
-                    'par %{customer_name}, un poster |||| par %{customer_name}, %{nb_items} posters',
+                items: 'par %{customer_name}, un poster |||| par %{customer_name}, %{nb_items} posters',
             },
             welcome: {
                 title: 'Bienvenue sur la démo e-commerce de react-admin',
@@ -143,7 +142,6 @@ const customFrenchMessages: TranslationMessages = {
                 date_lte: 'Emises avant',
                 address: 'Adresse',
                 total_ex_taxes: 'Montant HT',
-                delivery_fees: 'Frais de livraison',
                 taxes: 'TVA',
             },
         },
@@ -235,6 +233,6 @@ const customFrenchMessages: TranslationMessages = {
             },
         },
     },
-};
+}
 
-export default customFrenchMessages;
+export default customFrenchMessages
