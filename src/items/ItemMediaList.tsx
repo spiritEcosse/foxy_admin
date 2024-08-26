@@ -1,25 +1,12 @@
-import { useState, useEffect } from 'react'
 import * as React from 'react'
-import { FileInput, FileField } from 'react-admin'
-import {
-    DndContext,
-    closestCenter,
-    MouseSensor,
-    TouchSensor,
-    DragOverlay,
-    useSensor,
-    useSensors,
-} from '@dnd-kit/core'
-import {
-    arrayMove,
-    SortableContext,
-    rectSortingStrategy,
-} from '@dnd-kit/sortable'
-import { Grid } from './Grid'
-import { SortablePhoto } from './SortablePhoto'
+import {useEffect, useState} from 'react'
+import {FileField, FileInput, useRecordContext} from 'react-admin'
+import {closestCenter, DndContext, DragOverlay, MouseSensor, TouchSensor, useSensor, useSensors,} from '@dnd-kit/core'
+import {arrayMove, rectSortingStrategy, SortableContext,} from '@dnd-kit/sortable'
+import {Grid} from './Grid'
+import {SortablePhoto} from './SortablePhoto'
 import Media from './Media'
-import { useRecordContext } from 'react-admin'
-import { ItemType, MediaType } from '../types'
+import {ItemType, MediaType, MediaTypeEnum} from '../types'
 
 interface MediaListProps {
     setRecord: React.Dispatch<React.SetStateAction<ItemType>>
@@ -28,19 +15,20 @@ interface MediaListProps {
 }
 
 const ItemMediaList: React.FC<MediaListProps> = ({
-    setRecord,
-    setRecordsToDelete,
-    recordsToDelete,
-}) => {
+                                                     setRecord,
+                                                     setRecordsToDelete,
+                                                     recordsToDelete,
+                                                 }) => {
     const [activeMediaSrc, setActiveMediaSrc] = useState<string | null>(null)
     const sensors = useSensors(useSensor(MouseSensor), useSensor(TouchSensor))
     const initialRecord = useRecordContext<ItemType>()
     const [recordPresent, setRecordPresent] = useState<ItemType>(initialRecord)
     const mediaObject = recordPresent?.media
         ? recordPresent.media.find(
-              (media: MediaType) => media.src === activeMediaSrc,
-          )
+            (media: MediaType) => media.src === activeMediaSrc,
+        )
         : null
+
     function handleDragStart(event: any) {
         setActiveMediaSrc(event.active.id)
     }
@@ -54,18 +42,25 @@ const ItemMediaList: React.FC<MediaListProps> = ({
             console.log(event)
             let index: number = 0
             for (let key in event) {
-                const file = event[key]
+                let file = event[key]
+                let mediaType: MediaTypeEnum = MediaTypeEnum.IMAGE;
+
+                if (file.type.startsWith('video/')) {
+                    mediaType = MediaTypeEnum.VIDEO;
+                }
+
                 if (file instanceof File) {
                     const newMedia: MediaType = {
                         id: 0,
                         file: file,
-                        src: URL.createObjectURL(file), // temporary URL for the uploaded file
+                        type: mediaType,
+                        src: URL.createObjectURL(file),
                         sort: recordPresent?.media?.length
                             ? recordPresent.media.length + 1
                             : index + 1, // add other necessary properties here
                         item_id: recordPresent ? Number(recordPresent.id) : 0,
-                        created_at: '',
-                        updated_at: '',
+                        created_at: new Date(),
+                        updated_at: new Date(),
                     }
                     setRecordPresent((prevRecord) => ({
                         ...prevRecord,
@@ -82,7 +77,7 @@ const ItemMediaList: React.FC<MediaListProps> = ({
     }
 
     function handleDragEnd(event: any) {
-        const { active, over } = event
+        const {active, over} = event
 
         if (active.id !== over.id) {
             const oldIndex = recordPresent.media
@@ -130,8 +125,8 @@ const ItemMediaList: React.FC<MediaListProps> = ({
                 items={
                     recordPresent?.media
                         ? recordPresent.media.map(
-                              (media: MediaType) => media.src,
-                          )
+                            (media: MediaType) => media.src,
+                        )
                         : []
                 }
                 strategy={rectSortingStrategy}
@@ -139,18 +134,18 @@ const ItemMediaList: React.FC<MediaListProps> = ({
                 <Grid columns={5}>
                     {recordPresent?.media
                         ? recordPresent.media.map(
-                              (media: MediaType, index: number) => (
-                                  <SortablePhoto
-                                      setRecordPresent={setRecordPresent}
-                                      recordPresent={recordPresent}
-                                      setRecord={setRecord}
-                                      media={media}
-                                      index={index}
-                                      setRecordsToDelete={setRecordsToDelete}
-                                      key={media.src}
-                                  />
-                              ),
-                          )
+                            (media: MediaType, index: number) => (
+                                <SortablePhoto
+                                    setRecordPresent={setRecordPresent}
+                                    recordPresent={recordPresent}
+                                    setRecord={setRecord}
+                                    media={media}
+                                    index={index}
+                                    setRecordsToDelete={setRecordsToDelete}
+                                    key={media.src}
+                                />
+                            ),
+                        )
                         : null}
                 </Grid>
             </SortableContext>
@@ -163,7 +158,7 @@ const ItemMediaList: React.FC<MediaListProps> = ({
                 type="file"
                 onChange={handleFileUpload}
             >
-                <FileField source="src" title="title" />
+                <FileField source="src" title="title"/>
             </FileInput>
 
             <DragOverlay adjustScale={true}>

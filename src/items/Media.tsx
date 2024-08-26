@@ -1,9 +1,8 @@
-import React, { forwardRef } from 'react'
-import { Card, CardMedia, CardActions } from '@mui/material'
-import { Button } from 'react-admin'
+import React, {forwardRef} from 'react';
+import {Card, CardActions, CardMedia} from '@mui/material'
+import {Button} from 'react-admin'
 import DeleteIcon from '@mui/icons-material/Delete'
-import { MediaType } from '../types'
-import { ItemType } from '../types'
+import {ItemType, MediaType, MediaTypeEnum} from '../types'
 
 interface MediaProps {
     setRecordPresent: React.Dispatch<React.SetStateAction<ItemType>>
@@ -45,7 +44,6 @@ const Media = forwardRef<HTMLDivElement, MediaProps>(
             backgroundColor: 'grey',
             ...style,
         }
-
         const handleDelete = () => {
             if (media.id) {
                 setRecordsToDelete((prevRecord) => [...prevRecord, media])
@@ -66,12 +64,23 @@ const Media = forwardRef<HTMLDivElement, MediaProps>(
 
         return (
             <div>
-                <Card ref={ref} style={inlineStyles} {...props}>
-                    <CardMedia image={media.src} />
-                </Card>
+                {
+                    media.type === MediaTypeEnum.VIDEO ? (
+                        <CardMedia
+                            component="video"
+                            image={media.src}
+                            title='title'
+                            controls
+                        />
+                    ) : (
+                        <Card ref={ref} style={inlineStyles} {...props}>
+                            <CardMedia image={media.src}/>
+                        </Card>
+                    )
+                }
                 <CardActions>
                     <Button onClick={handleDelete}>
-                        <DeleteIcon />
+                        <DeleteIcon/>
                     </Button>
                 </CardActions>
             </div>
@@ -79,4 +88,5 @@ const Media = forwardRef<HTMLDivElement, MediaProps>(
     },
 )
 
+Media.displayName = 'Media';
 export default Media
