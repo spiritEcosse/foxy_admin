@@ -1,8 +1,8 @@
-import React, {forwardRef} from 'react';
-import {Card, CardActions, CardMedia} from '@mui/material'
-import {Button} from 'react-admin'
+import React, { forwardRef } from 'react'
+import { Card, CardActions, CardMedia } from '@mui/material'
+import { Button } from 'react-admin'
 import DeleteIcon from '@mui/icons-material/Delete'
-import {ItemType, MediaType, MediaTypeEnum} from '../types'
+import { ItemType, MediaType, MediaTypeEnum } from '../types'
 
 interface MediaProps {
     setRecordPresent: React.Dispatch<React.SetStateAction<ItemType>>
@@ -64,23 +64,21 @@ const Media = forwardRef<HTMLDivElement, MediaProps>(
 
         return (
             <div>
-                {
-                    media.type === MediaTypeEnum.VIDEO ? (
-                        <CardMedia
-                            component="video"
-                            image={media.src}
-                            title='title'
-                            controls
-                        />
-                    ) : (
-                        <Card ref={ref} style={inlineStyles} {...props}>
-                            <CardMedia image={media.src}/>
-                        </Card>
-                    )
-                }
+                {media.type === MediaTypeEnum.VIDEO ? (
+                    <CardMedia
+                        component="video"
+                        image={media.src}
+                        title="title"
+                        controls
+                    />
+                ) : (
+                    <Card ref={ref} style={inlineStyles} {...props}>
+                        <CardMedia image={media.src} />
+                    </Card>
+                )}
                 <CardActions>
                     <Button onClick={handleDelete}>
-                        <DeleteIcon/>
+                        <DeleteIcon />
                     </Button>
                 </CardActions>
             </div>
@@ -88,5 +86,5 @@ const Media = forwardRef<HTMLDivElement, MediaProps>(
     },
 )
 
-Media.displayName = 'Media';
+Media.displayName = 'Media'
 export default Media

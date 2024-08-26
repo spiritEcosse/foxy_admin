@@ -1,6 +1,10 @@
 import * as React from 'react'
-import {ItemType, MediaType} from '../types'
-import {DeleteObjectCommand, PutObjectCommand, S3Client,} from '@aws-sdk/client-s3'
+import { ItemType, MediaType } from '../types'
+import {
+    DeleteObjectCommand,
+    PutObjectCommand,
+    S3Client,
+} from '@aws-sdk/client-s3'
 
 const s3Client = new S3Client({
     region: import.meta.env.VITE_APP_AWS_REGION as string,
@@ -23,7 +27,7 @@ const uploadFile = async (record: ItemType, media: MediaType, file: File) => {
         const command = new PutObjectCommand(uploadParams)
         await s3Client.send(command)
         let host = `${import.meta.env.VITE_APP_BUCKET_NAME}.s3.amazonaws.com`
-        if (import.meta.env.VITE_APP_TWIC_PICS_NAME !== "") {
+        if (import.meta.env.VITE_APP_TWIC_PICS_NAME !== '') {
             host = `${import.meta.env.VITE_APP_TWIC_PICS_NAME}/.twic.pics`
         }
         media.src = `https://${host}/${src}?twic=v1`
@@ -65,7 +69,7 @@ export const HandleSubmit = async (
 
     if (record !== undefined) {
         for (let i = 0; i < record.media.length; i++) {
-            let media: MediaType = {...record.media[i]}
+            let media: MediaType = { ...record.media[i] }
             if (media.id) {
                 media.src = 'items' + media.src.split('items')[1].split('?')[0]
                 newMedia.push(media)
@@ -80,7 +84,7 @@ export const HandleSubmit = async (
     }
 
     try {
-        let {id} = data
+        let { id } = data
         let create = false
         if (data.id !== undefined) {
             delete data.media
@@ -105,7 +109,7 @@ export const HandleSubmit = async (
             let uploadPromises = newMediaUpload.map(async (mediaUpload) => {
                 data.id = id
                 await uploadFile(data, mediaUpload, mediaUpload.file)
-                let media: MediaType = {...mediaUpload}
+                let media: MediaType = { ...mediaUpload }
                 media.src = 'items' + media.src.split('items')[1].split('?')[0]
                 media.item_id = id
                 return media
@@ -125,13 +129,13 @@ export const HandleSubmit = async (
                 items: recordsToDelete.map((media: MediaType) => media.id),
             })
         }
-        setRecord({...record, media: []})
-        notify('item_updated', {type: 'info'})
+        setRecord({ ...record, media: [] })
+        notify('item_updated', { type: 'info' })
         if (create) {
             redirect(`/api/v1/item/admin/${id}`)
         }
     } catch (error) {
         console.error('Error: could not update item or media', error)
-        notify('Error: could not update item or media', {type: 'warning'})
+        notify('Error: could not update item or media', { type: 'warning' })
     }
 }

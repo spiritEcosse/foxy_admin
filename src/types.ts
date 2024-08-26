@@ -1,4 +1,4 @@
-import {Identifier, RaRecord} from 'react-admin'
+import { Identifier, RaRecord } from 'react-admin'
 
 export type ThemeName = 'light' | 'dark'
 
@@ -62,7 +62,7 @@ export enum MediaTypeEnum {
 
 export interface MediaType extends RaRecord {
     item_id: number
-    type: MediaTypeEnum,
+    type: MediaTypeEnum
     src: string
     sort: number
     created_at: Date
