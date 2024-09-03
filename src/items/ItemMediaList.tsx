@@ -1,24 +1,12 @@
 import * as React from 'react'
-import { useEffect, useState } from 'react'
-import { FileField, FileInput, useRecordContext } from 'react-admin'
-import {
-    closestCenter,
-    DndContext,
-    DragOverlay,
-    MouseSensor,
-    TouchSensor,
-    useSensor,
-    useSensors,
-} from '@dnd-kit/core'
-import {
-    arrayMove,
-    rectSortingStrategy,
-    SortableContext,
-} from '@dnd-kit/sortable'
-import { Grid } from './Grid'
-import { SortablePhoto } from './SortablePhoto'
+import {useEffect, useState} from 'react'
+import {FileField, FileInput, useRecordContext} from 'react-admin'
+import {closestCenter, DndContext, DragOverlay, MouseSensor, TouchSensor, useSensor, useSensors,} from '@dnd-kit/core'
+import {arrayMove, rectSortingStrategy, SortableContext,} from '@dnd-kit/sortable'
+import {Grid} from './Grid'
+import {SortablePhoto} from './SortablePhoto'
 import Media from './Media'
-import { ItemType, MediaType, MediaTypeEnum } from '../types'
+import {ItemType, MediaType, MediaTypeEnum} from '../types'
 
 interface MediaListProps {
     setRecord: React.Dispatch<React.SetStateAction<ItemType>>
@@ -40,7 +28,6 @@ const ItemMediaList: React.FC<MediaListProps> = ({
               (media: MediaType) => media.src === activeMediaSrc,
           )
         : null
-
     function handleDragStart(event: any) {
         setActiveMediaSrc(event.active.id)
     }
@@ -51,22 +38,23 @@ const ItemMediaList: React.FC<MediaListProps> = ({
 
     const handleFileUpload = async (event: any) => {
         if (Array.isArray(event)) {
-            console.log(event)
             let index: number = 0
+
             for (let key in event) {
                 let file = event[key]
-                let mediaType: MediaTypeEnum = MediaTypeEnum.IMAGE
-
-                if (file.type.startsWith('video/')) {
-                    mediaType = MediaTypeEnum.VIDEO
-                }
-
                 if (file instanceof File) {
+                    let mediaType: MediaTypeEnum = MediaTypeEnum.IMAGE
+                    let src = URL.createObjectURL(file)
+
+                    if (file.type.startsWith('video/')) {
+                        mediaType = MediaTypeEnum.VIDEO
+                    }
+
                     const newMedia: MediaType = {
                         id: 0,
                         file: file,
                         type: mediaType,
-                        src: URL.createObjectURL(file),
+                        src: src,
                         sort: recordPresent?.media?.length
                             ? recordPresent.media.length + 1
                             : index + 1, // add other necessary properties here

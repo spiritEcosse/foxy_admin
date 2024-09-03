@@ -75,6 +75,12 @@ const i18nProvider = polyglotI18nProvider(
 
 const store = localStorageStore(undefined, 'ECommerce')
 
+const MyDashboard = () => (
+    <div>
+        <h1>Welcome to the Admin Dashboard</h1>
+    </div>
+)
+
 export const App = () => {
     const [themeName] = useStore<ThemeName>('themeName', 'house')
     const lightTheme = themes.find((theme) => theme.name === themeName)?.light
@@ -98,7 +104,6 @@ export const App = () => {
         console.log('Not authenticated. Redirecting to login page.')
         return <GoogleLoginComponent />
     }
-    console.log('Authenticated. Loading admin panel.')
 
     return (
         <Admin
@@ -109,6 +114,7 @@ export const App = () => {
             i18nProvider={i18nProvider}
             lightTheme={lightTheme}
             darkTheme={darkTheme}
+            dashboard={MyDashboard}
             loginPage={GoogleLoginComponent}
             defaultTheme="light"
         >
