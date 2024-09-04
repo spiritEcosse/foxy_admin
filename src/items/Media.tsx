@@ -1,8 +1,8 @@
-import React, {forwardRef, useEffect, useState} from 'react'
-import {Card, CardActions, CardContent, CardMedia} from '@mui/material'
-import {Button} from 'react-admin'
+import React, { forwardRef, useEffect, useState } from 'react'
+import { Card, CardActions, CardContent, CardMedia } from '@mui/material'
+import { Button } from 'react-admin'
 import DeleteIcon from '@mui/icons-material/Delete'
-import {ItemType, MediaType, MediaTypeEnum} from '../types'
+import { ItemType, MediaType, MediaTypeEnum } from '../types'
 
 interface MediaProps {
     setRecordPresent: React.Dispatch<React.SetStateAction<ItemType>>
@@ -52,7 +52,7 @@ const Media = forwardRef<HTMLDivElement, MediaProps>(
             backgroundPosition: 'center',
             backgroundColor: 'white',
             display: 'flex',
-            justifyContent: 'center',  // Centers content horizontally
+            justifyContent: 'center', // Centers content horizontally
             alignItems: 'center',
             boxShadow: '0px 8px 16px rgba(0, 0, 0, 0.2)',
             ...style,

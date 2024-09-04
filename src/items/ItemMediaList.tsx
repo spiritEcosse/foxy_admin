@@ -1,12 +1,24 @@
 import * as React from 'react'
-import {useEffect, useState} from 'react'
-import {FileField, FileInput, useRecordContext} from 'react-admin'
-import {closestCenter, DndContext, DragOverlay, MouseSensor, TouchSensor, useSensor, useSensors,} from '@dnd-kit/core'
-import {arrayMove, rectSortingStrategy, SortableContext,} from '@dnd-kit/sortable'
-import {Grid} from './Grid'
-import {SortablePhoto} from './SortablePhoto'
+import { useEffect, useState } from 'react'
+import { FileField, FileInput, useRecordContext } from 'react-admin'
+import {
+    closestCenter,
+    DndContext,
+    DragOverlay,
+    MouseSensor,
+    TouchSensor,
+    useSensor,
+    useSensors,
+} from '@dnd-kit/core'
+import {
+    arrayMove,
+    rectSortingStrategy,
+    SortableContext,
+} from '@dnd-kit/sortable'
+import { Grid } from './Grid'
+import { SortablePhoto } from './SortablePhoto'
 import Media from './Media'
-import {ItemType, MediaType, MediaTypeEnum} from '../types'
+import { ItemType, MediaType, MediaTypeEnum } from '../types'
 
 interface MediaListProps {
     setRecord: React.Dispatch<React.SetStateAction<ItemType>>
