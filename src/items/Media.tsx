@@ -1,9 +1,8 @@
-import React, { forwardRef } from 'react'
-import { Card, CardMedia, CardActions } from '@mui/material'
+import React, { forwardRef, useEffect, useState } from 'react'
+import { Card, CardActions, CardContent, CardMedia } from '@mui/material'
 import { Button } from 'react-admin'
 import DeleteIcon from '@mui/icons-material/Delete'
-import { MediaType } from '../types'
-import { ItemType } from '../types'
+import { ItemType, MediaType, MediaTypeEnum } from '../types'
 
 interface MediaProps {
     setRecordPresent: React.Dispatch<React.SetStateAction<ItemType>>
@@ -15,6 +14,15 @@ interface MediaProps {
     setRecordsToDelete: React.Dispatch<React.SetStateAction<MediaType[]>>
     faded: boolean
     style: React.CSSProperties
+}
+
+const formatFileSize = (size: number) => {
+    const i = Math.floor(Math.log(size) / Math.log(1024))
+    return (
+        (size / Math.pow(1024, i)).toFixed(2) +
+        ' ' +
+        ['B', 'KB', 'MB', 'GB', 'TB'][i]
+    )
 }
 
 const Media = forwardRef<HTMLDivElement, MediaProps>(
@@ -42,9 +50,38 @@ const Media = forwardRef<HTMLDivElement, MediaProps>(
             backgroundImage: `url("${media.src}")`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
-            backgroundColor: 'grey',
+            backgroundColor: 'white',
+            display: 'flex',
+            justifyContent: 'center', // Centers content horizontally
+            alignItems: 'center',
+            boxShadow: '0px 8px 16px rgba(0, 0, 0, 0.2)',
             ...style,
         }
+        const [fileSize, setFileSize] = useState<string | null>(null)
+
+        useEffect(() => {
+            const fetchFileSize = async () => {
+                if (media.file) {
+                    setFileSize(formatFileSize(media.file.size))
+                } else {
+                    try {
+                        const response = await fetch(media.src, {
+                            method: 'HEAD',
+                        })
+                        const contentLength =
+                            response.headers.get('content-length')
+                        if (contentLength) {
+                            const size = parseInt(contentLength, 10)
+                            setFileSize(formatFileSize(size))
+                        }
+                    } catch (error) {
+                        console.error('Error fetching file size:', error)
+                    }
+                }
+            }
+
+            fetchFileSize()
+        }, [media.src])
 
         const handleDelete = () => {
             if (media.id) {
@@ -67,8 +104,20 @@ const Media = forwardRef<HTMLDivElement, MediaProps>(
         return (
             <div>
                 <Card ref={ref} style={inlineStyles} {...props}>
-                    <CardMedia image={media.src} />
+                    {media.type === MediaTypeEnum.VIDEO ? (
+                        <CardMedia
+                            component="video"
+                            image={media.src}
+                            title="title"
+                            controls
+                        />
+                    ) : (
+                        <CardMedia component="img" image={media.src} />
+                    )}
                 </Card>
+                <CardContent>
+                    {fileSize && <div>Size: {fileSize}</div>}
+                </CardContent>
                 <CardActions>
                     <Button onClick={handleDelete}>
                         <DeleteIcon />
@@ -79,4 +128,5 @@ const Media = forwardRef<HTMLDivElement, MediaProps>(
     },
 )
 
+Media.displayName = 'Media'
 export default Media

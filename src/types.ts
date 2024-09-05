@@ -55,8 +55,14 @@ export interface ItemType extends RaRecord {
     shipping_profile_id: Identifier
 }
 
+export enum MediaTypeEnum {
+    IMAGE = 'image',
+    VIDEO = 'video',
+}
+
 export interface MediaType extends RaRecord {
     item_id: number
+    type: MediaTypeEnum
     src: string
     sort: number
     created_at: Date
