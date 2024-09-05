@@ -1,25 +1,24 @@
-import { useState, useEffect } from 'react'
 import * as React from 'react'
-import { FileInput, FileField } from 'react-admin'
+import { useEffect, useState } from 'react'
+import { FileField, FileInput, useRecordContext } from 'react-admin'
 import {
-    DndContext,
     closestCenter,
+    DndContext,
+    DragOverlay,
     MouseSensor,
     TouchSensor,
-    DragOverlay,
     useSensor,
     useSensors,
 } from '@dnd-kit/core'
 import {
     arrayMove,
-    SortableContext,
     rectSortingStrategy,
+    SortableContext,
 } from '@dnd-kit/sortable'
 import { Grid } from './Grid'
 import { SortablePhoto } from './SortablePhoto'
 import Media from './Media'
-import { useRecordContext } from 'react-admin'
-import { ItemType, MediaType } from '../types'
+import { ItemType, MediaType, MediaTypeEnum } from '../types'
 
 interface MediaListProps {
     setRecord: React.Dispatch<React.SetStateAction<ItemType>>
@@ -51,21 +50,29 @@ const ItemMediaList: React.FC<MediaListProps> = ({
 
     const handleFileUpload = async (event: any) => {
         if (Array.isArray(event)) {
-            console.log(event)
             let index: number = 0
+
             for (let key in event) {
-                const file = event[key]
+                let file = event[key]
                 if (file instanceof File) {
+                    let mediaType: MediaTypeEnum = MediaTypeEnum.IMAGE
+                    let src = URL.createObjectURL(file)
+
+                    if (file.type.startsWith('video/')) {
+                        mediaType = MediaTypeEnum.VIDEO
+                    }
+
                     const newMedia: MediaType = {
                         id: 0,
                         file: file,
-                        src: URL.createObjectURL(file), // temporary URL for the uploaded file
+                        type: mediaType,
+                        src: src,
                         sort: recordPresent?.media?.length
                             ? recordPresent.media.length + 1
                             : index + 1, // add other necessary properties here
                         item_id: recordPresent ? Number(recordPresent.id) : 0,
-                        created_at: '',
-                        updated_at: '',
+                        created_at: new Date(),
+                        updated_at: new Date(),
                     }
                     setRecordPresent((prevRecord) => ({
                         ...prevRecord,
