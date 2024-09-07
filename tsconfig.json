@@ -1,8 +1,7 @@
 {
     "compilerOptions": {
-        "target": "ES2020",
+        "target": "es5",
         "lib": [
-            "ES2020",
             "DOM",
             "DOM.Iterable",
             "esnext"
@@ -17,7 +16,7 @@
         "noUnusedLocals": true,
         "noUnusedParameters": true,
         "module": "ESNext",
-        "moduleResolution": "bundler",
+        "moduleResolution": "node",
         "resolveJsonModule": true,
         "isolatedModules": true,
         "noEmit": true,
@@ -28,9 +27,4 @@
     "include": [
         "src"
     ],
-    "references": [
-        {
-            "path": "./tsconfig.node.json"
-        }
-    ]
 }
