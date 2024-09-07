@@ -1,12 +1,12 @@
 {
     "compilerOptions": {
-        "target": "es5",
+        "target": "esnext",
         "lib": [
             "DOM",
             "DOM.Iterable",
             "esnext"
         ],
-        "allowJs": true,
+        "allowJs": false,
         "skipLibCheck": true,
         "esModuleInterop": true,
         "allowSyntheticDefaultImports": true,
