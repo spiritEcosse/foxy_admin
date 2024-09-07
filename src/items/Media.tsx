@@ -1,8 +1,8 @@
-import React, {forwardRef, useEffect, useState} from 'react'
-import {Card, CardActions, CardContent, CardMedia} from '@mui/material'
-import {Button} from 'react-admin'
+import React, { forwardRef, useEffect, useState } from 'react'
+import { Card, CardActions, CardContent, CardMedia } from '@mui/material'
+import { Button } from 'react-admin'
 import DeleteIcon from '@mui/icons-material/Delete'
-import {ItemType, MediaType, MediaTypeEnum} from '../types'
+import { ItemType, MediaType, MediaTypeEnum } from '../types'
 
 interface MediaProps {
     setRecordPresent: React.Dispatch<React.SetStateAction<ItemType>>
@@ -107,9 +107,11 @@ const Media = forwardRef<HTMLDivElement, MediaProps>(
                     {media.type === MediaTypeEnum.VIDEO ? (
                         <CardMedia
                             component="video"
-                            image={media.src.startsWith('https://')
-                            ? `https://${import.meta.env.VITE_APP_BUCKET_NAME}.s3.amazonaws.com${media.src.replace(/https?:\/\/[^/]+/, '')}`
-                            : media.src}
+                            image={
+                                media.src.startsWith('https://')
+                                    ? `https://${import.meta.env.VITE_APP_BUCKET_NAME}.s3.amazonaws.com${media.src.replace(/https?:\/\/[^/]+/, '')}`
+                                    : media.src
+                            }
                             title="title"
                             controls
                         />
