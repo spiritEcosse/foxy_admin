@@ -58,6 +58,9 @@ const Media = forwardRef<HTMLDivElement, MediaProps>(
             ...style,
         }
         const [fileSize, setFileSize] = useState<string | null>(null)
+        const mediaSrc= media.src.startsWith('https://')
+            ? `https://${import.meta.env.VITE_APP_BUCKET_NAME}.s3.amazonaws.com${media.src.replace(/https?:\/\/[^/]+/, '')}`
+            : media.src;
 
         useEffect(() => {
             const fetchFileSize = async () => {
@@ -65,7 +68,7 @@ const Media = forwardRef<HTMLDivElement, MediaProps>(
                     setFileSize(formatFileSize(media.file.size))
                 } else {
                     try {
-                        const response = await fetch(media.src, {
+                        const response = await fetch(mediaSrc, {
                             method: 'HEAD',
                         })
                         const contentLength =
@@ -107,9 +110,7 @@ const Media = forwardRef<HTMLDivElement, MediaProps>(
                     {media.type === MediaTypeEnum.VIDEO ? (
                         <CardMedia
                             component="video"
-                            image={media.src.startsWith('https://')
-                            ? `https://${import.meta.env.VITE_APP_BUCKET_NAME}.s3.amazonaws.com${media.src.replace(/https?:\/\/[^/]+/, '')}`
-                            : media.src}
+                            image={mediaSrc}
                             title="title"
                             controls
                         />
