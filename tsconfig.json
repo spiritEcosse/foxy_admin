@@ -16,7 +16,7 @@
         "noUnusedLocals": true,
         "noUnusedParameters": true,
         "module": "ESNext",
-        "moduleResolution": "node",
+        "moduleResolution": "bundler",
         "resolveJsonModule": true,
         "isolatedModules": true,
         "noEmit": true,
@@ -27,4 +27,9 @@
     "include": [
         "src"
     ],
+    "references": [
+        {
+            "path": "./tsconfig.node.json"
+        }
+    ]
 }

@@ -24,7 +24,7 @@ export default defineConfig({
         port: 5176,
     },
 
-    base: './',
+    base: '/',
 
     build: {
         sourcemap: true,
