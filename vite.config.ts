@@ -11,9 +11,6 @@ export default defineConfig({
             project: 'faithfishart-admin',
         }),
     ],
-    optimizeDeps: {
-        exclude: ['@ffmpeg/ffmpeg', '@ffmpeg/util'],
-    },
 
     define: {
         'process.env': process.env,

@@ -1,10 +1,6 @@
 import * as React from 'react'
-import { ItemType, MediaType } from '../types'
-import {
-    DeleteObjectCommand,
-    PutObjectCommand,
-    S3Client,
-} from '@aws-sdk/client-s3'
+import {ItemType, MediaType, MediaTypeEnum} from '../types'
+import {DeleteObjectCommand, PutObjectCommand, S3Client,} from '@aws-sdk/client-s3'
 
 const s3Client = new S3Client({
     region: import.meta.env.VITE_APP_AWS_REGION as string,
@@ -27,7 +23,7 @@ const uploadFile = async (record: ItemType, media: MediaType, file: File) => {
         const command = new PutObjectCommand(uploadParams)
         await s3Client.send(command)
         let host = `${import.meta.env.VITE_APP_BUCKET_NAME}.s3.amazonaws.com`
-        if (import.meta.env.VITE_APP_TWIC_PICS_NAME !== '') {
+        if (import.meta.env.VITE_APP_TWIC_PICS_NAME !== '' && media.type === MediaTypeEnum.IMAGE) {
             host = `${import.meta.env.VITE_APP_TWIC_PICS_NAME}/.twic.pics`
         }
         media.src = `https://${host}/${src}?twic=v1`
