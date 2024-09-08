@@ -1,4 +1,4 @@
-import { Identifier, RaRecord } from 'react-admin'
+import {Identifier, RaRecord} from 'react-admin'
 
 export type ThemeName = 'light' | 'dark'
 
@@ -52,7 +52,8 @@ export interface ItemType extends RaRecord {
     slug: string
     updated_at: Date
     price: number
-    shipping_profile_id: Identifier
+    shipping_profile_id: Identifier,
+    tags: string[]
 }
 
 export enum MediaTypeEnum {
