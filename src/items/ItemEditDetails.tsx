@@ -10,9 +10,9 @@ import {
     SimpleFormIterator,
     TextInput,
 } from 'react-admin'
-import {Grid, InputAdornment} from '@mui/material'
-import {useFormContext} from 'react-hook-form'
-import {slugify, validatePositive} from '../utils'
+import { Grid, InputAdornment } from '@mui/material'
+import { useFormContext } from 'react-hook-form'
+import { slugify, validatePositive } from '../utils'
 
 export const ItemEditDetails = () => {
     const formContext = useFormContext()
