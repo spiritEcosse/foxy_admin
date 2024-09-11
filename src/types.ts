@@ -53,6 +53,7 @@ export interface ItemType extends RaRecord {
     updated_at: Date
     price: number
     shipping_profile_id: Identifier
+    tags: string[]
 }
 
 export enum MediaTypeEnum {

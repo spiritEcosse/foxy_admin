@@ -1,12 +1,14 @@
 import * as React from 'react'
 import {
-    required,
-    TextInput,
-    DateTimeInput,
+    ArrayInput,
     BooleanInput,
+    DateTimeInput,
     NumberInput,
     ReferenceInput,
+    required,
     SelectInput,
+    SimpleFormIterator,
+    TextInput,
 } from 'react-admin'
 import { Grid, InputAdornment } from '@mui/material'
 import { useFormContext } from 'react-hook-form'
@@ -65,6 +67,14 @@ export const ItemEditDetails = () => {
             </Grid>
             <Grid item xs={12} sm={4}>
                 <DateTimeInput source="updated_at" />
+            </Grid>
+
+            <Grid item xs={12}>
+                <ArrayInput source="tags" label="Tags">
+                    <SimpleFormIterator>
+                        <TextInput />
+                    </SimpleFormIterator>
+                </ArrayInput>
             </Grid>
         </Grid>
     )
