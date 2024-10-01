@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { ItemType, MediaType, MediaTypeEnum } from '../types'
+import {ItemType, MediaType, MediaTypeEnum, TagType} from '../types'
 import {
     DeleteObjectCommand,
     PutObjectCommand,
@@ -66,9 +66,13 @@ export const HandleSubmit = async (
     notify: any,
     dataProvider: any,
     redirect: any,
+    deletedTagIds: number[],
+    setDeletedTagIds: React.Dispatch<React.SetStateAction<number[]>>,
 ) => {
     let newMedia: MediaType[] = []
     let newMediaUpload: MediaType[] = []
+    let tagUpdate: TagType[] = []
+    let tagCreate: TagType[] = []
 
     if (record !== undefined) {
         for (let i = 0; i < record.media.length; i++) {
@@ -85,6 +89,15 @@ export const HandleSubmit = async (
             }
         }
     }
+    for (let i = 0; i < data.tag.length; i++) {
+        let tag: TagType = { ...data.tag[i] }
+        if (tag.id) {
+            tagUpdate.push(tag)
+        } else {
+            tagCreate.push(tag)
+        }
+    }
+    console.log('deletedTagIds', deletedTagIds)
 
     try {
         let { id } = data
@@ -101,6 +114,25 @@ export const HandleSubmit = async (
             })
             id = response.data.id
             create = true
+        }
+
+        if (tagUpdate.length !== 0) {
+            await dataProvider.multiUpdate('api/v1/tag/admin/items', {
+                items: tagUpdate,
+            })
+        }
+
+        if (tagCreate.length !== 0) {
+            await dataProvider.multiCreate('api/v1/tag/admin/items', {
+                items: tagCreate,
+            })
+        }
+
+        if (deletedTagIds.length !== 0) {
+            await dataProvider.multiDelete('api/v1/tag/admin/items', {
+                items: deletedTagIds,
+            })
+            setDeletedTagIds([])
         }
 
         if (newMedia.length !== 0) {

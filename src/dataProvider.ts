@@ -87,6 +87,7 @@ export const dataProvider = {
             }
             let item = json['_item']
             item.media = json['_media']
+            item.tag = json['_tag']
             return { data: item }
         } else if (resource === 'api/v1/order/admin') {
             // Custom handling for /api/v1/item/admin

@@ -42,6 +42,24 @@ export interface ShippingRateType extends RaRecord {
     updated_at: Date
 }
 
+export enum SocialMediaTypeEnum {
+    FACEBOOK = 'Facebook',
+    TWITTER = 'Twitter',
+    INSTAGRAM = 'Instagram',
+    PINTEREST = 'Pinterest',
+    LINKEDIN = 'LinkedIn',
+    YOUTUBE = 'YouTube',
+    TIKTOK = 'TikTok',
+    SNAPCHAT = 'Snapchat',
+    QUORA = 'Quora',
+}
+
+export interface TagType extends RaRecord {
+    title: string
+    social_media: SocialMediaTypeEnum[]
+    item_id: Identifier
+}
+
 export interface ItemType extends RaRecord {
     title: string
     meta_description: string
@@ -53,7 +71,7 @@ export interface ItemType extends RaRecord {
     updated_at: Date
     price: number
     shipping_profile_id: Identifier
-    tags: string[]
+    tag: TagType[]
 }
 
 export enum MediaTypeEnum {

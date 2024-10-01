@@ -43,6 +43,7 @@ const ItemEdit = () => {
     const notify = useNotify()
     const dataProvider = useDataProvider()
     const redirect = useRedirect()
+    const [deletedTagIds, setDeletedTagIds] = useState<number[]>([])
 
     const onSubmit = async (data: any) => {
         await HandleSubmit(
@@ -55,6 +56,8 @@ const ItemEdit = () => {
             notify,
             dataProvider,
             redirect,
+            deletedTagIds,
+            setDeletedTagIds
         )
     }
 
@@ -71,7 +74,9 @@ const ItemEdit = () => {
                     label="resources.items.tabs.details"
                     path="details"
                 >
-                    <ItemEditDetails />
+                    <ItemEditDetails
+                        setDeletedTagIds={setDeletedTagIds}
+                    />
                 </TabbedForm.Tab>
                 <TabbedForm.Tab
                     label="resources.items.tabs.description"
