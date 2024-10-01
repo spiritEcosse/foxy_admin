@@ -1,5 +1,5 @@
 import * as React from 'react'
-import {ItemType, MediaType, MediaTypeEnum, TagType} from '../types'
+import { ItemType, MediaType, MediaTypeEnum, TagType } from '../types'
 import {
     DeleteObjectCommand,
     PutObjectCommand,

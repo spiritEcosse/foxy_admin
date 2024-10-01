@@ -51,7 +51,7 @@ const ItemCreate = () => {
             dataProvider,
             redirect,
             deletedTagIds,
-            setDeletedTagIds
+            setDeletedTagIds,
         )
     }
 
@@ -69,9 +69,7 @@ const ItemCreate = () => {
                     path="details"
                     sx={{ maxWidth: '40em' }}
                 >
-                    <ItemEditDetails
-                        setDeletedTagIds={setDeletedTagIds}
-                    />
+                    <ItemEditDetails setDeletedTagIds={setDeletedTagIds} />
                 </TabbedForm.Tab>
                 <TabbedForm.Tab label="description" path="description">
                     <RichTextInput source="description" label="" />

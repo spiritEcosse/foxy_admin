@@ -57,7 +57,7 @@ const ItemEdit = () => {
             dataProvider,
             redirect,
             deletedTagIds,
-            setDeletedTagIds
+            setDeletedTagIds,
         )
     }
 
@@ -74,9 +74,7 @@ const ItemEdit = () => {
                     label="resources.items.tabs.details"
                     path="details"
                 >
-                    <ItemEditDetails
-                        setDeletedTagIds={setDeletedTagIds}
-                    />
+                    <ItemEditDetails setDeletedTagIds={setDeletedTagIds} />
                 </TabbedForm.Tab>
                 <TabbedForm.Tab
                     label="resources.items.tabs.description"

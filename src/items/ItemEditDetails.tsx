@@ -18,11 +18,11 @@ import {
 import { Grid, InputAdornment, Button } from '@mui/material'
 import { useFormContext } from 'react-hook-form'
 import { slugify, validatePositive } from '../utils'
-import {ItemType, SocialMediaTypeEnum} from '../types'
-import {useState} from "react";
-import DeleteIcon from '@mui/icons-material/Delete';
+import { ItemType, SocialMediaTypeEnum } from '../types'
+import { useState } from 'react'
+import DeleteIcon from '@mui/icons-material/Delete'
 
-const socialMediaChoices = Object.values(SocialMediaTypeEnum).map(value => ({
+const socialMediaChoices = Object.values(SocialMediaTypeEnum).map((value) => ({
     id: value,
     name: value,
 }))
@@ -31,23 +31,31 @@ interface ItemEditDetailsProps {
     setDeletedTagIds: React.Dispatch<React.SetStateAction<number[]>>
 }
 
-
-const TagRemoveButton = ({ setDeletedTagIds, ...props }: { setDeletedTagIds: React.Dispatch<React.SetStateAction<number[]>> } & Omit<ButtonProps, 'onClick'>) => {
-    const { remove, index } = useSimpleFormIteratorItem(); // Access remove function and index
-    const { getValues } = useFormContext(); // Access form methods
-    const translate = useTranslate();
+const TagRemoveButton = ({
+    setDeletedTagIds,
+    ...props
+}: { setDeletedTagIds: React.Dispatch<React.SetStateAction<number[]>> } & Omit<
+    ButtonProps,
+    'onClick'
+>) => {
+    const { remove, index } = useSimpleFormIteratorItem() // Access remove function and index
+    const { getValues } = useFormContext() // Access form methods
+    const translate = useTranslate()
 
     // Handle click event
     const handleRemoveButtonClick = () => {
-        console.log('onRemove', index);
-        const id = getValues(`tag.${index}.id`); // Get the id of the item to remove
+        console.log('onRemove', index)
+        const id = getValues(`tag.${index}.id`) // Get the id of the item to remove
 
         if (id) {
-            console.log('onRemove ID', index, id);
-            setDeletedTagIds((prevDeletedTagIds: number[]) => [...prevDeletedTagIds, id]); // Add the id to the list of deleted items
-            remove();
+            console.log('onRemove ID', index, id)
+            setDeletedTagIds((prevDeletedTagIds: number[]) => [
+                ...prevDeletedTagIds,
+                id,
+            ]) // Add the id to the list of deleted items
+            remove()
         }
-    };
+    }
 
     return (
         <Button
@@ -58,11 +66,12 @@ const TagRemoveButton = ({ setDeletedTagIds, ...props }: { setDeletedTagIds: Rea
         >
             {translate(props.label ?? 'ra.action.remove')}
         </Button>
-    );
-};
+    )
+}
 
-
-export const ItemEditDetails: React.FC<ItemEditDetailsProps> = ({ setDeletedTagIds }) => {
+export const ItemEditDetails: React.FC<ItemEditDetailsProps> = ({
+    setDeletedTagIds,
+}) => {
     const { setValue } = useFormContext()
     const initialRecord = useRecordContext<ItemType>()
     const [record] = useState<ItemType>(initialRecord)
@@ -123,12 +132,24 @@ export const ItemEditDetails: React.FC<ItemEditDetailsProps> = ({ setDeletedTagI
                 <ArrayInput source="tag" label="Tags">
                     <SimpleFormIterator
                         disableRemove={false}
-                        removeButton={<TagRemoveButton setDeletedTagIds={setDeletedTagIds}/>}
+                        removeButton={
+                            <TagRemoveButton
+                                setDeletedTagIds={setDeletedTagIds}
+                            />
+                        }
                     >
                         <TextInput source="title" label="Title" />
-                        <NumberInput source="item_id" style={{ display: 'none' }} defaultValue={record?.id} />
+                        <NumberInput
+                            source="item_id"
+                            style={{ display: 'none' }}
+                            defaultValue={record?.id}
+                        />
                         <NumberInput source="id" style={{ display: 'none' }} />
-                        <SelectArrayInput source="social_media" choices={socialMediaChoices} label="Social Media" />
+                        <SelectArrayInput
+                            source="social_media"
+                            choices={socialMediaChoices}
+                            label="Social Media"
+                        />
                     </SimpleFormIterator>
                 </ArrayInput>
             </Grid>
