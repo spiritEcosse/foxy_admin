@@ -44,11 +44,9 @@ const TagRemoveButton = ({
 
     // Handle click event
     const handleRemoveButtonClick = () => {
-        console.log('onRemove', index)
         const id = getValues(`tag.${index}.id`) // Get the id of the item to remove
 
         if (id) {
-            console.log('onRemove ID', index, id)
             setDeletedTagIds((prevDeletedTagIds: number[]) => [
                 ...prevDeletedTagIds,
                 id,
