@@ -1,4 +1,3 @@
-import * as React from 'react'
 import { ItemType, MediaType, MediaTypeEnum, TagType } from '../types'
 import {
     DeleteObjectCommand,
@@ -13,164 +12,212 @@ const s3Client = new S3Client({
         secretAccessKey: import.meta.env.VITE_APP_SECRET_ACCESS_KEY as string,
     },
 })
-const uploadFile = async (record: ItemType, media: MediaType, file: File) => {
-    const src = `items/${record.id}/${media.src
-        .split('/')
-        .pop()}.${media.file.name.split('.').pop()}`
+
+const uploadMedia = async (
+    notify: any,
+    media: MediaType,
+) => {
+    if (!media.rawFile) {
+        notify('no_file_to_upload', { type: 'warning' })
+        return
+    }
     const uploadParams = {
         Bucket: import.meta.env.VITE_APP_BUCKET_NAME as string,
-        Key: src,
-        Body: file,
+        Key: media.src,
+        Body: media.rawFile,
     }
 
     try {
         const command = new PutObjectCommand(uploadParams)
         await s3Client.send(command)
-        let host = `${import.meta.env.VITE_APP_BUCKET_NAME}.s3.amazonaws.com`
-        if (
-            import.meta.env.VITE_APP_TWIC_PICS_NAME !== '' &&
-            media.type === MediaTypeEnum.IMAGE
-        ) {
-            host = `${import.meta.env.VITE_APP_TWIC_PICS_NAME}/.twic.pics`
-        }
-        media.src = `https://${host}/${src}?twic=v1`
-
-        console.log(`File uploaded successfully.`)
+        notify('file_uploaded_successfully', { type: 'info' })
     } catch (err) {
         console.error('Error uploading file: ', err)
+        notify('error_uploading_file', { type: 'error' })
     }
 }
 
-const DeleteMedia = async (media: MediaType) => {
+const deleteMedia = async (notify: any, media: MediaType) => {
     const deleteParams = {
         Bucket: import.meta.env.VITE_APP_BUCKET_NAME as string,
-        Key: 'items' + media.src.split('items')[1].split('?')[0],
+        Key: `items${media.src.split('items')[1].split('?')[0]}`
     }
 
     try {
         const command = new DeleteObjectCommand(deleteParams)
         await s3Client.send(command)
-        console.log(`File deleted successfully.`)
+        notify('file_deleted_successfully', { type: 'info' })
     } catch (err) {
         console.error('Error deleting file: ', err)
+        notify('error_deleting_file', { type: 'error' })
     }
 }
 
-export const HandleSubmit = async (
-    data: any,
-    record: ItemType | undefined,
-    setRecord: React.Dispatch<React.SetStateAction<ItemType | undefined>>,
-    recordsToDelete: MediaType[],
-    setRecordsToDelete: React.Dispatch<React.SetStateAction<MediaType[]>>,
-    updateItem: any,
-    notify: any,
-    dataProvider: any,
-    redirect: any,
-    deletedTagIds: number[],
-    setDeletedTagIds: React.Dispatch<React.SetStateAction<number[]>>,
-) => {
-    let newMedia: MediaType[] = []
-    let newMediaUpload: MediaType[] = []
+const processMedia = (notify: any, data: any, item?: ItemType) => {
+    let mediaToUpdate: MediaType[] = []
+    let mediaToCreate: MediaType[] = []
+    let mediaToDelete: MediaType[] = []
+
+    item?.media?.forEach((media) => {
+        if (!data.media.find((m: MediaType) => m.id === media.id)) {
+            mediaToDelete.push(media)
+        }
+    })
+
+    data.media.forEach((media: MediaType) => {
+        if (media.rawFile) {
+            media.type = media.rawFile.type.startsWith('video/')
+                ? MediaTypeEnum.VIDEO
+                : MediaTypeEnum.IMAGE
+        }
+        media.sort = data.media.indexOf(media) + 1
+        media.item_id = data.id
+
+        if (media.id) {
+            media.src = `items${media.src.split('items')[1].split('?')[0]}`
+            mediaToUpdate.push(media)
+        } else {
+            if (!media.rawFile) {
+                notify('no_file_to_upload', { type: 'warning' })
+                return
+            }
+
+            media.src = `items/${data.id}/${media.src
+                .split('/')
+                .pop()}.${media.rawFile.name.split('.').pop()}`
+            mediaToCreate.push(media)
+        }
+    })
+
+    return { mediaToUpdate, mediaToCreate, mediaToDelete }
+}
+
+const processTags = (data: any, item?: ItemType) => {
     let tagUpdate: TagType[] = []
     let tagCreate: TagType[] = []
+    let tagIdsToDelete: number[] = []
 
-    if (record !== undefined) {
-        for (let i = 0; i < record.media.length; i++) {
-            let media: MediaType = { ...record.media[i] }
-            if (media.id) {
-                media.src = 'items' + media.src.split('items')[1].split('?')[0]
-                newMedia.push(media)
-            }
+    item?.tag?.forEach((tag) => {
+        if (!data.tag.find((t: TagType) => t.id === tag.id)) {
+            tagIdsToDelete.push(Number(tag.id))
         }
-        for (let i = 0; i < record.media.length; i++) {
-            let media: MediaType = record.media[i]
-            if (media.id == 0) {
-                newMediaUpload.push(media)
-            }
-        }
-    }
-    for (let i = 0; i < data.tag.length; i++) {
-        let tag: TagType = { ...data.tag[i] }
+    })
+
+    data.tag.forEach((tag: TagType) => {
+        tag.item_id = data.id
+
         if (tag.id) {
             tagUpdate.push(tag)
         } else {
             tagCreate.push(tag)
         }
+    })
+
+    return { tagUpdate, tagCreate, tagIdsToDelete }
+}
+
+const handleItem = async (
+    data: any,
+    dataProvider: any,
+) => {
+    const itemEndpoint = 'api/v1/item/admin'
+
+    if (data.id === undefined) {
+        const response = await dataProvider.create(itemEndpoint, { data })
+        return response.data.id
+    } else {
+        await dataProvider.updateItem(itemEndpoint, { id: data.id, data })
+        return data.id
     }
-    console.log('deletedTagIds', deletedTagIds)
+}
 
+const handleTags = async (
+    tagUpdate: TagType[],
+    tagCreate: TagType[],
+    tagIdsToDelete: number[],
+    dataProvider: any,
+) => {
+    const tagEndpoint = 'api/v1/tag/admin/items'
+
+    if (tagUpdate.length)
+        await dataProvider.multiUpdate(tagEndpoint, { items: tagUpdate })
+    if (tagCreate.length)
+        await dataProvider.multiCreate(tagEndpoint, { items: tagCreate })
+    if (tagIdsToDelete.length)
+        await dataProvider.multiDelete(tagEndpoint, { items: tagIdsToDelete })
+}
+
+const handleMedia = async (
+    mediaToUpdate: MediaType[],
+    mediaToCreate: MediaType[],
+    mediaToDelete: MediaType[],
+    dataProvider: any,
+    notify: any,
+) => {
+    const mediaEndpoint = 'api/v1/media/admin/items'
+
+    if (mediaToUpdate.length)
+        await dataProvider.multiUpdate(mediaEndpoint, { items: mediaToUpdate })
+
+    if (mediaToCreate.length) {
+        for (const media of mediaToCreate) {
+            await uploadMedia(notify, media)
+        }
+        await dataProvider.multiCreate(mediaEndpoint, { items: mediaToCreate })
+    }
+
+    if (mediaToDelete.length) {
+        for (const media of mediaToDelete) {
+            await deleteMedia(notify, media)
+        }
+        await dataProvider.multiDelete(mediaEndpoint, {
+            items: mediaToDelete.map((media: MediaType) => media.id),
+        })
+    }
+}
+
+export const HandleSubmit = async (
+    data: any,
+    item: ItemType | undefined,
+    notify: any,
+    dataProvider: any,
+    redirect: any,
+    refresh: any,
+) => {
     try {
-        let { id } = data
-        let create = false
-        if (data.id !== undefined) {
-            delete data.media
-            await dataProvider.updateItem('api/v1/item/admin', {
-                id: data.id,
-                data: data,
-            })
-        } else {
-            const response = await dataProvider.create('api/v1/item/admin', {
-                data: data,
-            })
-            id = response.data.id
-            create = true
-        }
+        const create = data.id === undefined
+        data.id = await handleItem(data, dataProvider)
 
-        if (tagUpdate.length !== 0) {
-            await dataProvider.multiUpdate('api/v1/tag/admin/items', {
-                items: tagUpdate,
-            })
-        }
+        const { mediaToUpdate, mediaToCreate, mediaToDelete } = processMedia(
+            notify,
+            data,
+            item,
+        )
+        const { tagUpdate, tagCreate, tagIdsToDelete } = processTags(data, item)
 
-        if (tagCreate.length !== 0) {
-            await dataProvider.multiCreate('api/v1/tag/admin/items', {
-                items: tagCreate,
-            })
-        }
+        await handleTags(
+            tagUpdate,
+            tagCreate,
+            tagIdsToDelete,
+            dataProvider,
+        )
+        await handleMedia(
+            mediaToUpdate,
+            mediaToCreate,
+            mediaToDelete,
+            dataProvider,
+            notify,
+        )
 
-        if (deletedTagIds.length !== 0) {
-            await dataProvider.multiDelete('api/v1/tag/admin/items', {
-                items: deletedTagIds,
-            })
-            setDeletedTagIds([])
-        }
-
-        if (newMedia.length !== 0) {
-            await dataProvider.multiUpdate('api/v1/media/admin/items', {
-                items: newMedia,
-            })
-        }
-        if (newMediaUpload.length !== 0) {
-            let uploadPromises = newMediaUpload.map(async (mediaUpload) => {
-                data.id = id
-                await uploadFile(data, mediaUpload, mediaUpload.file)
-                let media: MediaType = { ...mediaUpload }
-                media.src = 'items' + media.src.split('items')[1].split('?')[0]
-                media.item_id = id
-                return media
-            })
-
-            let newMediaCreate = await Promise.all(uploadPromises)
-            await dataProvider.multiCreate('api/v1/media/admin/items', {
-                items: newMediaCreate,
-            })
-        }
-        if (recordsToDelete.length !== 0) {
-            recordsToDelete.map(async (media) => {
-                await DeleteMedia(media)
-            })
-            setRecordsToDelete([])
-            await dataProvider.multiDelete('api/v1/media/admin/items', {
-                items: recordsToDelete.map((media: MediaType) => media.id),
-            })
-        }
-        setRecord({ ...record, media: [] })
-        notify('item_updated', { type: 'info' })
         if (create) {
-            redirect(`/api/v1/item/admin/${id}`)
+            redirect(`/api/v1/item/admin/${data.id}`)
+            notify('item_created', { type: 'info' })
+        } else {
+            refresh()
+            notify('item_updated', { type: 'info' })
         }
     } catch (error) {
         console.error('Error: could not update item or media', error)
-        notify('Error: could not update item or media', { type: 'warning' })
+        notify('could_not_update_object', { type: 'error' })
     }
 }

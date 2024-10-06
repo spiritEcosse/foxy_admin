@@ -4,6 +4,13 @@ import englishMessages from 'ra-language-english'
 const customEnglishMessages: TranslationMessages = {
     ...englishMessages,
     item_updated: 'Item updated',
+    item_created: 'Item created',
+    file_uploaded_successfully: 'File uploaded successfully',
+    error_uploading_file: 'Error uploading file',
+    file_deleted_successfully: 'File deleted successfully',
+    error_deleting_file: 'Error deleting file',
+    no_file_to_upload: 'No file to upload',
+    could_not_update_object: 'Error: could not update object',
     pos: {
         search: 'Search',
         configuration: 'Configuration',
@@ -194,6 +201,9 @@ const customEnglishMessages: TranslationMessages = {
         },
         items: {
             name: 'Items |||| Items',
+            actions: {
+                analyze_image: 'Analyze Image',
+            },
             fields: {
                 title: 'Title',
                 description: 'Description',

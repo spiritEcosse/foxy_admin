@@ -1,19 +1,13 @@
 import React, { forwardRef, useEffect, useState } from 'react'
 import { Card, CardActions, CardContent, CardMedia } from '@mui/material'
-import { Button } from 'react-admin'
+import { Button, useNotify } from 'react-admin'
 import DeleteIcon from '@mui/icons-material/Delete'
-import { ItemType, MediaType, MediaTypeEnum } from '../types'
+import { MediaType, MediaTypeEnum } from '../types'
+import { useFormContext } from 'react-hook-form'
 
 interface MediaProps {
-    setRecordPresent: React.Dispatch<React.SetStateAction<ItemType>>
-    recordPresent: ItemType
-    setRecord: React.Dispatch<React.SetStateAction<ItemType>>
-    record: ItemType
     media: MediaType
-    index: number
-    setRecordsToDelete: React.Dispatch<React.SetStateAction<MediaType[]>>
-    faded: boolean
-    style: React.CSSProperties
+    style?: React.CSSProperties
 }
 
 const formatFileSize = (size: number) => {
@@ -26,27 +20,13 @@ const formatFileSize = (size: number) => {
 }
 
 const Media = forwardRef<HTMLDivElement, MediaProps>(
-    (
-        {
-            setRecord,
-            setRecordPresent,
-            recordPresent,
-            media,
-            index,
-            setRecordsToDelete,
-            faded,
-            style,
-            ...props
-        },
-        ref,
-    ) => {
+    ({ media, style, ...props }, ref) => {
         const inlineStyles = {
-            opacity: faded ? '0.2' : '1',
             transformOrigin: '0 0',
             height: 200,
             width: 200,
-            gridRowStart: index === 0 ? 'span 2' : null,
-            gridColumnStart: index === 0 ? 'span 2' : null,
+            gridRowStart: null,
+            gridColumnStart: null,
             backgroundImage: `url("${media.src}")`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
@@ -57,15 +37,19 @@ const Media = forwardRef<HTMLDivElement, MediaProps>(
             boxShadow: '0px 8px 16px rgba(0, 0, 0, 0.2)',
             ...style,
         }
+        const { getValues, setValue } = useFormContext()
         const [fileSize, setFileSize] = useState<string | null>(null)
         const mediaSrc = media.src.startsWith('https://')
-            ? `https://${import.meta.env.VITE_APP_BUCKET_NAME}.s3.amazonaws.com${media.src.replace(/https?:\/\/[^/]+/, '')}`
+            ? `https://${
+                  import.meta.env.VITE_APP_BUCKET_NAME
+              }.s3.amazonaws.com${media.src.replace(/https?:\/\/[^/]+/, '')}`
             : media.src
+        const notify = useNotify()
 
         useEffect(() => {
             const fetchFileSize = async () => {
-                if (media.file) {
-                    setFileSize(formatFileSize(media.file.size))
+                if (media.rawFile) {
+                    setFileSize(formatFileSize(media.rawFile.size))
                 } else {
                     try {
                         const response = await fetch(mediaSrc, {
@@ -79,30 +63,20 @@ const Media = forwardRef<HTMLDivElement, MediaProps>(
                         }
                     } catch (error) {
                         console.error('Error fetching file size:', error)
+                        notify('Error fetching file size', { type: 'warning' })
                     }
                 }
             }
 
             fetchFileSize()
-        }, [media.src])
+        }, [media, mediaSrc, notify])
 
         const handleDelete = () => {
-            if (media.id) {
-                setRecordsToDelete((prevRecord) => [...prevRecord, media])
-            }
-            const newRecords = recordPresent.media.filter(
-                (obj) => obj !== media,
-            )
-
-            setRecordPresent((prevRecord) => ({
-                ...prevRecord,
-                media: newRecords,
-            }))
-            setRecord((prevRecord) => ({
-                ...prevRecord,
-                media: newRecords,
-            }))
-        }
+            const newMedia = getValues().media.filter(
+                (obj: MediaType) => obj.src !== media.src,
+            );
+            setValue('media', newMedia, { shouldValidate: true, shouldDirty: true });
+        };
 
         return (
             <div>
@@ -111,11 +85,11 @@ const Media = forwardRef<HTMLDivElement, MediaProps>(
                         <CardMedia
                             component="video"
                             image={mediaSrc}
-                            title="title"
+                            title={media.src}
                             controls
                         />
                     ) : (
-                        <CardMedia component="img" image={media.src} />
+                        <CardMedia component="img" image={media.src} title={media.src}/>
                     )}
                 </Card>
                 <CardContent>
@@ -128,7 +102,7 @@ const Media = forwardRef<HTMLDivElement, MediaProps>(
                 </CardActions>
             </div>
         )
-    },
+    }
 )
 
 Media.displayName = 'Media'
