@@ -13,10 +13,7 @@ const s3Client = new S3Client({
     },
 })
 
-const uploadMedia = async (
-    notify: any,
-    media: MediaType,
-) => {
+const uploadMedia = async (notify: any, media: MediaType) => {
     if (!media.rawFile) {
         notify('no_file_to_upload', { type: 'warning' })
         return
@@ -40,7 +37,7 @@ const uploadMedia = async (
 const deleteMedia = async (notify: any, media: MediaType) => {
     const deleteParams = {
         Bucket: import.meta.env.VITE_APP_BUCKET_NAME as string,
-        Key: `items${media.src.split('items')[1].split('?')[0]}`
+        Key: `items${media.src.split('items')[1].split('?')[0]}`,
     }
 
     try {
@@ -116,10 +113,7 @@ const processTags = (data: any, item?: ItemType) => {
     return { tagUpdate, tagCreate, tagIdsToDelete }
 }
 
-const handleItem = async (
-    data: any,
-    dataProvider: any,
-) => {
+const handleItem = async (data: any, dataProvider: any) => {
     const itemEndpoint = 'api/v1/item/admin'
 
     if (data.id === undefined) {
@@ -195,12 +189,7 @@ export const HandleSubmit = async (
         )
         const { tagUpdate, tagCreate, tagIdsToDelete } = processTags(data, item)
 
-        await handleTags(
-            tagUpdate,
-            tagCreate,
-            tagIdsToDelete,
-            dataProvider,
-        )
+        await handleTags(tagUpdate, tagCreate, tagIdsToDelete, dataProvider)
         await handleMedia(
             mediaToUpdate,
             mediaToCreate,

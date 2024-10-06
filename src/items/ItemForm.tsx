@@ -23,7 +23,7 @@ const ItemForm = () => {
     const item = useRecordContext<ItemType>()
     const notify = useNotify()
     const dataProvider = useDataProvider()
-    const refresh = useRefresh();
+    const refresh = useRefresh()
     const redirect = useRedirect()
 
     const onSubmit = async (data: any) => {
@@ -35,10 +35,7 @@ const ItemForm = () => {
             <TabbedForm.Tab label="resources.items.tabs.images" path="">
                 <ItemMediaList />
             </TabbedForm.Tab>
-            <TabbedForm.Tab
-                label="resources.items.tabs.details"
-                path="details"
-            >
+            <TabbedForm.Tab label="resources.items.tabs.details" path="details">
                 <ItemEditDetails />
             </TabbedForm.Tab>
             <TabbedForm.Tab
@@ -52,9 +49,8 @@ const ItemForm = () => {
                 />
             </TabbedForm.Tab>
         </TabbedForm>
-    );
+    )
 }
 const req = [required()]
 
 export default ItemForm
-

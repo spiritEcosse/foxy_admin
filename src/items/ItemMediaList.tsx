@@ -57,7 +57,10 @@ const ItemMediaList: React.FC<MediaListProps> = () => {
                 }
                 return item
             })
-            setValue('media', newMedia, { shouldValidate: true, shouldDirty: true })
+            setValue('media', newMedia, {
+                shouldValidate: true,
+                shouldDirty: true,
+            })
         }
         setSelectedMediaSrc(null)
     }

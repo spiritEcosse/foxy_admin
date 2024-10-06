@@ -10,7 +10,7 @@ const ProductTitle = () => {
 const ItemEdit = () => {
     return (
         <Edit title={<ProductTitle />}>
-            <ItemForm/>
+            <ItemForm />
         </Edit>
     )
 }

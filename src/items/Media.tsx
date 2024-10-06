@@ -74,9 +74,12 @@ const Media = forwardRef<HTMLDivElement, MediaProps>(
         const handleDelete = () => {
             const newMedia = getValues().media.filter(
                 (obj: MediaType) => obj.src !== media.src,
-            );
-            setValue('media', newMedia, { shouldValidate: true, shouldDirty: true });
-        };
+            )
+            setValue('media', newMedia, {
+                shouldValidate: true,
+                shouldDirty: true,
+            })
+        }
 
         return (
             <div>
@@ -89,7 +92,11 @@ const Media = forwardRef<HTMLDivElement, MediaProps>(
                             controls
                         />
                     ) : (
-                        <CardMedia component="img" image={media.src} title={media.src}/>
+                        <CardMedia
+                            component="img"
+                            image={media.src}
+                            title={media.src}
+                        />
                     )}
                 </Card>
                 <CardContent>
@@ -102,7 +109,7 @@ const Media = forwardRef<HTMLDivElement, MediaProps>(
                 </CardActions>
             </div>
         )
-    }
+    },
 )
 
 Media.displayName = 'Media'

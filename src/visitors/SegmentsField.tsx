@@ -3,10 +3,13 @@ import { FieldProps, useTranslate, useRecordContext } from 'react-admin'
 import segments from '../segments/data'
 import { Customer } from '../types'
 
-const segmentsById = segments.reduce((acc, segment) => {
-    acc[segment.id] = segment
-    return acc
-}, {} as { [key: string]: any })
+const segmentsById = segments.reduce(
+    (acc, segment) => {
+        acc[segment.id] = segment
+        return acc
+    },
+    {} as { [key: string]: any },
+)
 
 const SegmentsField = (_: FieldProps) => {
     const translate = useTranslate()
