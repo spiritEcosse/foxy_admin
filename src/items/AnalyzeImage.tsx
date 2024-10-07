@@ -1,12 +1,12 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { OpenAI } from 'openai'
 import { useNotify, useTranslate } from 'react-admin'
 import { Button, CircularProgress } from '@mui/material'
 import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh'
 import { useFormContext } from 'react-hook-form'
-import {downloadMedia} from "../clients/storage";
-import {SocialMediaTypeEnum} from "../types.ts";
-import {slugify} from "../utils";
+import { downloadMedia } from '../clients/storage'
+import { SocialMediaTypeEnum } from '../types.ts'
+import { slugify } from '../utils'
 
 interface TagGptType {
     title: string
@@ -29,22 +29,25 @@ const AnalyzeImage: React.FC = () => {
     const notify = useNotify()
     const translate = useTranslate()
     const { setValue, getValues } = useFormContext()
-    const [isAnalyzing, setIsAnalyzing] = useState(false);
+    const [isAnalyzing, setIsAnalyzing] = useState(false)
 
-    const toBase64 = (file: File) => new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = reject;
-    });
+    const toBase64 = (file: File) =>
+        new Promise((resolve, reject) => {
+            const reader = new FileReader()
+            reader.readAsDataURL(file)
+            reader.onload = () => resolve(reader.result)
+            reader.onerror = reject
+        })
 
     const handleAnalyze = async () => {
-        if (isAnalyzing) return;
-        setIsAnalyzing(true);
+        if (isAnalyzing) return
+        setIsAnalyzing(true)
 
         const media = getValues().media
         if (!media?.length) {
-            notify('resources.items.notifications.media_is_empty', { type: 'error' })
+            notify('resources.items.notifications.media_is_empty', {
+                type: 'error',
+            })
             return
         }
 
@@ -56,14 +59,24 @@ const AnalyzeImage: React.FC = () => {
 
             // Check file size
             if (file.size > 20 * 1024 * 1024) {
-                notify('resources.items.notifications.image_too_large', { type: 'error' })
+                notify('resources.items.notifications.image_too_large', {
+                    type: 'error',
+                })
                 return
             }
 
             // Check file type
-            const allowedTypes = ['image/png', 'image/jpeg', 'image/gif', 'image/webp']
+            const allowedTypes = [
+                'image/png',
+                'image/jpeg',
+                'image/gif',
+                'image/webp',
+            ]
             if (!allowedTypes.includes(file.type)) {
-                notify('resources.items.notifications.unsupported_image_format', { type: 'error' })
+                notify(
+                    'resources.items.notifications.unsupported_image_format',
+                    { type: 'error' },
+                )
                 return
             }
             const base64Image = await toBase64(file)
@@ -94,7 +107,8 @@ Your response must be a valid JSON object with the following structure:
   ]
 }
 
-Ensure that each tag is associated with the appropriate social media platforms where it would be most effective. Some tags may be suitable for multiple platforms.`                },
+Ensure that each tag is associated with the appropriate social media platforms where it would be most effective. Some tags may be suitable for multiple platforms.`,
+                },
                 {
                     role: 'user',
                     content: [
@@ -104,7 +118,7 @@ Ensure that each tag is associated with the appropriate social media platforms w
                         },
                         {
                             type: 'image_url',
-                            image_url: base64Image
+                            image_url: base64Image,
                         },
                     ],
                 },
@@ -114,14 +128,14 @@ Ensure that each tag is associated with the appropriate social media platforms w
                 model: 'chatgpt-4o-latest',
                 messages: messages,
                 max_tokens: 1000,
-                response_format: { type: "json_object" }
+                response_format: { type: 'json_object' },
             })
 
             let jsonResponse = completion.choices[0].message.content
 
             if (jsonResponse) {
                 console.log('OpenAI response:', jsonResponse)
-                const itemGpt = JSON.parse(jsonResponse) as ItemGptType;
+                const itemGpt = JSON.parse(jsonResponse) as ItemGptType
                 setValue('title', itemGpt.title, {
                     shouldValidate: true,
                     shouldDirty: true,
@@ -142,15 +156,19 @@ Ensure that each tag is associated with the appropriate social media platforms w
                     shouldValidate: true,
                     shouldDirty: true,
                 })
-                notify('resources.items.notifications.image_analyzed', { type: 'info' })
+                notify('resources.items.notifications.image_analyzed', {
+                    type: 'info',
+                })
             } else {
                 notify('No content in the OpenAI response', { type: 'error' })
             }
-            setIsAnalyzing(false);
+            setIsAnalyzing(false)
         } catch (error) {
             console.error('Error:', error)
-            setIsAnalyzing(false);
-            notify('resources.items.notifications.failed_to_analyze_image', { type: 'error' })
+            setIsAnalyzing(false)
+            notify('resources.items.notifications.failed_to_analyze_image', {
+                type: 'error',
+            })
         }
     }
 

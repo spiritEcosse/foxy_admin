@@ -207,11 +207,13 @@ const customEnglishMessages: TranslationMessages = {
                 analyze_image: 'Analyze Image',
             },
             notifications: {
-                unsupported_image_format: 'Unsupported image format. Please use PNG, JPEG, GIF, or WebP',
+                unsupported_image_format:
+                    'Unsupported image format. Please use PNG, JPEG, GIF, or WebP',
                 image_too_large: 'Image size exceeds 20MB limit',
-                media_is_empty: 'I\'m sorry, I am unable to proceed until you upload the file.',
+                media_is_empty:
+                    "I'm sorry, I am unable to proceed until you upload the file.",
                 failed_to_analyze_image: 'Failed to analyze image',
-                image_analyzed: "Image analyzed successfully",
+                image_analyzed: 'Image analyzed successfully',
             },
             fields: {
                 title: 'Title',

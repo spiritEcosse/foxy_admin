@@ -52,30 +52,35 @@ export const deleteMedia = async (notify: any, media: MediaType) => {
     }
 }
 
-export const downloadMedia = async (notify: any, media: MediaType): Promise<File> => {
+export const downloadMedia = async (
+    notify: any,
+    media: MediaType,
+): Promise<File> => {
     if (!media.src) {
-        notify('no_file_to_download', { type: 'error' });
-        throw new Error('No media source');
+        notify('no_file_to_download', { type: 'error' })
+        throw new Error('No media source')
     }
 
-    const key = media.src.split('amazonaws.com/').pop();
+    const key = media.src.split('amazonaws.com/').pop()
     if (!key) {
-        throw new Error('Invalid media source');
+        throw new Error('Invalid media source')
     }
 
     const params = new GetObjectCommand({
         Bucket: import.meta.env.VITE_APP_BUCKET_NAME as string,
-        Key: key
-    });
+        Key: key,
+    })
 
-    const response = await s3Client.send(params);
+    const response = await s3Client.send(params)
 
     if (!response.Body) {
-        throw new Error('No body in response');
+        throw new Error('No body in response')
     }
 
-    const arrayBuffer = await response.Body.transformToByteArray();
-    const blob = new Blob([arrayBuffer], { type: response.ContentType });
+    const arrayBuffer = await response.Body.transformToByteArray()
+    const blob = new Blob([arrayBuffer], { type: response.ContentType })
     const filename = key.split('/').pop() ?? 'file'
-    return new File([blob], filename, { type: getMimeType(getFileExtension(filename)) });
+    return new File([blob], filename, {
+        type: getMimeType(getFileExtension(filename)),
+    })
 }
