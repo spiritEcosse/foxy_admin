@@ -1,54 +1,5 @@
 import { ItemType, MediaType, MediaTypeEnum, TagType } from '../types'
-import {
-    DeleteObjectCommand,
-    PutObjectCommand,
-    S3Client,
-} from '@aws-sdk/client-s3'
-
-const s3Client = new S3Client({
-    region: import.meta.env.VITE_APP_AWS_REGION as string,
-    credentials: {
-        accessKeyId: import.meta.env.VITE_APP_ACCESS_KEY_ID as string,
-        secretAccessKey: import.meta.env.VITE_APP_SECRET_ACCESS_KEY as string,
-    },
-})
-
-const uploadMedia = async (notify: any, media: MediaType) => {
-    if (!media.rawFile) {
-        notify('no_file_to_upload', { type: 'warning' })
-        return
-    }
-    const uploadParams = {
-        Bucket: import.meta.env.VITE_APP_BUCKET_NAME as string,
-        Key: media.src,
-        Body: media.rawFile,
-    }
-
-    try {
-        const command = new PutObjectCommand(uploadParams)
-        await s3Client.send(command)
-        notify('file_uploaded_successfully', { type: 'info' })
-    } catch (err) {
-        console.error('Error uploading file: ', err)
-        notify('error_uploading_file', { type: 'error' })
-    }
-}
-
-const deleteMedia = async (notify: any, media: MediaType) => {
-    const deleteParams = {
-        Bucket: import.meta.env.VITE_APP_BUCKET_NAME as string,
-        Key: `items${media.src.split('items')[1].split('?')[0]}`,
-    }
-
-    try {
-        const command = new DeleteObjectCommand(deleteParams)
-        await s3Client.send(command)
-        notify('file_deleted_successfully', { type: 'info' })
-    } catch (err) {
-        console.error('Error deleting file: ', err)
-        notify('error_deleting_file', { type: 'error' })
-    }
-}
+import { deleteMedia, uploadMedia } from '../clients/storage'
 
 const processMedia = (notify: any, data: any, item?: ItemType) => {
     let mediaToUpdate: MediaType[] = []

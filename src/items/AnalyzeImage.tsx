@@ -1,15 +1,23 @@
-import React, { useState } from 'react'
+import React, {useState} from 'react'
 import { OpenAI } from 'openai'
 import { useNotify, useTranslate } from 'react-admin'
-import { Button } from '@mui/material'
+import { Button, CircularProgress } from '@mui/material'
 import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh'
 import { useFormContext } from 'react-hook-form'
+import {downloadMedia} from "../clients/storage";
+import {SocialMediaTypeEnum} from "../types.ts";
+import {slugify} from "../utils";
+
+interface TagGptType {
+    title: string
+    social_media: SocialMediaTypeEnum[]
+}
 
 interface ItemGptType {
     title: string
     description: string
     meta_description: string
-    social_media: string[]
+    tag: TagGptType[]
 }
 
 const openai = new OpenAI({
@@ -20,50 +28,73 @@ const openai = new OpenAI({
 const AnalyzeImage: React.FC = () => {
     const notify = useNotify()
     const translate = useTranslate()
-    const { getValues } = useFormContext()
-    const [itemGpt, setItemGpt] = useState<ItemGptType>()
+    const { setValue, getValues } = useFormContext()
+    const [isAnalyzing, setIsAnalyzing] = useState(false);
 
-    const convertFileToBase64 = (file: File): Promise<string> => {
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader()
-            reader.readAsDataURL(file)
-            reader.onload = () => resolve(reader.result as string)
-            reader.onerror = (error) => reject(error)
-        })
-    }
+    const toBase64 = (file: File) => new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+    });
 
     const handleAnalyze = async () => {
-        const media = getValues('media')
-        if (!media || media.length === 0) {
-            notify('No image available in the record', { type: 'warning' })
-            return
-        }
+        if (isAnalyzing) return;
+        setIsAnalyzing(true);
 
-        const file = media[0].file // Use the file from the first media item
-        if (!file) {
-            notify('File not available', { type: 'warning' })
+        const media = getValues().media
+        if (!media?.length) {
+            notify('resources.items.notifications.media_is_empty', { type: 'error' })
             return
         }
 
         try {
-            const base64Image = await convertFileToBase64(file)
+            let file: File = media[0].rawFile
+            if (!file) {
+                file = await downloadMedia(notify, media[0])
+            }
+
+            // Check file size
+            if (file.size > 20 * 1024 * 1024) {
+                notify('resources.items.notifications.image_too_large', { type: 'error' })
+                return
+            }
+
+            // Check file type
+            const allowedTypes = ['image/png', 'image/jpeg', 'image/gif', 'image/webp']
+            if (!allowedTypes.includes(file.type)) {
+                notify('resources.items.notifications.unsupported_image_format', { type: 'error' })
+                return
+            }
+            const base64Image = await toBase64(file)
 
             const messages = [
                 {
                     role: 'system',
-                    content: `You are an AI trained to analyze images and provide detailed, platform-specific tags and categories. Your response should be in a specific JSON format.
+                    content: `You are an AI trained to analyze images and provide detailed, platform-specific tags and categories. Your response must be in a specific JSON format.
 
-                    Consider the following when analyzing:
-                    1. Instagram: Provide up to 30 relevant hashtags, including a mix of popular and niche tags.
-                    2. Facebook: Suggest 5-10 relevant categories or tags that align with Facebook's content classification.
-                    3. Pinterest: Include 5-7 descriptive keywords and categories that work well for Pinterest's search and discovery features.
-                    4. Twitter: Suggest 3-5 concise hashtags that fit Twitter's character limit and trending topics.
-                    5. TikTok: Propose 3-5 trending hashtags or challenges related to the image content.
+Consider the following when analyzing:
+1. Instagram: Provide up to 30 relevant hashtags, including a mix of popular and niche tags.
+2. Facebook: Suggest 5-10 relevant categories or tags that align with Facebook's content classification.
+3. Pinterest: Include 5-7 descriptive keywords and categories that work well for Pinterest's search and discovery features.
+4. Twitter: Suggest 3-5 concise hashtags that fit Twitter's character limit and trending topics.
+5. TikTok: Propose 3-5 trending hashtags or challenges related to the image content.
 
-                    For each tag or category, list the social media platforms where it would be most effective. Some tags may be suitable for multiple platforms.
+Your response must be a valid JSON object with the following structure:
+{
+  "title": "A concise title describing the image",
+  "description": "A detailed description of the image content",
+  "meta_description": "A brief summary suitable for SEO purposes",
+  "tag": [
+    {
+      "title": "Example Tag",
+      "social_media": ["Instagram", "Facebook", "Pinterest", "Twitter", "TikTok"]
+    },
+    // ... more tags
+  ]
+}
 
-                    Always respond with a valid JSON object containing 'title', 'description', 'meta_description', and 'social_media' (list of relevant platforms) fields.`,
-                },
+Ensure that each tag is associated with the appropriate social media platforms where it would be most effective. Some tags may be suitable for multiple platforms.`                },
                 {
                     role: 'user',
                     content: [
@@ -73,7 +104,7 @@ const AnalyzeImage: React.FC = () => {
                         },
                         {
                             type: 'image_url',
-                            image_url: base64Image,
+                            image_url: base64Image
                         },
                     ],
                 },
@@ -83,25 +114,43 @@ const AnalyzeImage: React.FC = () => {
                 model: 'chatgpt-4o-latest',
                 messages: messages,
                 max_tokens: 1000,
+                response_format: { type: "json_object" }
             })
 
             let jsonResponse = completion.choices[0].message.content
 
             if (jsonResponse) {
-                if (jsonResponse.startsWith('json')) {
-                    jsonResponse = jsonResponse.slice(4)
-                }
-
-                console.log(jsonResponse)
-                const parsedResponse = JSON.parse(jsonResponse)
-                console.log(parsedResponse)
-                setItemGpt(parsedResponse)
+                console.log('OpenAI response:', jsonResponse)
+                const itemGpt = JSON.parse(jsonResponse) as ItemGptType;
+                setValue('title', itemGpt.title, {
+                    shouldValidate: true,
+                    shouldDirty: true,
+                })
+                setValue('description', itemGpt.description, {
+                    shouldValidate: true,
+                    shouldDirty: true,
+                })
+                setValue('meta_description', itemGpt.meta_description, {
+                    shouldValidate: true,
+                    shouldDirty: true,
+                })
+                setValue('tag', itemGpt.tag, {
+                    shouldValidate: true,
+                    shouldDirty: true,
+                })
+                setValue('slug', slugify(itemGpt.title), {
+                    shouldValidate: true,
+                    shouldDirty: true,
+                })
+                notify('resources.items.notifications.image_analyzed', { type: 'info' })
             } else {
                 notify('No content in the OpenAI response', { type: 'error' })
             }
+            setIsAnalyzing(false);
         } catch (error) {
             console.error('Error:', error)
-            notify('Failed to analyze image', { type: 'error' })
+            setIsAnalyzing(false);
+            notify('resources.items.notifications.failed_to_analyze_image', { type: 'error' })
         }
     }
 
@@ -111,8 +160,12 @@ const AnalyzeImage: React.FC = () => {
             startIcon={<AutoFixHighIcon />}
             variant="contained"
             color="primary"
+            disabled={isAnalyzing}
         >
             {translate('resources.items.actions.analyze_image')}
+            {isAnalyzing && (
+                <CircularProgress size={20} thickness={2.5} sx={{ ml: 1 }} />
+            )}
         </Button>
     )
 }
