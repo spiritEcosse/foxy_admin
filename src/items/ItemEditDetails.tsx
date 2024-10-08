@@ -1,30 +1,39 @@
 import * as React from 'react'
 import {
-    ArrayInput,
     BooleanInput,
     DateTimeInput,
-    NumberInput,
     ReferenceInput,
     required,
     SelectInput,
-    SimpleFormIterator,
+    NumberInput,
     TextInput,
+    SelectArrayInput,
+    SimpleFormIterator,
+    ArrayInput,
 } from 'react-admin'
 import { Grid, InputAdornment } from '@mui/material'
 import { useFormContext } from 'react-hook-form'
 import { slugify, validatePositive } from '../utils'
+import { SocialMediaTypeEnum } from '../types'
+import AnalyzeImage from './AnalyzeImage.tsx'
+
+const socialMediaChoices = Object.values(SocialMediaTypeEnum).map((value) => ({
+    id: value,
+    name: value,
+}))
 
 export const ItemEditDetails = () => {
-    const formContext = useFormContext()
+    const { setValue } = useFormContext()
 
     const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const slugTitle = slugify(event.target.value)
-        formContext.setValue('slug', slugTitle)
+        setValue('slug', slugTitle)
     }
 
     return (
         <Grid container columnSpacing={2}>
             <Grid item xs={12}>
+                <AnalyzeImage />
                 <TextInput
                     source="title"
                     validate={required()}
@@ -70,9 +79,15 @@ export const ItemEditDetails = () => {
             </Grid>
 
             <Grid item xs={12}>
-                <ArrayInput source="tags" label="Tags">
+                <ArrayInput source="tag" label="Tags">
                     <SimpleFormIterator>
-                        <TextInput />
+                        <TextInput source="title" label="Title" />
+                        <NumberInput source="id" style={{ display: 'none' }} />
+                        <SelectArrayInput
+                            source="social_media"
+                            choices={socialMediaChoices}
+                            label="Social Media"
+                        />
                     </SimpleFormIterator>
                 </ArrayInput>
             </Grid>

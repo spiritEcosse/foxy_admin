@@ -24,7 +24,7 @@ import {
 import React, { useEffect, useState } from 'react'
 import GoogleLoginComponent from './google/GoogleLoginComponent'
 
-if (import.meta.env.VITE_APP_SENTRY !== 'null') {
+if (import.meta.env.VITE_APP_SENTRY !== undefined) {
     Sentry.init({
         dsn: import.meta.env.VITE_APP_SENTRY,
         integrations: [
