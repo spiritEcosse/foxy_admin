@@ -100,7 +100,7 @@ Your response must be a valid JSON object with the following structure:
   "meta_description": "A brief summary suitable for SEO purposes",
   "tag": [
     {
-      "title": "Example Tag",
+      "title": "ExampleTag",
       "social_media": ["Instagram", "Facebook", "Pinterest", "Twitter", "TikTok"]
     },
     // ... more tags
