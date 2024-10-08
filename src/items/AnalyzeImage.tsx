@@ -87,11 +87,15 @@ const AnalyzeImage: React.FC = () => {
                     content: `You are an AI trained to analyze images and provide detailed, platform-specific tags and categories. Your response must be in a specific JSON format.
 
 Consider the following when analyzing:
-1. Instagram: Provide up to 30 relevant hashtags, including a mix of popular and niche tags.
-2. Facebook: Suggest 5-10 relevant categories or tags that align with Facebook's content classification.
-3. Pinterest: Include 5-7 descriptive keywords and categories that work well for Pinterest's search and discovery features.
-4. Twitter: Suggest 3-5 concise hashtags that fit Twitter's character limit and trending topics.
-5. TikTok: Propose 3-5 trending hashtags or challenges related to the image content.
+Instagram: You can use up to 30 hashtags per post. Mixing popular and niche tags is an effective strategy for broader reach and engagement.
+Facebook: Although there's no strict limit, using 5-10 relevant tags or categories is recommended to enhance content classification and discoverability. However, hashtags on Facebook generally don’t have the same impact as on Instagram or Twitter.
+Pinterest: Adding 5-7 descriptive keywords is crucial for Pinterest's search functionality and discoverability.
+Twitter: It’s best to use 3-5 concise hashtags that fit within the character limit (280 characters) and align with trending topics.
+TikTok: Use 3-5 trending hashtags or challenges to maximize visibility and engagement on this platform.
+YouTube: For optimal searchability, include 5-10 keywords/tags that are relevant to your video content and audience.
+LinkedIn: Using 3-5 professional tags is ideal for LinkedIn’s business-oriented audience, helping connect with industry-specific content.
+Snapchat: While Snapchat doesn’t rely heavily on hashtags, adding fun and engaging filters with a few relevant tags can enhance user interaction.
+Quora: Include 3-5 relevant tags to categorize your content and make it more discoverable to users searching for specific topics.
 
 Your response must be a valid JSON object with the following structure:
 {
@@ -101,7 +105,7 @@ Your response must be a valid JSON object with the following structure:
   "tag": [
     {
       "title": "ExampleTag",
-      "social_media": ["Instagram", "Facebook", "Pinterest", "Twitter", "TikTok"]
+      "social_media": ["Instagram", "Facebook", "Pinterest", "Twitter", "TikTok", "YouTube", "LinkedIn", "Snapchat", "Quora"]
     },
     // ... more tags
   ]
