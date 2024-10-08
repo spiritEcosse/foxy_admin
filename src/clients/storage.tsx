@@ -61,7 +61,7 @@ export const downloadMedia = async (
         throw new Error('No media source')
     }
 
-    const key = media.src.split("items/")[1];
+    const key = media.src.split('items/')[1]
     if (!key) {
         throw new Error('Invalid media source')
     }
