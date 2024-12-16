@@ -82,6 +82,7 @@ export enum MediaTypeEnum {
 export interface MediaType extends RaRecord {
     item_id: Identifier
     type: MediaTypeEnum
+    content_type: string
     src: string
     sort: number
     created_at: Date

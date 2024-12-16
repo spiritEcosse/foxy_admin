@@ -69,8 +69,6 @@ const AnalyzeImage: React.FC = () => {
             const allowedTypes = [
                 'image/png',
                 'image/jpeg',
-                'image/gif',
-                'image/webp',
             ]
             if (!allowedTypes.includes(file.type)) {
                 notify(
