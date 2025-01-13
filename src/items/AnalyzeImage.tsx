@@ -66,12 +66,7 @@ const AnalyzeImage: React.FC = () => {
             }
 
             // Check file type
-            const allowedTypes = [
-                'image/png',
-                'image/jpeg',
-                'image/gif',
-                'image/webp',
-            ]
+            const allowedTypes = ['image/png', 'image/jpeg']
             if (!allowedTypes.includes(file.type)) {
                 notify(
                     'resources.items.notifications.unsupported_image_format',

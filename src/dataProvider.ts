@@ -77,35 +77,6 @@ export const dataProvider = {
         }
         return json
     },
-    getOne: async (resource: string, params: { id: string | number }) => {
-        if (resource === 'api/v1/item/admin') {
-            // Custom handling for /api/v1/item/admin
-            const url = `${dataProvider.getUrl(resource)}/${params.id}`
-            const { json } = await httpClient(url)
-            if (json.error) {
-                throw new Error(json.error)
-            }
-            let item = json['_item']
-            item.media = json['_media']
-            item.tag = json['_tag']
-            return { data: item }
-        } else if (resource === 'api/v1/order/admin') {
-            // Custom handling for /api/v1/item/admin
-            const url = `${dataProvider.getUrl(resource)}/${params.id}`
-            const { json } = await httpClient(url)
-            if (json.error) {
-                throw new Error(json.error)
-            }
-            let item = json['_order']
-            item.items = json['_items']
-            item.address = json['_address']
-            item.user = json['_user']
-            return { data: item }
-        } else {
-            // Fallback to the default getOne method for other resources
-            return dataProviderBase.getOne(resource, params)
-        }
-    },
     multiUpdate: async (
         resource: string,
         params: { ids: Array<string | number>; data: any },

@@ -1,6 +1,23 @@
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google'
 import '../styles/GoogleLoginComponent.css'
 import { dataProvider } from '../dataProvider'
+import { jwtDecode } from 'jwt-decode'
+interface GoogleCredential {
+    iss: string
+    nbf: number
+    aud: string
+    sub: string
+    email: string
+    email_verified: boolean
+    azp: string
+    name: string
+    picture: string
+    given_name: string
+    family_name: string
+    iat: number
+    exp: number
+    jti: string
+}
 
 const GoogleLoginComponent = () => {
     return (
@@ -18,6 +35,12 @@ const GoogleLoginComponent = () => {
                         }
                         const credential =
                             credentialResponse.credential as string
+                        // Decode the JWT
+                        const decodedCredential =
+                            jwtDecode<GoogleCredential>(credential)
+
+                        // Log the parsed credentials
+                        console.log('Parsed credentials:', decodedCredential)
                         fetch(
                             dataProvider.getUrl(
                                 'api/v1/auth/admin/google_login',

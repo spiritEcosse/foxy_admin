@@ -17,6 +17,7 @@ const processMedia = (notify: any, data: any, item?: ItemType) => {
             media.type = media.rawFile.type.startsWith('video/')
                 ? MediaTypeEnum.VIDEO
                 : MediaTypeEnum.IMAGE
+            media.content_type = media.rawFile.type
         }
         media.sort = data.media.indexOf(media) + 1
         media.item_id = data.id
