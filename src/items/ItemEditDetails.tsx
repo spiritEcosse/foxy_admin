@@ -79,7 +79,7 @@ export const ItemEditDetails = () => {
             </Grid>
 
             <Grid item xs={12}>
-                <ArrayInput source="tag" label="Tags">
+                <ArrayInput source="tags" label="Tags">
                     <SimpleFormIterator>
                         <TextInput source="title" label="Title" />
                         <NumberInput source="id" style={{ display: 'none' }} />
