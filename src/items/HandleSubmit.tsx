@@ -46,13 +46,13 @@ const processTags = (data: any, item?: ItemType) => {
     let tagCreate: TagType[] = []
     let tagIdsToDelete: number[] = []
 
-    item?.tag?.forEach((tag) => {
-        if (!data.tag.find((t: TagType) => t.id === tag.id)) {
+    item?.tags?.forEach((tag) => {
+        if (!data.tags.find((t: TagType) => t.id === tag.id)) {
             tagIdsToDelete.push(Number(tag.id))
         }
     })
 
-    data.tag.forEach((tag: TagType) => {
+    data.tags.forEach((tag: TagType) => {
         tag.item_id = data.id
 
         if (tag.id) {

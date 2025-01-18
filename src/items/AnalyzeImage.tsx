@@ -17,7 +17,7 @@ interface ItemGptType {
     title: string
     description: string
     meta_description: string
-    tag: TagGptType[]
+    tags: TagGptType[]
 }
 
 const openai = new OpenAI({
@@ -97,7 +97,7 @@ Your response must be a valid JSON object with the following structure:
   "title": "A concise title describing the image",
   "description": "A detailed description of the image content",
   "meta_description": "A brief summary suitable for SEO purposes",
-  "tag": [
+  "tags": [
     {
       "title": "ExampleTag",
       "social_media": ["Instagram", "Facebook", "Pinterest", "Twitter", "TikTok", "YouTube", "LinkedIn", "Snapchat", "Quora"]
@@ -147,7 +147,7 @@ Ensure that each tag is associated with the appropriate social media platforms w
                     shouldValidate: true,
                     shouldDirty: true,
                 })
-                setValue('tag', itemGpt.tag, {
+                setValue('tags', itemGpt.tags, {
                     shouldValidate: true,
                     shouldDirty: true,
                 })
