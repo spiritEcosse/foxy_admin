@@ -18,6 +18,12 @@ const processMedia = (notify: any, data: any, item?: ItemType) => {
                 ? MediaTypeEnum.VIDEO
                 : MediaTypeEnum.IMAGE
             media.content_type = media.rawFile.type
+            if (media.type == MediaTypeEnum.IMAGE && media.rawFile.size > 15 * 1024 * 1024) {
+                throw new Error('image_file_too_large')
+            }
+            if (media.type == MediaTypeEnum.VIDEO && media.rawFile.size > 512 * 1024 * 1024) {
+                throw new Error('video_file_too_large')
+            }
         }
         media.sort = data.media.indexOf(media) + 1
         media.item_id = data.id
@@ -158,7 +164,11 @@ export const HandleSubmit = async (
             notify('item_updated', { type: 'info' })
         }
     } catch (error) {
-        console.error('Error: could not update item or media', error)
-        notify('could_not_update_object', { type: 'error' })
+        if (error instanceof Error) {
+            notify(error.message, { type: 'error' })
+        } else {
+            console.error('Error: could not update item or media', error)
+            notify('could_not_update_object', { type: 'error' })
+        }
     }
 }
