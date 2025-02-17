@@ -18,7 +18,10 @@ const processMedia = (notify: any, data: any, item?: ItemType) => {
                 ? MediaTypeEnum.VIDEO
                 : MediaTypeEnum.IMAGE
             media.content_type = media.rawFile.type
-            if (media.type == MediaTypeEnum.IMAGE && media.rawFile.size > 15 * 1024 * 1024) {
+            if (
+                media.type == MediaTypeEnum.IMAGE &&
+                media.rawFile.size > 15 * 1024 * 1024
+            ) {
                 throw new Error('image_file_too_large')
             }
         }
