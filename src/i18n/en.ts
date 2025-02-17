@@ -11,6 +11,8 @@ const customEnglishMessages: TranslationMessages = {
     file_deleted_successfully: 'File deleted successfully',
     error_deleting_file: 'Error deleting file',
     no_file_to_upload: 'No file to upload',
+    image_file_too_large: 'Image file size exceeds 15MB limit',
+    video_file_too_large: 'Video file size exceeds 512MB limit',
     could_not_update_object: 'Error: could not update object',
     file_not_available: 'File not available',
     pos: {

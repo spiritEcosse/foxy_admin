@@ -4,6 +4,8 @@ import { Button, useNotify } from 'react-admin'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { MediaType, MediaTypeEnum } from '../types'
 import { useFormContext } from 'react-hook-form'
+import { HeadObjectCommand } from '@aws-sdk/client-s3'
+import { s3Client } from '../clients/s3Client'
 
 interface MediaProps {
     media: MediaType
@@ -52,14 +54,15 @@ const Media = forwardRef<HTMLDivElement, MediaProps>(
                     setFileSize(formatFileSize(media.rawFile.size))
                 } else {
                     try {
-                        const response = await fetch(mediaSrc, {
-                            method: 'HEAD',
+                        const headObjectCommand = new HeadObjectCommand({
+                            Bucket: import.meta.env
+                                .VITE_APP_BUCKET_NAME as string,
+                            Key: mediaSrc.replace(/https?:\/\/[^/]+\/?/, ''),
                         })
-                        const contentLength =
-                            response.headers.get('content-length')
-                        if (contentLength) {
-                            const size = parseInt(contentLength, 10)
-                            setFileSize(formatFileSize(size))
+
+                        const response = await s3Client.send(headObjectCommand)
+                        if (response.ContentLength) {
+                            setFileSize(formatFileSize(response.ContentLength))
                         }
                     } catch (error) {
                         console.error('Error fetching file size:', error)
