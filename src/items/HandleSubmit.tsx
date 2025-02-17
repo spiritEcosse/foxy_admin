@@ -21,9 +21,6 @@ const processMedia = (notify: any, data: any, item?: ItemType) => {
             if (media.type == MediaTypeEnum.IMAGE && media.rawFile.size > 15 * 1024 * 1024) {
                 throw new Error('image_file_too_large')
             }
-            if (media.type == MediaTypeEnum.VIDEO && media.rawFile.size > 512 * 1024 * 1024) {
-                throw new Error('video_file_too_large')
-            }
         }
         media.sort = data.media.indexOf(media) + 1
         media.item_id = data.id
