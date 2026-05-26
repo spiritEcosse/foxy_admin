@@ -78,7 +78,11 @@ const handleItem = async (data: any, dataProvider: any) => {
         const response = await dataProvider.create(itemEndpoint, { data })
         return response.data.id
     } else {
-        await dataProvider.updateItem(itemEndpoint, { id: data.id, data })
+        await dataProvider.update(itemEndpoint, {
+            id: data.id,
+            data,
+            previousData: data,
+        })
         return data.id
     }
 }
@@ -92,11 +96,11 @@ const handleTags = async (
     const tagEndpoint = 'api/v1/tag/admin/items'
 
     if (tagUpdate.length)
-        await dataProvider.multiUpdate(tagEndpoint, { items: tagUpdate })
+        await dataProvider.multi(tagEndpoint, 'PUT', { items: tagUpdate })
     if (tagCreate.length)
-        await dataProvider.multiCreate(tagEndpoint, { items: tagCreate })
+        await dataProvider.multi(tagEndpoint, 'POST', { items: tagCreate })
     if (tagIdsToDelete.length)
-        await dataProvider.multiDelete(tagEndpoint, { items: tagIdsToDelete })
+        await dataProvider.multi(tagEndpoint, 'DELETE', { items: tagIdsToDelete })
 }
 
 const handleMedia = async (
@@ -109,20 +113,20 @@ const handleMedia = async (
     const mediaEndpoint = 'api/v1/media/admin/items'
 
     if (mediaToUpdate.length)
-        await dataProvider.multiUpdate(mediaEndpoint, { items: mediaToUpdate })
+        await dataProvider.multi(mediaEndpoint, 'PUT', { items: mediaToUpdate })
 
     if (mediaToCreate.length) {
         for (const media of mediaToCreate) {
             await uploadMedia(notify, media)
         }
-        await dataProvider.multiCreate(mediaEndpoint, { items: mediaToCreate })
+        await dataProvider.multi(mediaEndpoint, 'POST', { items: mediaToCreate })
     }
 
     if (mediaToDelete.length) {
         for (const media of mediaToDelete) {
             await deleteMedia(notify, media)
         }
-        await dataProvider.multiDelete(mediaEndpoint, {
+        await dataProvider.multi(mediaEndpoint, 'DELETE', {
             items: mediaToDelete.map((media: MediaType) => media.id),
         })
     }
