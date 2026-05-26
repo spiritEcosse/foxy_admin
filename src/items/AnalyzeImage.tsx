@@ -71,7 +71,7 @@ const AnalyzeImage: React.FC = () => {
             const image = await toRawBase64(file)
 
             const response = await fetch(
-                `${import.meta.env.VITE_JSON_SERVER_URL}/api/v1/ai/analyze-image`,
+                `${import.meta.env.VITE_JSON_SERVER_URL}/api/v1/aianalyzeimage/admin`,
                 {
                     method: 'POST',
                     headers: {
