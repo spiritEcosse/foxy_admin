@@ -41,11 +41,7 @@ const Media = forwardRef<HTMLDivElement, MediaProps>(
         }
         const { getValues, setValue } = useFormContext()
         const [fileSize, setFileSize] = useState<string | null>(null)
-        const mediaSrc = media.src.startsWith('https://')
-            ? `https://${
-                  import.meta.env.VITE_APP_BUCKET_NAME
-              }.s3.amazonaws.com${media.src.replace(/https?:\/\/[^/]+/, '')}`
-            : media.src
+        const mediaSrc = media.src
         const notify = useNotify()
 
         useEffect(() => {
