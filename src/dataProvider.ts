@@ -11,7 +11,7 @@ const httpClient = async (url: string, options: fetchUtils.Options = {}) => {
     try {
         return await fetchUtils.fetchJson(url, options)
     } catch (error) {
-        if (error instanceof Error && error.message === 'Unauthorized') {
+        if ((error as any).status === 401) {
             localStorage.removeItem('auth')
             window.dispatchEvent(new Event('storage'))
             return Promise.reject(new Error('Authentication failed'))
