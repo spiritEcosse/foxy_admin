@@ -9,7 +9,13 @@ import shipping_rate from './shipping_rate'
 import reviews from './reviews'
 import social_media from './social_media'
 import financial_details from './financial_details'
-import { Admin, localStorageStore, Resource, useStore } from 'react-admin'
+import {
+    Admin,
+    localStorageStore,
+    Resource,
+    StoreContextProvider,
+    useStore,
+} from 'react-admin'
 import { ThemeName, themes } from './themes/themes'
 import { Layout } from './layout'
 import polyglotI18nProvider from 'ra-i18n-polyglot'
@@ -81,29 +87,10 @@ const MyDashboard = () => (
     </div>
 )
 
-export const App = () => {
+const AdminWithTheme = () => {
     const [themeName] = useStore<ThemeName>('themeName', 'house')
     const lightTheme = themes.find((theme) => theme.name === themeName)?.light
     const darkTheme = themes.find((theme) => theme.name === themeName)?.dark
-    const [auth, setAuth] = useState(localStorage.getItem('auth'))
-
-    useEffect(() => {
-        const handleStorageChange = () => {
-            setAuth(localStorage.getItem('auth'))
-        }
-
-        window.addEventListener('storage', handleStorageChange)
-
-        // Cleanup the event listener
-        return () => {
-            window.removeEventListener('storage', handleStorageChange)
-        }
-    }, [auth])
-
-    if (auth === null) {
-        console.log('Not authenticated. Redirecting to login page.')
-        return <GoogleLoginComponent />
-    }
 
     return (
         <Admin
@@ -140,5 +127,32 @@ export const App = () => {
             <Resource name="api/v1/shippingrate/admin" {...shipping_rate} />
             <Resource name="api/v1/review/admin" {...reviews} />
         </Admin>
+    )
+}
+
+export const App = () => {
+    const [auth, setAuth] = useState(localStorage.getItem('auth'))
+
+    useEffect(() => {
+        const handleStorageChange = () => {
+            setAuth(localStorage.getItem('auth'))
+        }
+
+        window.addEventListener('storage', handleStorageChange)
+
+        return () => {
+            window.removeEventListener('storage', handleStorageChange)
+        }
+    }, [auth])
+
+    if (auth === null) {
+        console.log('Not authenticated. Redirecting to login page.')
+        return <GoogleLoginComponent />
+    }
+
+    return (
+        <StoreContextProvider value={store}>
+            <AdminWithTheme />
+        </StoreContextProvider>
     )
 }
