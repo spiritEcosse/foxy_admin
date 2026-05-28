@@ -33,6 +33,7 @@ import GoogleLoginComponent from './google/GoogleLoginComponent'
 if (import.meta.env.VITE_APP_SENTRY !== undefined) {
     Sentry.init({
         dsn: import.meta.env.VITE_APP_SENTRY,
+        environment: import.meta.env.MODE,
         integrations: [
             // See docs for support of different versions of variation of react router
             // https://docs.sentry.io/platforms/javascript/guides/react/configuration/integrations/react-router/
