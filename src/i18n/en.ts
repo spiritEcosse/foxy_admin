@@ -216,6 +216,7 @@ const customEnglishMessages: TranslationMessages = {
                     "I'm sorry, I am unable to proceed until you upload the file.",
                 failed_to_analyze_image: 'Failed to analyze image',
                 image_analyzed: 'Image analyzed successfully',
+                analyzing_image: 'Analyzing image...',
             },
             fields: {
                 title: 'Title',

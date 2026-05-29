@@ -25,3 +25,9 @@ dist-ssr
 
 # Sentry Config File
 .env.sentry-build-plugin
+
+# Local environment
+.env
+
+# Google OAuth client secrets
+client_secret_*.json

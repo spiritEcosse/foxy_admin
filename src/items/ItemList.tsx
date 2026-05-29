@@ -1,6 +1,7 @@
 import { Box, Chip, useMediaQuery, Theme } from '@mui/material'
 import {
     CreateButton,
+    Empty,
     ExportButton,
     FilterButton,
     FilterForm,
@@ -13,11 +14,28 @@ import {
     SortButton,
     Title,
     TopToolbar,
+    useListContext,
     useTranslate,
     useGetResourceLabel,
 } from 'react-admin'
 
 import ImageList from './GridList'
+
+const ItemListContent = ({ isSmall }: { isSmall: boolean }) => {
+    const { data, isLoading, filterValues } = useListContext()
+    const hasFilters = filterValues && Object.keys(filterValues).length > 0
+    if (!isLoading && (!data || data.length === 0) && !hasFilters) {
+        return <Empty />
+    }
+    return (
+        <Box display="flex">
+            <Box width={isSmall ? 'auto' : 'calc(100% - 16em)'}>
+                <ImageList />
+                <Pagination rowsPerPageOptions={[12, 24, 48, 72]} />
+            </Box>
+        </Box>
+    )
+}
 
 const ItemList = () => {
     const getResourceLabel = useGetResourceLabel()
@@ -35,12 +53,7 @@ const ItemList = () => {
                     </Box>
                 )}
             </FilterContext.Provider>
-            <Box display="flex">
-                <Box width={isSmall ? 'auto' : 'calc(100% - 16em)'}>
-                    <ImageList />
-                    <Pagination rowsPerPageOptions={[12, 24, 48, 72]} />
-                </Box>
-            </Box>
+            <ItemListContent isSmall={isSmall} />
         </ListBase>
     )
 }

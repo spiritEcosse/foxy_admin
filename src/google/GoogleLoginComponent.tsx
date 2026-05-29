@@ -1,6 +1,5 @@
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google'
 import '../styles/GoogleLoginComponent.css'
-import { dataProvider } from '../dataProvider'
 import { jwtDecode } from 'jwt-decode'
 interface GoogleCredential {
     iss: string
@@ -42,9 +41,7 @@ const GoogleLoginComponent = () => {
                         // Log the parsed credentials
                         console.log('Parsed credentials:', decodedCredential)
                         fetch(
-                            dataProvider.getUrl(
-                                'api/v1/auth/admin/google_login',
-                            ),
+                            `${import.meta.env.VITE_JSON_SERVER_URL}/api/v1/auth/admin/google_login`,
                             {
                                 method: 'POST',
                                 headers: {

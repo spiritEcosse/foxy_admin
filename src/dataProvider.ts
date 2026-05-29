@@ -11,11 +11,7 @@ const httpClient = async (url: string, options: fetchUtils.Options = {}) => {
     try {
         return await fetchUtils.fetchJson(url, options)
     } catch (error) {
-        if (
-            error instanceof Error &&
-            (error.message === 'Unauthorized' ||
-                error.message === 'Failed to fetch')
-        ) {
+        if ((error as any).status === 401) {
             localStorage.removeItem('auth')
             window.dispatchEvent(new Event('storage'))
             return Promise.reject(new Error('Authentication failed'))
@@ -25,6 +21,9 @@ const httpClient = async (url: string, options: fetchUtils.Options = {}) => {
         )
     }
 }
+const url = (resource: string) =>
+    `${import.meta.env.VITE_JSON_SERVER_URL}/${resource}`
+
 const dataProviderBase = jsonServerProvider(
     import.meta.env.VITE_JSON_SERVER_URL,
     httpClient,
@@ -32,101 +31,44 @@ const dataProviderBase = jsonServerProvider(
 
 export const dataProvider = {
     ...dataProviderBase,
-    getUrl(resource: string): string {
-        const baseUrl = import.meta.env.VITE_JSON_SERVER_URL
-        return `${baseUrl}/${resource}`
-    },
-    publishToSocialMedia: async () => {
-        const url = `${dataProvider.getUrl('api/v1/socialmedia/admin/publish')}`
-        const options = {
-            method: 'POST',
-            headers: new Headers({
-                'Content-Type': 'application/json',
-            }),
-        }
-        const { json } = await httpClient(url, options)
-        return { data: json }
-    },
     getList: async (resource: string, params: GetListParams) => {
         const { page, perPage } = params.pagination
         const { field, order } = params.sort
         const query = {
             ...fetchUtils.flattenObject(params.filter),
             sort: field,
-            order: order,
-            page: page,
+            order,
+            page,
             limit: perPage,
         }
-        const url = `${dataProvider.getUrl(
-            resource,
-        )}?${fetchUtils.queryParameters(query)}`
-
-        const { json } = await httpClient(url)
-        return json
+        const { json } = await httpClient(
+            `${url(resource)}?${fetchUtils.queryParameters(query)}`,
+        )
+        return { data: json.data, total: json.total }
     },
     getMany: async (resource: string, params: GetListParams) => {
-        const query = {
-            ...fetchUtils.flattenObject(params.filter),
-        }
-        const url = `${dataProvider.getUrl(
-            resource,
-        )}?${fetchUtils.queryParameters(query)}`
-        const { json } = await httpClient(url)
+        const query = fetchUtils.flattenObject(params.filter)
+        const { json } = await httpClient(
+            `${url(resource)}?${fetchUtils.queryParameters(query)}`,
+        )
+        // TODO: only getMany checks this. Either move to httpClient if the
+        // backend can return { error } with HTTP 200 on any endpoint, or
+        // delete if this branch is dead.
         if (json.error) {
             throw new Error(json.error)
         }
-        return json
+        return { data: json.data }
     },
-    multiUpdate: async (
+    multi: async (
         resource: string,
-        params: { ids: Array<string | number>; data: any },
+        method: 'POST' | 'PUT' | 'DELETE',
+        params: { items: Array<any> },
     ) => {
-        const url = `${dataProvider.getUrl(resource)}`
-        const options = {
-            method: 'PUT',
+        const { json } = await httpClient(url(resource), {
+            method,
             body: JSON.stringify(params),
             headers: new Headers({ 'Content-Type': 'application/json' }),
-        }
-        const { json } = await httpClient(url, options)
-        return { data: json }
-    },
-    updateItem: async (
-        resource: string,
-        params: { id: string | number; data: any },
-    ) => {
-        const url = `${dataProvider.getUrl(resource)}/${params.id}`
-        const options = {
-            method: 'PUT',
-            body: JSON.stringify(params.data),
-            headers: new Headers({ 'Content-Type': 'application/json' }),
-        }
-        const { json } = await httpClient(url, options)
-        return { data: json }
-    },
-    multiCreate: async (
-        resource: string,
-        params: { ids: Array<string | number>; data: any },
-    ) => {
-        const url = `${dataProvider.getUrl(resource)}`
-        const options = {
-            method: 'POST',
-            body: JSON.stringify(params),
-            headers: new Headers({ 'Content-Type': 'application/json' }),
-        }
-        const { json } = await httpClient(url, options)
-        return { data: json }
-    },
-    multiDelete: async (
-        resource: string,
-        params: { items: Array<string | number> },
-    ) => {
-        const url = `${dataProvider.getUrl(resource)}`
-        const options = {
-            method: 'DELETE',
-            body: JSON.stringify(params),
-            headers: new Headers({ 'Content-Type': 'application/json' }),
-        }
-        const { json } = await httpClient(url, options)
+        })
         return { data: json }
     },
 }
