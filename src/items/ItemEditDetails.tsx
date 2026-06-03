@@ -11,7 +11,7 @@ import {
     SimpleFormIterator,
     ArrayInput,
 } from 'react-admin'
-import { Grid, InputAdornment } from '@mui/material'
+import { Divider, Grid, InputAdornment } from '@mui/material'
 import { useFormContext } from 'react-hook-form'
 import { slugify, validatePositive } from '../utils'
 import { SocialMediaTypeEnum } from '../types'
@@ -34,6 +34,23 @@ export const ItemEditDetails = () => {
         <Grid container columnSpacing={2}>
             <Grid item xs={12}>
                 <AnalyzeImage />
+            </Grid>
+            <Grid item xs={12} sm={4}>
+                <NumberInput source="title_size" min={0} fullWidth />
+            </Grid>
+            <Grid item xs={12} sm={4}>
+                <NumberInput source="description_size" min={0} fullWidth />
+            </Grid>
+            <Grid item xs={12} sm={4}>
+                <NumberInput source="meta_description_size" min={0} fullWidth />
+            </Grid>
+            <Grid item xs={12}>
+                <TextInput source="extra_prompt" fullWidth multiline />
+            </Grid>
+            <Grid item xs={12}>
+                <Divider sx={{ my: 2 }} />
+            </Grid>
+            <Grid item xs={12}>
                 <TextInput
                     source="title"
                     validate={required()}

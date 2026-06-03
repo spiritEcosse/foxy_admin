@@ -228,6 +228,10 @@ const customEnglishMessages: TranslationMessages = {
                 enabled: 'Enabled',
                 slug: 'Slug',
                 updated_at: 'Updated At',
+                title_size: 'Title Size',
+                description_size: 'Description Size',
+                meta_description_size: 'Meta Description Size',
+                extra_prompt: 'Extra Prompt',
             },
             tabs: {
                 images: 'Images',

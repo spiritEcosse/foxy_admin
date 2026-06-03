@@ -142,6 +142,14 @@ export const HandleSubmit = async (
 ) => {
     try {
         const create = data.id === undefined
+
+        // Analyze-only inputs that tune the AI image analysis request.
+        // They are not item fields, so strip them before persisting.
+        delete data.title_size
+        delete data.description_size
+        delete data.meta_description_size
+        delete data.extra_prompt
+
         data.id = await handleItem(data, dataProvider)
 
         const { mediaToUpdate, mediaToCreate, mediaToDelete } = processMedia(
