@@ -70,6 +70,25 @@ const AnalyzeImage: React.FC = () => {
 
             const image = await toRawBase64(file)
 
+            const {
+                title_size,
+                description_size,
+                meta_description_size,
+                extra_prompt,
+            } = getValues()
+
+            const body: Record<string, unknown> = {
+                image,
+                mimeType: file.type,
+            }
+            if (title_size != null && title_size !== '')
+                body.title_size = title_size
+            if (description_size != null && description_size !== '')
+                body.description_size = description_size
+            if (meta_description_size != null && meta_description_size !== '')
+                body.meta_description_size = meta_description_size
+            if (extra_prompt) body.extra_prompt = extra_prompt
+
             const response = await fetch(
                 `${import.meta.env.VITE_JSON_SERVER_URL}/api/v1/aianalyzeimage/admin`,
                 {
@@ -78,7 +97,7 @@ const AnalyzeImage: React.FC = () => {
                         'Content-Type': 'application/json',
                         Authorization: `Bearer ${localStorage.getItem('auth')}`,
                     },
-                    body: JSON.stringify({ image, mimeType: file.type }),
+                    body: JSON.stringify(body),
                 },
             )
 
